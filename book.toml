@@ -1,0 +1,6 @@
+[book]
+authors = ["zhj12138"]
+language = "zh-CN"
+multilingual = false
+src = "src"
+title = "C++ConcurrencyInAction"
