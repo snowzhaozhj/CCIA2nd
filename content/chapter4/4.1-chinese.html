@@ -1,0 +1,463 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>4.1 等待事件或条件 - C++ConcurrencyInAction</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../../favicon.svg">
+                        <link rel="shortcut icon" href="../../favicon.png">
+                <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+                <link rel="stylesheet" href="../../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../content/Praise_for_the_first_edition.html"><strong aria-hidden="true">1.</strong> 第一版的赞许</a></li><li class="chapter-item expanded "><a href="../../content/preface-chinese.html"><strong aria-hidden="true">2.</strong> 前言</a></li><li class="chapter-item expanded "><a href="../../content/acknowledgments-chinese.html"><strong aria-hidden="true">3.</strong> 感谢</a></li><li class="chapter-item expanded "><a href="../../content/about_this_book-chinese.html"><strong aria-hidden="true">4.</strong> 关于本书</a></li><li class="chapter-item expanded "><a href="../../content/about_the_author-chinese.html"><strong aria-hidden="true">5.</strong> 关于作者</a></li><li class="chapter-item expanded "><a href="../../content/about_cover_illustration-chinese.html"><strong aria-hidden="true">6.</strong> 关于封面</a></li><li class="chapter-item expanded "><a href="../../content/chapter1/1.0-chinese.html"><strong aria-hidden="true">7.</strong> 第1章 你好，并发世界</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter1/1.1-chinese.html"><strong aria-hidden="true">7.1.</strong> 1.1 何谓并发</a></li><li class="chapter-item expanded "><a href="../../content/chapter1/1.2-chinese.html"><strong aria-hidden="true">7.2.</strong> 1.2 为什么使用并发</a></li><li class="chapter-item expanded "><a href="../../content/chapter1/1.3-chinese.html"><strong aria-hidden="true">7.3.</strong> 1.3 并发和多线程</a></li><li class="chapter-item expanded "><a href="../../content/chapter1/1.4-chinese.html"><strong aria-hidden="true">7.4.</strong> 1.4 开始入门</a></li><li class="chapter-item expanded "><a href="../../content/chapter1/1.5-chinese.html"><strong aria-hidden="true">7.5.</strong> 1.5 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter2/2.0-chinese.html"><strong aria-hidden="true">8.</strong> 第2章 线程管理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter2/2.1-chinese.html"><strong aria-hidden="true">8.1.</strong> 2.1 线程的基本操作</a></li><li class="chapter-item expanded "><a href="../../content/chapter2/2.2-chinese.html"><strong aria-hidden="true">8.2.</strong> 2.2 传递参数</a></li><li class="chapter-item expanded "><a href="../../content/chapter2/2.3-chinese.html"><strong aria-hidden="true">8.3.</strong> 2.3 转移所有权</a></li><li class="chapter-item expanded "><a href="../../content/chapter2/2.4-chinese.html"><strong aria-hidden="true">8.4.</strong> 2.4 确定线程数量</a></li><li class="chapter-item expanded "><a href="../../content/chapter2/2.5-chinese.html"><strong aria-hidden="true">8.5.</strong> 2.5 线程标识</a></li><li class="chapter-item expanded "><a href="../../content/chapter2/2.6-chinese.html"><strong aria-hidden="true">8.6.</strong> 2.6 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter3/3.0-chinese.html"><strong aria-hidden="true">9.</strong> 第3章 共享数据</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter3/3.1-chinese.html"><strong aria-hidden="true">9.1.</strong> 3.1 共享数据的问题</a></li><li class="chapter-item expanded "><a href="../../content/chapter3/3.2-chinese.html"><strong aria-hidden="true">9.2.</strong> 3.2 使用互斥量</a></li><li class="chapter-item expanded "><a href="../../content/chapter3/3.3-chinese.html"><strong aria-hidden="true">9.3.</strong> 3.3 保护共享数据的方式</a></li><li class="chapter-item expanded "><a href="../../content/chapter3/3.4-chinese.html"><strong aria-hidden="true">9.4.</strong> 3.4 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter4/4.0-chinese.html"><strong aria-hidden="true">10.</strong> 第4章 同步操作</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter4/4.1-chinese.html" class="active"><strong aria-hidden="true">10.1.</strong> 4.1 等待事件或条件</a></li><li class="chapter-item expanded "><a href="../../content/chapter4/4.2-chinese.html"><strong aria-hidden="true">10.2.</strong> 4.2 使用future</a></li><li class="chapter-item expanded "><a href="../../content/chapter4/4.3-chinese.html"><strong aria-hidden="true">10.3.</strong> 4.3 限时等待</a></li><li class="chapter-item expanded "><a href="../../content/chapter4/4.4-chinese.html"><strong aria-hidden="true">10.4.</strong> 4.4 简化代码</a></li><li class="chapter-item expanded "><a href="../../content/chapter4/4.5-chinese.html"><strong aria-hidden="true">10.5.</strong> 4.5 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter5/5.0-chinese.html"><strong aria-hidden="true">11.</strong> 第5章 内存模型和原子操作</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter5/5.1-chinese.html"><strong aria-hidden="true">11.1.</strong> 5.1 内存模型</a></li><li class="chapter-item expanded "><a href="../../content/chapter5/5.2-chinese.html"><strong aria-hidden="true">11.2.</strong> 5.2 原子操作和原子类型</a></li><li class="chapter-item expanded "><a href="../../content/chapter5/5.3-chinese.html"><strong aria-hidden="true">11.3.</strong> 5.3 同步操作和强制排序</a></li><li class="chapter-item expanded "><a href="../../content/chapter5/5.4-chinese.html"><strong aria-hidden="true">11.4.</strong> 5.4 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter6/6.0-chinese.html"><strong aria-hidden="true">12.</strong> 第6章 设计基于锁的并发数据结构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter6/6.1-chinese.html"><strong aria-hidden="true">12.1.</strong> 6.1 并发设计的意义</a></li><li class="chapter-item expanded "><a href="../../content/chapter6/6.2-chinese.html"><strong aria-hidden="true">12.2.</strong> 6.2 基于锁的并发数据结构</a></li><li class="chapter-item expanded "><a href="../../content/chapter6/6.3-chinese.html"><strong aria-hidden="true">12.3.</strong> 6.3 设计更加复杂的数据结构</a></li><li class="chapter-item expanded "><a href="../../content/chapter6/6.4-chinese.html"><strong aria-hidden="true">12.4.</strong> 6.4 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter7/7.0-chinese.html"><strong aria-hidden="true">13.</strong> 第7章 设计无锁的并发数据结构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter7/7.1-chinese.html"><strong aria-hidden="true">13.1.</strong> 7.1 定义和意义</a></li><li class="chapter-item expanded "><a href="../../content/chapter7/7.2-chinese.html"><strong aria-hidden="true">13.2.</strong> 7.2 无锁数据结构的例子</a></li><li class="chapter-item expanded "><a href="../../content/chapter7/7.3-chinese.html"><strong aria-hidden="true">13.3.</strong> 7.3 设计无锁数据结构的指导建议</a></li><li class="chapter-item expanded "><a href="../../content/chapter7/7.4-chinese.html"><strong aria-hidden="true">13.4.</strong> 7.4 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter8/8.0-chinese.html"><strong aria-hidden="true">14.</strong> 第8章 并发设计</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter8/8.1-chinese.html"><strong aria-hidden="true">14.1.</strong> 8.1 线程间划分工作</a></li><li class="chapter-item expanded "><a href="../../content/chapter8/8.2-chinese.html"><strong aria-hidden="true">14.2.</strong> 8.2 并发代码的性能</a></li><li class="chapter-item expanded "><a href="../../content/chapter8/8.3-chinese.html"><strong aria-hidden="true">14.3.</strong> 8.3 为多线程性能设计数据结构</a></li><li class="chapter-item expanded "><a href="../../content/chapter8/8.4-chinese.html"><strong aria-hidden="true">14.4.</strong> 8.4 设计并发代码的注意事项</a></li><li class="chapter-item expanded "><a href="../../content/chapter8/8.5-chinese.html"><strong aria-hidden="true">14.5.</strong> 8.5 在实践中设计并发代码</a></li><li class="chapter-item expanded "><a href="../../content/chapter8/8.6-chinese.html"><strong aria-hidden="true">14.6.</strong> 8.6 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter9/9.0-chinese.html"><strong aria-hidden="true">15.</strong> 第9章 高级线程管理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter9/9.1-chinese.html"><strong aria-hidden="true">15.1.</strong> 9.1 线程池</a></li><li class="chapter-item expanded "><a href="../../content/chapter9/9.2-chinese.html"><strong aria-hidden="true">15.2.</strong> 9.2 中断线程</a></li><li class="chapter-item expanded "><a href="../../content/chapter9/9.3-chinese.html"><strong aria-hidden="true">15.3.</strong> 9.3 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter10/10.0-chinese.html"><strong aria-hidden="true">16.</strong> 第10章 并行算法</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter10/10.1-chinese.html"><strong aria-hidden="true">16.1.</strong> 10.1 并行化标准库算法</a></li><li class="chapter-item expanded "><a href="../../content/chapter10/10.2-chinese.html"><strong aria-hidden="true">16.2.</strong> 10.2 执行策略</a></li><li class="chapter-item expanded "><a href="../../content/chapter10/10.3-chinese.html"><strong aria-hidden="true">16.3.</strong> 10.3 C++标准库中的并行算法</a></li><li class="chapter-item expanded "><a href="../../content/chapter10/10.4-chinese.html"><strong aria-hidden="true">16.4.</strong> 10.4 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter11/11.0-chinese.html"><strong aria-hidden="true">17.</strong> 第11章 测试和调试多线程应用</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter11/11.1-chinese.html"><strong aria-hidden="true">17.1.</strong> 11.1 与并发相关的Bug</a></li><li class="chapter-item expanded "><a href="../../content/chapter11/11.2-chinese.html"><strong aria-hidden="true">17.2.</strong> 11.2 定位并发Bug的技巧</a></li><li class="chapter-item expanded "><a href="../../content/chapter11/11.3-chinese.html"><strong aria-hidden="true">17.3.</strong> 11.3 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.0-chinese.html"><strong aria-hidden="true">18.</strong> 附录A C++11特性简明参考(部分)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/appendix_A/A.1-chinese.html"><strong aria-hidden="true">18.1.</strong> A.1 右值引用</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.2-chinese.html"><strong aria-hidden="true">18.2.</strong> A.2 删除函数</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.3-chinese.html"><strong aria-hidden="true">18.3.</strong> A.3 默认函数</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.4-chinese.html"><strong aria-hidden="true">18.4.</strong> A.4 常量表达式函数</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.5-chinese.html"><strong aria-hidden="true">18.5.</strong> A.5 Lambda函数</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.6-chinese.html"><strong aria-hidden="true">18.6.</strong> A.6 变参模板</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.7-chinese.html"><strong aria-hidden="true">18.7.</strong> A.7 自动推导变量类型</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.8-chinese.html"><strong aria-hidden="true">18.8.</strong> A.8 线程本地变量</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.9-chinese.html"><strong aria-hidden="true">18.9.</strong> A.9 模板类参数的推导</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.10-chinese.html"><strong aria-hidden="true">18.10.</strong> A.10 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/appendix_B/B.0-chinese.html"><strong aria-hidden="true">19.</strong> 附录B 并发库简要对比</a></li><li class="chapter-item expanded "><a href="../../content/appendix_C/C.0-chinese.html"><strong aria-hidden="true">20.</strong> 附录C 消息传递框架与完整的ATM示例</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.0-chinese.html"><strong aria-hidden="true">21.</strong> 附录D C++线程类库参考</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/appendix_D/D.1-chinese.html"><strong aria-hidden="true">21.1.</strong> D.1 chrono头文件</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.2-chinese.html"><strong aria-hidden="true">21.2.</strong> D.2 condition_variable头文件</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.3-chinese.html"><strong aria-hidden="true">21.3.</strong> D.3 atomic头文件</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.4-chinese.html"><strong aria-hidden="true">21.4.</strong> D.4 future头文件</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.5-chinese.html"><strong aria-hidden="true">21.5.</strong> D.5 mutex头文件</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.6-chinese.html"><strong aria-hidden="true">21.6.</strong> D.6 ratio头文件</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.7-chinese.html"><strong aria-hidden="true">21.7.</strong> D.7 thread头文件</a></li></ol></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">C++ConcurrencyInAction</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="41-等待事件或条件"><a class="header" href="#41-等待事件或条件">4.1 等待事件或条件</a></h1>
+<p>假设你正在一辆在夜间运行的火车上，在夜间如何在正确的站点下车呢？有一种方法是整晚都要醒着，每停一站都能知道，这样就不会错过你要到达的站点，但会很疲倦。另外，可以看一下时间表，估计一下火车到达目的地的时间，然后在一个稍早的时间点上设置闹铃，然后安心的睡会。这个方法听起来也很不错，也没有错过你要下车的站点，但是当火车晚点时，就要被过早的叫醒了。当然，闹钟的电池也可能会没电了，并导致你睡过站。理想的方式是，无论是早或晚，只要当火车到站的时候，有人或其他东西能把你叫醒就好了。</p>
+<p>这和线程有什么关系呢？当一个线程等待另一个线程完成时，可以持续的检查共享数据标志(用于做保护工作的互斥量)，直到另一线程完成工作时对这个标识进行重置。不过，这种方式会消耗线程的执行时间检查标识，并且当互斥量上锁后，其他线程就没有办法获取锁，就会持续等待。因为对等待线程资源的限制，并且在任务完成时阻碍对标识的设置。类似于保持清醒状态和列车驾驶员聊了一晚上：驾驶员不得不缓慢驾驶，因为你分散了他的注意力，所以火车需要更长的时间，才能到站。同样，等待的线程会等待更长的时间，也会消耗更多的系统资源。</p>
+<p>另外，在等待线程在检查间隙，使用<code>std::this_thread::sleep_for()</code>进行周期性的间歇(详见4.3节)：</p>
+<pre><code class="language-c++">bool flag;
+std::mutex m;
+
+void wait_for_flag()
+{
+  std::unique_lock&lt;std::mutex&gt; lk(m);
+  while(!flag)
+  {
+    lk.unlock();  // 1 解锁互斥量
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));  // 2 休眠100ms
+    lk.lock();   // 3 再锁互斥量
+  }
+}
+</code></pre>
+<p>循环中，休眠前②函数对互斥量进行解锁①，并且在休眠结束后再对互斥量上锁，所以另外的线程就有机会获取锁并设置标识。</p>
+<p>这个实现就进步很多，当线程休眠时没有浪费执行时间，但很难确定正确的休眠时间。太短的休眠和没有一样，都会浪费执行时间。太长的休眠时间，可能会让任务等待时间过久。休眠时间过长比较少见，这会影响到程序的行为，在高节奏的游戏中，就意味着丢帧或错过了一个时间片。</p>
+<p>第三个选择(也是优先选择的)，使用C++标准库提供的工具去等待事件的发生。通过另一线程触发等待事件的机制是最基本的唤醒方式(例如：流水线上存在额外的任务时)，这种机制就称为“条件变量”。从概念上来说，条件变量会与多个事件或其他条件相关，并且一个或多个线程会等待条件的达成。当某些线程被终止时，为了唤醒等待线程(允许等待线程继续执行)，终止线程将会向等待着的线程广播“条件达成”的信息。</p>
+<h2 id="411-等待条件达成"><a class="header" href="#411-等待条件达成">4.1.1 等待条件达成</a></h2>
+<p>C++标准库对条件变量有两套实现：<code>std::condition_variable</code>和<code>std::condition_variable_any</code>，这两个实现都包含在<code>&lt;condition_variable&gt;</code>头文件的声明中。两者都需要与互斥量一起才能工作(互斥量是为了同步)，前者仅能与<code>std::mutex</code>一起工作，而后者可以和合适的互斥量一起工作，从而加上了<code>_any</code>的后缀。因为<code> std::condition_variable_any</code>更加通用，不过在性能和系统资源的使用方面会有更多的开销，所以通常会将<code>std::condition_variable</code>作为首选类型。当对灵活性有要求时，才会考虑<code>std::condition_variable_any</code>。</p>
+<p>所以，使用<code>std::condition_variable</code>去处理之前提到的情况——当有数据需要处理时，如何唤醒休眠中的线程？以下代码展示了使用条件变量唤醒线程的方式。</p>
+<p>代码4.1 使用<code>std::condition_variable</code>处理数据等待</p>
+<pre><code class="language-c++">std::mutex mut;
+std::queue&lt;data_chunk&gt; data_queue;  // 1
+std::condition_variable data_cond;
+
+void data_preparation_thread()
+{
+  while(more_data_to_prepare())
+  {
+    data_chunk const data=prepare_data();
+    std::lock_guard&lt;std::mutex&gt; lk(mut);
+    data_queue.push(data);  // 2
+    data_cond.notify_one();  // 3
+  }
+}
+
+void data_processing_thread()
+{
+  while(true)
+  {
+    std::unique_lock&lt;std::mutex&gt; lk(mut);  // 4
+    data_cond.wait(
+         lk,[]{return !data_queue.empty();});  // 5
+    data_chunk data=data_queue.front();
+    data_queue.pop();
+    lk.unlock();  // 6
+    process(data);
+    if(is_last_chunk(data))
+      break;
+  }
+}
+</code></pre>
+<p>首先，队列中中有两个线程，两个线程之间会对数据进行传递①。数据准备好时，使用<code>std::lock_guard</code>锁定队列，将准备好的数据压入队列②之后，线程会对队列中的数据上锁，并调用<code>std::condition_variable</code>的notify_one()成员函数，对等待的线程(如果有等待线程)进行通知③。</p>
+<p>另外的一个线程正在处理数据，线程首先对互斥量上锁(这里使用<code>std::unique_lock</code>要比<code>std::lock_guard</code>④更加合适)。之后会调用<code>std::condition_variable</code>的成员函数wait()，传递一个锁和一个Lambda表达式(作为等待的条件⑤)。Lambda函数是C++11添加的新特性，可以让一个匿名函数作为其他表达式的一部分，并且非常合适作为标准函数的谓词。例子中，简单的Lambda函数<code>[]{return !data_queue.empty();}</code>会去检查data_queue是否为空，当data_queue不为空，就说明数据已经准备好了。附录A的A.5节有Lambda函数更多的信息。</p>
+<p>wait()会去检查这些条件(通过Lambda函数)，当条件满足(Lambda函数返回true)时返回。如果条件不满足(Lambda函数返回false)，wait()将解锁互斥量，并且将线程(处理数据的线程)置于阻塞或等待状态。当准备数据的线程调用notify_one()通知条件变量时，处理数据的线程从睡眠中苏醒，重新获取互斥锁，并且再次进行条件检查。在条件满足的情况下，从wait()返回并继续持有锁。当条件不满足时，线程将对互斥量解锁，并重新等待。这就是为什么用<code>std::unique_lock</code>而不使用<code>std::lock_guard</code>的原因——等待中的线程必须在等待期间解锁互斥量，并对互斥量再次上锁，而<code>std::lock_guard</code>没有这么灵活。如果互斥量在线程休眠期间保持锁住状态，准备数据的线程将无法锁住互斥量，也无法添加数据到队列中。同样，等待线程也永远不会知道条件何时满足。</p>
+<p>代码4.1使用了简单的Lambda函数用于等待⑤(用于检查队列何时不为空)，不过任意的函数和可调用对象都可以传入wait()。当写好函数做为检查条件时，不一定非要放在一个Lambda表达式中，也可以直接将这个函数传入wait()。调用wait()的过程中，在互斥量锁定时，可能会去检查条件变量若干次，当提供测试条件的函数返回true就会立即返回。当等待线程重新获取互斥量并检查条件变量时，并非直接响应另一个线程的通知，就是所谓的<em>伪唤醒</em>(spurious wakeup)。因为任何伪唤醒的数量和频率都是不确定的，所以不建议使用有副作用的函数做条件检查。</p>
+<p>本质上，<code> std::condition_variable::wait</code>是“忙碌-等待”的优化。下面用简单的循环实现了一个“忙碌-等待”：</p>
+<pre><code class="language-c++">template&lt;typename Predicate&gt;
+void minimal_wait(std::unique_lock&lt;std::mutex&gt;&amp; lk, Predicate pred){
+  while(!pred()){
+    lk.unlock();
+    lk.lock();
+  }
+}
+</code></pre>
+<p>为wait()准备一个最小化实现，只需要notify_one()或notify_all()。</p>
+<p><code>std::unique_lock</code>的灵活性，不仅适用于对wait()的调用，还可以用于待处理的数据⑥。处理数据可能是耗时的操作，并且长时间持有锁是个糟糕的主意。</p>
+<p>使用队列在多个线程中转移数据(如代码4.1)很常见。做得好的话，同步操作可以在队列内部完成，这样同步问题和条件竞争出现的概率也会降低。鉴于这些好处，需要从代码4.1中提取出一个通用线程安全的队列。</p>
+<h2 id="412-构建线程安全队列"><a class="header" href="#412-构建线程安全队列">4.1.2 构建线程安全队列</a></h2>
+<p>设计通用队列时，就要花时间想想，哪些操作需要添加到队列实现中去，就如之前在3.2.3节看到的线程安全的栈。可以看一下C++标准库提供的实现，找找灵感。<code>std::queue&lt;&gt;</code>容器的接口展示如下：</p>
+<p>代码4.2 <code>std::queue</code>接口</p>
+<pre><code class="language-c++">template &lt;class T, class Container = std::deque&lt;T&gt; &gt;
+class queue {
+public:
+  explicit queue(const Container&amp;);
+  explicit queue(Container&amp;&amp; = Container());
+  template &lt;class Alloc&gt; explicit queue(const Alloc&amp;);
+  template &lt;class Alloc&gt; queue(const Container&amp;, const Alloc&amp;);
+  template &lt;class Alloc&gt; queue(Container&amp;&amp;, const Alloc&amp;);
+  template &lt;class Alloc&gt; queue(queue&amp;&amp;, const Alloc&amp;);
+
+  void swap(queue&amp; q);
+
+  bool empty() const;
+  size_type size() const;
+
+  T&amp; front();
+  const T&amp; front() const;
+  T&amp; back();
+  const T&amp; back() const;
+
+  void push(const T&amp; x);
+  void push(T&amp;&amp; x);
+  void pop();
+  template &lt;class... Args&gt; void emplace(Args&amp;&amp;... args);
+};
+</code></pre>
+<p>忽略构造、赋值以及交换操作，剩下了三组操作：</p>
+<ol>
+<li>对整个队列的状态进行查询(empty()和size())</li>
+<li>查询在队列中的各个元素(front()和back())</li>
+<li>修改队列的操作(push(), pop()和emplace())</li>
+</ol>
+<p>和3.2.3中的栈一样，也会遇到接口上的条件竞争。因此，需要将front()和pop()合并成一个函数调用，就像之前在栈实现时合并top()和pop()一样。与代码4.1不同的是，当队列在多个线程中传递数据时，接收线程通常需要等待数据的压入。这里提供pop()函数的两个变种：try_pop()和wait_and_pop()。</p>
+<p>try_pop() ，尝试从队列中弹出数据，即使没有值可检索，也会直接返回。</p>
+<p>wait_and_pop()，将会等待有值可检索的时候才返回。</p>
+<p>当使用之前栈的方式来实现队列，接口可能会是下面这样：</p>
+<p>代码4.3 线程安全队列的接口</p>
+<pre><code class="language-c++">#include &lt;memory&gt; // 为了使用std::shared_ptr
+
+template&lt;typename T&gt;
+class threadsafe_queue
+{
+public:
+  threadsafe_queue();
+  threadsafe_queue(const threadsafe_queue&amp;);
+  threadsafe_queue&amp; operator=(
+      const threadsafe_queue&amp;) = delete;  // 不允许简单的赋值
+
+  void push(T new_value);
+
+  bool try_pop(T&amp; value);  // 1
+  std::shared_ptr&lt;T&gt; try_pop();  // 2
+
+  void wait_and_pop(T&amp; value);
+  std::shared_ptr&lt;T&gt; wait_and_pop();
+
+  bool empty() const;
+};
+</code></pre>
+<p>就像之前的栈，裁剪了很多构造函数，并禁止简单赋值。需要提供两个版本的try_pop()和wait_for_pop()。第一个重载的try_pop()①在引用变量中存储着检索值，可以用来返回队列中值的状态。当检索到一个变量时，将返回true，否则返回false(详见A.2节)。第二个重载②就不行了，因为它是用来直接返回检索值的，当没有值可检索时，这个函数返回NULL。</p>
+<p>那么问题来了，如何将以上这些和代码4.1相关联呢？从之前的代码中提取push()和wait_and_pop()，如以下代码所示。</p>
+<p>代码4.4 从代码4.1中提取push()和wait_and_pop()</p>
+<pre><code class="language-c++">#include &lt;queue&gt;
+#include &lt;mutex&gt;
+#include &lt;condition_variable&gt;
+
+template&lt;typename T&gt;
+class threadsafe_queue
+{
+private:
+  std::mutex mut;
+  std::queue&lt;T&gt; data_queue;
+  std::condition_variable data_cond;
+public:
+  void push(T new_value)
+  {
+    std::lock_guard&lt;std::mutex&gt; lk(mut);
+    data_queue.push(new_value);
+    data_cond.notify_one();
+  }
+
+  void wait_and_pop(T&amp; value)
+  {
+    std::unique_lock&lt;std::mutex&gt; lk(mut);
+    data_cond.wait(lk,[this]{return !data_queue.empty();});
+    value=data_queue.front();
+    data_queue.pop();
+  }
+};
+threadsafe_queue&lt;data_chunk&gt; data_queue;  // 1
+
+void data_preparation_thread()
+{
+  while(more_data_to_prepare())
+  {
+    data_chunk const data=prepare_data();
+    data_queue.push(data);  // 2
+  }
+}
+
+void data_processing_thread()
+{
+  while(true)
+  {
+    data_chunk data;
+    data_queue.wait_and_pop(data);  // 3
+    process(data);
+    if(is_last_chunk(data))
+      break;
+  }
+}
+</code></pre>
+<p>线程队列中有互斥量和条件变量，所以独立的变量就不需要了①，并且push()不需要外部同步②。当然，wait_and_pop()还要兼顾条件变量的等待③。</p>
+<p>另一个wait_and_pop()的重载写起来就很琐碎，剩下的函数就像从代码3.5实现的栈中粘过来一样。</p>
+<p>代码4.5 使用条件变量的线程安全队列(完整版)</p>
+<pre><code class="language-c++">#include &lt;queue&gt;
+#include &lt;memory&gt;
+#include &lt;mutex&gt;
+#include &lt;condition_variable&gt;
+
+template&lt;typename T&gt;
+class threadsafe_queue
+{
+private:
+  mutable std::mutex mut;  // 1 互斥量必须是可变的 
+  std::queue&lt;T&gt; data_queue;
+  std::condition_variable data_cond;
+public:
+  threadsafe_queue()
+  {}
+  threadsafe_queue(threadsafe_queue const&amp; other)
+  {
+    std::lock_guard&lt;std::mutex&gt; lk(other.mut);
+    data_queue=other.data_queue;
+  }
+
+  void push(T new_value)
+  {
+    std::lock_guard&lt;std::mutex&gt; lk(mut);
+    data_queue.push(new_value);
+    data_cond.notify_one();
+  }
+
+  void wait_and_pop(T&amp; value)
+  {
+    std::unique_lock&lt;std::mutex&gt; lk(mut);
+    data_cond.wait(lk,[this]{return !data_queue.empty();});
+    value=data_queue.front();
+    data_queue.pop();
+  }
+
+  std::shared_ptr&lt;T&gt; wait_and_pop()
+  {
+    std::unique_lock&lt;std::mutex&gt; lk(mut);
+    data_cond.wait(lk,[this]{return !data_queue.empty();});
+    std::shared_ptr&lt;T&gt; res(std::make_shared&lt;T&gt;(data_queue.front()));
+    data_queue.pop();
+    return res;
+  }
+
+  bool try_pop(T&amp; value)
+  {
+    std::lock_guard&lt;std::mutex&gt; lk(mut);
+    if(data_queue.empty())
+      return false;
+    value=data_queue.front();
+    data_queue.pop();
+    return true;
+  }
+
+  std::shared_ptr&lt;T&gt; try_pop()
+  {
+    std::lock_guard&lt;std::mutex&gt; lk(mut);
+    if(data_queue.empty())
+      return std::shared_ptr&lt;T&gt;();
+    std::shared_ptr&lt;T&gt; res(std::make_shared&lt;T&gt;(data_queue.front()));
+    data_queue.pop();
+    return res;
+  }
+
+  bool empty() const
+  {
+    std::lock_guard&lt;std::mutex&gt; lk(mut);
+    return data_queue.empty();
+  }
+};
+</code></pre>
+<p>empty()是一个const成员函数，并且传入拷贝构造函数的other形参是一个const引用。因为其他线程可能有非const引用对象，并调用变种成员函数，所以这里有必要对互斥量上锁。又因为锁住互斥量是个可变操作，所以互斥量成员必须为mutable①才能在empty()和拷贝构造函数中进行上锁。</p>
+<p>条件变量在多个线程等待同一个事件时也很有用。当线程用来分解工作负载，并且只有一个线程可以对通知做出反应时，与代码4.1中结构完全相同。当数据准备完成时，调用notify_one()将会唤醒一个正在wait()的线程，检查条件和wait()函数的返回状态(因为仅是向data_queue添加了一个数据项)。 这里不保证线程一定会被通知到，即使只有一个等待线程收到通知，其他处理线程也有可能因为在处理数据，而忽略了这个通知。</p>
+<p>另一种可能是，很多线程等待同一事件。对于通知，都需要做出回应。这会发生在共享数据初始化的时候，当处理线程使用同一数据时，就要等待数据被初始化，或等待共享数据的更新，比如：<em>周期性初始化</em>(periodic reinitialization)。这些情况下，线程准备好数据时，就会通过条件变量调用notify_all()，而非调用notify_one()。顾名思义，这就是全部线程在都去执行wait()(检查他们等待的条件是否满足)的原因。</p>
+<p>当条件为true时，等待线程只等待一次，就不会再等待条件变量了，所以尤其是在等待一组可用的数据块时，一个条件变量并非同步操作最好的选择。</p>
+<p>接下来就来了解一下future，对于条件变量的补足。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../../content/chapter4/4.0-chinese.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../../content/chapter4/4.2-chinese.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../../content/chapter4/4.0-chinese.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../../content/chapter4/4.2-chinese.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>

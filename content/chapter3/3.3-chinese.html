@@ -1,0 +1,342 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>3.3 保护共享数据的方式 - C++ConcurrencyInAction</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../../favicon.svg">
+                        <link rel="shortcut icon" href="../../favicon.png">
+                <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+                <link rel="stylesheet" href="../../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../content/Praise_for_the_first_edition.html"><strong aria-hidden="true">1.</strong> 第一版的赞许</a></li><li class="chapter-item expanded "><a href="../../content/preface-chinese.html"><strong aria-hidden="true">2.</strong> 前言</a></li><li class="chapter-item expanded "><a href="../../content/acknowledgments-chinese.html"><strong aria-hidden="true">3.</strong> 感谢</a></li><li class="chapter-item expanded "><a href="../../content/about_this_book-chinese.html"><strong aria-hidden="true">4.</strong> 关于本书</a></li><li class="chapter-item expanded "><a href="../../content/about_the_author-chinese.html"><strong aria-hidden="true">5.</strong> 关于作者</a></li><li class="chapter-item expanded "><a href="../../content/about_cover_illustration-chinese.html"><strong aria-hidden="true">6.</strong> 关于封面</a></li><li class="chapter-item expanded "><a href="../../content/chapter1/1.0-chinese.html"><strong aria-hidden="true">7.</strong> 第1章 你好，并发世界</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter1/1.1-chinese.html"><strong aria-hidden="true">7.1.</strong> 1.1 何谓并发</a></li><li class="chapter-item expanded "><a href="../../content/chapter1/1.2-chinese.html"><strong aria-hidden="true">7.2.</strong> 1.2 为什么使用并发</a></li><li class="chapter-item expanded "><a href="../../content/chapter1/1.3-chinese.html"><strong aria-hidden="true">7.3.</strong> 1.3 并发和多线程</a></li><li class="chapter-item expanded "><a href="../../content/chapter1/1.4-chinese.html"><strong aria-hidden="true">7.4.</strong> 1.4 开始入门</a></li><li class="chapter-item expanded "><a href="../../content/chapter1/1.5-chinese.html"><strong aria-hidden="true">7.5.</strong> 1.5 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter2/2.0-chinese.html"><strong aria-hidden="true">8.</strong> 第2章 线程管理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter2/2.1-chinese.html"><strong aria-hidden="true">8.1.</strong> 2.1 线程的基本操作</a></li><li class="chapter-item expanded "><a href="../../content/chapter2/2.2-chinese.html"><strong aria-hidden="true">8.2.</strong> 2.2 传递参数</a></li><li class="chapter-item expanded "><a href="../../content/chapter2/2.3-chinese.html"><strong aria-hidden="true">8.3.</strong> 2.3 转移所有权</a></li><li class="chapter-item expanded "><a href="../../content/chapter2/2.4-chinese.html"><strong aria-hidden="true">8.4.</strong> 2.4 确定线程数量</a></li><li class="chapter-item expanded "><a href="../../content/chapter2/2.5-chinese.html"><strong aria-hidden="true">8.5.</strong> 2.5 线程标识</a></li><li class="chapter-item expanded "><a href="../../content/chapter2/2.6-chinese.html"><strong aria-hidden="true">8.6.</strong> 2.6 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter3/3.0-chinese.html"><strong aria-hidden="true">9.</strong> 第3章 共享数据</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter3/3.1-chinese.html"><strong aria-hidden="true">9.1.</strong> 3.1 共享数据的问题</a></li><li class="chapter-item expanded "><a href="../../content/chapter3/3.2-chinese.html"><strong aria-hidden="true">9.2.</strong> 3.2 使用互斥量</a></li><li class="chapter-item expanded "><a href="../../content/chapter3/3.3-chinese.html" class="active"><strong aria-hidden="true">9.3.</strong> 3.3 保护共享数据的方式</a></li><li class="chapter-item expanded "><a href="../../content/chapter3/3.4-chinese.html"><strong aria-hidden="true">9.4.</strong> 3.4 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter4/4.0-chinese.html"><strong aria-hidden="true">10.</strong> 第4章 同步操作</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter4/4.1-chinese.html"><strong aria-hidden="true">10.1.</strong> 4.1 等待事件或条件</a></li><li class="chapter-item expanded "><a href="../../content/chapter4/4.2-chinese.html"><strong aria-hidden="true">10.2.</strong> 4.2 使用future</a></li><li class="chapter-item expanded "><a href="../../content/chapter4/4.3-chinese.html"><strong aria-hidden="true">10.3.</strong> 4.3 限时等待</a></li><li class="chapter-item expanded "><a href="../../content/chapter4/4.4-chinese.html"><strong aria-hidden="true">10.4.</strong> 4.4 简化代码</a></li><li class="chapter-item expanded "><a href="../../content/chapter4/4.5-chinese.html"><strong aria-hidden="true">10.5.</strong> 4.5 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter5/5.0-chinese.html"><strong aria-hidden="true">11.</strong> 第5章 内存模型和原子操作</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter5/5.1-chinese.html"><strong aria-hidden="true">11.1.</strong> 5.1 内存模型</a></li><li class="chapter-item expanded "><a href="../../content/chapter5/5.2-chinese.html"><strong aria-hidden="true">11.2.</strong> 5.2 原子操作和原子类型</a></li><li class="chapter-item expanded "><a href="../../content/chapter5/5.3-chinese.html"><strong aria-hidden="true">11.3.</strong> 5.3 同步操作和强制排序</a></li><li class="chapter-item expanded "><a href="../../content/chapter5/5.4-chinese.html"><strong aria-hidden="true">11.4.</strong> 5.4 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter6/6.0-chinese.html"><strong aria-hidden="true">12.</strong> 第6章 设计基于锁的并发数据结构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter6/6.1-chinese.html"><strong aria-hidden="true">12.1.</strong> 6.1 并发设计的意义</a></li><li class="chapter-item expanded "><a href="../../content/chapter6/6.2-chinese.html"><strong aria-hidden="true">12.2.</strong> 6.2 基于锁的并发数据结构</a></li><li class="chapter-item expanded "><a href="../../content/chapter6/6.3-chinese.html"><strong aria-hidden="true">12.3.</strong> 6.3 设计更加复杂的数据结构</a></li><li class="chapter-item expanded "><a href="../../content/chapter6/6.4-chinese.html"><strong aria-hidden="true">12.4.</strong> 6.4 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter7/7.0-chinese.html"><strong aria-hidden="true">13.</strong> 第7章 设计无锁的并发数据结构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter7/7.1-chinese.html"><strong aria-hidden="true">13.1.</strong> 7.1 定义和意义</a></li><li class="chapter-item expanded "><a href="../../content/chapter7/7.2-chinese.html"><strong aria-hidden="true">13.2.</strong> 7.2 无锁数据结构的例子</a></li><li class="chapter-item expanded "><a href="../../content/chapter7/7.3-chinese.html"><strong aria-hidden="true">13.3.</strong> 7.3 设计无锁数据结构的指导建议</a></li><li class="chapter-item expanded "><a href="../../content/chapter7/7.4-chinese.html"><strong aria-hidden="true">13.4.</strong> 7.4 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter8/8.0-chinese.html"><strong aria-hidden="true">14.</strong> 第8章 并发设计</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter8/8.1-chinese.html"><strong aria-hidden="true">14.1.</strong> 8.1 线程间划分工作</a></li><li class="chapter-item expanded "><a href="../../content/chapter8/8.2-chinese.html"><strong aria-hidden="true">14.2.</strong> 8.2 并发代码的性能</a></li><li class="chapter-item expanded "><a href="../../content/chapter8/8.3-chinese.html"><strong aria-hidden="true">14.3.</strong> 8.3 为多线程性能设计数据结构</a></li><li class="chapter-item expanded "><a href="../../content/chapter8/8.4-chinese.html"><strong aria-hidden="true">14.4.</strong> 8.4 设计并发代码的注意事项</a></li><li class="chapter-item expanded "><a href="../../content/chapter8/8.5-chinese.html"><strong aria-hidden="true">14.5.</strong> 8.5 在实践中设计并发代码</a></li><li class="chapter-item expanded "><a href="../../content/chapter8/8.6-chinese.html"><strong aria-hidden="true">14.6.</strong> 8.6 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter9/9.0-chinese.html"><strong aria-hidden="true">15.</strong> 第9章 高级线程管理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter9/9.1-chinese.html"><strong aria-hidden="true">15.1.</strong> 9.1 线程池</a></li><li class="chapter-item expanded "><a href="../../content/chapter9/9.2-chinese.html"><strong aria-hidden="true">15.2.</strong> 9.2 中断线程</a></li><li class="chapter-item expanded "><a href="../../content/chapter9/9.3-chinese.html"><strong aria-hidden="true">15.3.</strong> 9.3 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter10/10.0-chinese.html"><strong aria-hidden="true">16.</strong> 第10章 并行算法</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter10/10.1-chinese.html"><strong aria-hidden="true">16.1.</strong> 10.1 并行化标准库算法</a></li><li class="chapter-item expanded "><a href="../../content/chapter10/10.2-chinese.html"><strong aria-hidden="true">16.2.</strong> 10.2 执行策略</a></li><li class="chapter-item expanded "><a href="../../content/chapter10/10.3-chinese.html"><strong aria-hidden="true">16.3.</strong> 10.3 C++标准库中的并行算法</a></li><li class="chapter-item expanded "><a href="../../content/chapter10/10.4-chinese.html"><strong aria-hidden="true">16.4.</strong> 10.4 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter11/11.0-chinese.html"><strong aria-hidden="true">17.</strong> 第11章 测试和调试多线程应用</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter11/11.1-chinese.html"><strong aria-hidden="true">17.1.</strong> 11.1 与并发相关的Bug</a></li><li class="chapter-item expanded "><a href="../../content/chapter11/11.2-chinese.html"><strong aria-hidden="true">17.2.</strong> 11.2 定位并发Bug的技巧</a></li><li class="chapter-item expanded "><a href="../../content/chapter11/11.3-chinese.html"><strong aria-hidden="true">17.3.</strong> 11.3 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.0-chinese.html"><strong aria-hidden="true">18.</strong> 附录A C++11特性简明参考(部分)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/appendix_A/A.1-chinese.html"><strong aria-hidden="true">18.1.</strong> A.1 右值引用</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.2-chinese.html"><strong aria-hidden="true">18.2.</strong> A.2 删除函数</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.3-chinese.html"><strong aria-hidden="true">18.3.</strong> A.3 默认函数</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.4-chinese.html"><strong aria-hidden="true">18.4.</strong> A.4 常量表达式函数</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.5-chinese.html"><strong aria-hidden="true">18.5.</strong> A.5 Lambda函数</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.6-chinese.html"><strong aria-hidden="true">18.6.</strong> A.6 变参模板</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.7-chinese.html"><strong aria-hidden="true">18.7.</strong> A.7 自动推导变量类型</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.8-chinese.html"><strong aria-hidden="true">18.8.</strong> A.8 线程本地变量</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.9-chinese.html"><strong aria-hidden="true">18.9.</strong> A.9 模板类参数的推导</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.10-chinese.html"><strong aria-hidden="true">18.10.</strong> A.10 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/appendix_B/B.0-chinese.html"><strong aria-hidden="true">19.</strong> 附录B 并发库简要对比</a></li><li class="chapter-item expanded "><a href="../../content/appendix_C/C.0-chinese.html"><strong aria-hidden="true">20.</strong> 附录C 消息传递框架与完整的ATM示例</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.0-chinese.html"><strong aria-hidden="true">21.</strong> 附录D C++线程类库参考</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/appendix_D/D.1-chinese.html"><strong aria-hidden="true">21.1.</strong> D.1 chrono头文件</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.2-chinese.html"><strong aria-hidden="true">21.2.</strong> D.2 condition_variable头文件</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.3-chinese.html"><strong aria-hidden="true">21.3.</strong> D.3 atomic头文件</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.4-chinese.html"><strong aria-hidden="true">21.4.</strong> D.4 future头文件</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.5-chinese.html"><strong aria-hidden="true">21.5.</strong> D.5 mutex头文件</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.6-chinese.html"><strong aria-hidden="true">21.6.</strong> D.6 ratio头文件</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.7-chinese.html"><strong aria-hidden="true">21.7.</strong> D.7 thread头文件</a></li></ol></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">C++ConcurrencyInAction</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="33-保护共享数据的方式"><a class="header" href="#33-保护共享数据的方式">3.3 保护共享数据的方式</a></h1>
+<p>互斥量是一种通用的机制，但其并非保护共享数据的唯一方式。有很多方式可以在特定情况下，对共享数据提供合适的保护。</p>
+<p>一个特别极端的情况就是，共享数据在并发访问和初始化时(都需要保护)，需要进行隐式同步。这可能是因为数据作为只读方式创建，所以没有同步问题，或者因为必要的保护作为对数据操作的一部分。任何情况下，数据初始化后锁住一个互斥量，纯粹是为了保护其初始化过程，并且会给性能带来不必要的影响。</p>
+<p>出于以上的原因，C++标准提供了一种纯粹保护共享数据初始化过程的机制。</p>
+<h2 id="331-保护共享数据的初始化过程"><a class="header" href="#331-保护共享数据的初始化过程">3.3.1 保护共享数据的初始化过程</a></h2>
+<p>假设有一个共享源，构建代价很昂贵，它可能会打开一个数据库连接或分配出很多的内存。</p>
+<p>延迟初始化(Lazy initialization)在单线程代码很常见——每一个操作都需要先对源进行检查，为了了解数据是否被初始化，然后在其使用前决定，数据是否需要初始化：</p>
+<pre><code class="language-c++">std::shared_ptr&lt;some_resource&gt; resource_ptr;
+void foo()
+{
+  if(!resource_ptr)
+  {
+    resource_ptr.reset(new some_resource);  // 1
+  }
+  resource_ptr-&gt;do_something();
+}
+</code></pre>
+<p>转为多线程代码时，只有①处需要保护，这样共享数据对于并发访问就是安全的。但是下面天真的转换会使得线程资源产生不必要的序列化，为了确定数据源已经初始化，每个线程必须等待互斥量。</p>
+<p>代码3.11 使用延迟初始化(线程安全)的过程</p>
+<pre><code class="language-c++">std::shared_ptr&lt;some_resource&gt; resource_ptr;
+std::mutex resource_mutex;
+
+void foo()
+{
+  std::unique_lock&lt;std::mutex&gt; lk(resource_mutex);  // 所有线程在此序列化 
+  if(!resource_ptr)
+  {
+    resource_ptr.reset(new some_resource);  // 只有初始化过程需要保护 
+  }
+  lk.unlock();
+  resource_ptr-&gt;do_something();
+}
+</code></pre>
+<p>这段代码相当常见了，也足够表现出没必要的线程化问题，很多人能想出更好的一些的办法来做这件事，包括声名狼藉的“双重检查锁模式”：</p>
+<pre><code class="language-c++">void undefined_behaviour_with_double_checked_locking()
+{
+  if(!resource_ptr)  // 1
+  {
+    std::lock_guard&lt;std::mutex&gt; lk(resource_mutex);
+    if(!resource_ptr)  // 2
+    {
+      resource_ptr.reset(new some_resource);  // 3
+    }
+  }
+  resource_ptr-&gt;do_something();  // 4
+}
+</code></pre>
+<p>指针第一次读取数据不需要获取锁①，并且只有在指针为空时才需要获取锁。然后，当获取锁之后，会再检查一次指针② (这就是双重检查的部分)，避免另一线程在第一次检查后再做初始化，并且让当前线程获取锁。</p>
+<p>这个模式为什么声名狼藉呢？因为有潜在的条件竞争。未被锁保护的读取操作①没有与其他线程里被锁保护的写入操作③进行同步，因此就会产生条件竞争，这个条件竞争不仅覆盖指针本身，还会影响到其指向的对象；即使一个线程知道另一个线程完成对指针进行写入，它可能没有看到新创建的some_resource实例，然后调用do_something()④后，得到不正确的结果。这个例子是在一种典型的条件竞争——数据竞争，C++标准中指定为“未定义行为”，这种竞争是可以避免的。阅读第5章时，那里有更多对内存模型的讨论，也包括数据竞争的构成。(译者注：著名的《C++和双重检查锁定模式(DCLP)的风险》可以作为补充材料供大家参考 <a href="https://www.aristeia.com/Papers/DDJ_Jul_Aug_2004_revised.pdf">英文版</a> <a href="http://blog.jobbole.com/86392/">中文版</a>)</p>
+<p>C++标准委员会也认为条件竞争的处理很重要，所以C++标准库提供了<code>std::once_flag</code>和<code>std::call_once</code>来处理这种情况。比起锁住互斥量并显式的检查指针，每个线程只需要使用<code>std::call_once</code>就可以，在<code>std::call_once</code>的结束时，就能安全的知晓指针已经被其他的线程初始化了。使用<code>std::call_once</code>比显式使用互斥量消耗的资源更少，特别是当初始化完成后。下面的例子展示了与代码3.11中的同样的操作，这里使用了<code>std::call_once</code>。这种情况下，初始化通过调用函数完成，这样的操作使用类中的函数操作符来实现同样很简单。如同大多数在标准库中的函数一样，或作为函数被调用，或作为参数被传递，<code>std::call_once</code>可以和任何函数或可调用对象一起使用。</p>
+<pre><code class="language-c++">std::shared_ptr&lt;some_resource&gt; resource_ptr;
+std::once_flag resource_flag;  // 1
+
+void init_resource()
+{
+  resource_ptr.reset(new some_resource);
+}
+
+void foo()
+{
+  std::call_once(resource_flag,init_resource);  // 可以完整的进行一次初始化
+  resource_ptr-&gt;do_something();
+}
+</code></pre>
+<p>这个例子中，<code>std::once_flag</code>①和初始化好的数据都是命名空间区域的对象，但<code>std::call_once()</code>可仅作为延迟初始化的类型成员，如同下面的例子一样：</p>
+<p>代码3.12 使用<code>std::call_once</code>作为类成员的延迟初始化(线程安全)</p>
+<pre><code class="language-c++">class X
+{
+private:
+  connection_info connection_details;
+  connection_handle connection;
+  std::once_flag connection_init_flag;
+
+  void open_connection()
+  {
+    connection=connection_manager.open(connection_details);
+  }
+public:
+  X(connection_info const&amp; connection_details_):
+      connection_details(connection_details_)
+  {}
+  void send_data(data_packet const&amp; data)  // 1
+  {
+    std::call_once(connection_init_flag,&amp;X::open_connection,this);  // 2
+    connection.send_data(data);
+  }
+  data_packet receive_data()  // 3
+  {
+    std::call_once(connection_init_flag,&amp;X::open_connection,this);  // 2
+    return connection.receive_data();
+  }
+};
+</code></pre>
+<p>例子中第一次调用send_data()①或receive_data()③的线程完成初始化过程。使用成员函数open_connection()去初始化数据，也需要将this指针传进去。和标准库中的函数一样，接受可调用对象，比如<code>std::thread</code>的构造函数和<code>std::bind()</code>，通过向<code>std::call_once()</code>②传递一个额外的参数来完成这个操作。</p>
+<p>值得注意的是，<code>std::mutex</code>和<code>std::once_flag</code>的实例不能拷贝和移动，需要通过显式定义相应的成员函数，对这些类成员进行操作。</p>
+<p>还有一种初始化过程中潜存着条件竞争：其中一个局部变量为static类型，这种变量的在声明后就已经完成初始化。对于多线程调用的函数，这就意味着这里有条件竞争——抢着去定义这个变量。很多在不支持C++11标准的编译器上，在实践过程中，这样的条件竞争是确实存在的，因为在多线程中，每个线程都认为他们是第一个初始化这个变量线程，或一个线程对变量进行初始化，而另外一个线程要使用这个变量时，初始化过程还没完成。在C++11标准中，这些问题都被解决了：初始化及定义完全在一个线程中发生，并且没有其他线程可在初始化完成前对其进行处理，条件竞争终止于初始化阶段，这样比在之后再去处理好的多。在只需要一个全局实例情况下，这里提供一个<code>std::call_once</code>的替代方案</p>
+<pre><code class="language-c++">class my_class;
+my_class&amp; get_my_class_instance()
+{
+  static my_class instance;  // 线程安全的初始化过程
+  return instance;
+}
+</code></pre>
+<p>多线程可以安全的调用get_my_class_instance()①函数，不用为数据竞争而担心。</p>
+<p>对于很少有更新的数据结构来说，只在初始化时保护数据。大多数情况下，这种数据结构是只读的，并且多线程对其并发的读取也是很愉快的，不过一旦数据结构需要更新就会产生竞争。</p>
+<h2 id="332-保护不常更新的数据结构"><a class="header" href="#332-保护不常更新的数据结构">3.3.2 保护不常更新的数据结构</a></h2>
+<p>试想为了将域名解析为其相关IP地址，在缓存中的存放了一张DNS入口表。通常，给定DNS数目在很长的时间内保持不变。虽然，用户访问不同网站时，新的入口可能会被添加到表中，但是这些数据可能在其生命周期内保持不变。所以定期检查缓存中入口的有效性就变的十分重要。但也需要一次更新，也许这次更新只是对一些细节做了改动。</p>
+<p>虽然更新频度很低，但也有可能发生，并且当缓存多个线程访问时，这个缓存就需要保护更新时状态的状态，也是为了确保每个线程读到都是有效数据。</p>
+<p>没有使用专用数据结构时，这种方式是符合预期的，并为并发更新和读取进行了特别设计(更多的例子在第6和第7章中介绍)。这样的更新要求线程独占数据结构的访问权，直到更新操作完成。当完成更新时，数据结构对于并发多线程的访问又会是安全的。使用<code>std::mutex</code>来保护数据结构，感觉有些反应过度(因为在没有发生修改时，它将削减并发读取数据的可能性)。这里需要另一种不同的互斥量，这种互斥量常被称为“读者-作者锁”，因为其允许两种不同的使用方式：一个“作者”线程独占访问和共享访问，让多个“读者”线程并发访问。</p>
+<p>C++17标准库提供了两种非常好的互斥量——<code>std::shared_mutex</code>和<code>std::shared_timed_mutex</code>。C++14只提供了<code>std::shared_timed_mutex</code>，并且在C++11中并未提供任何互斥量类型。如果还在用支持C++14标准之前的编译器，可以使用Boost库中的互斥量。<code>std::shared_mutex</code>和<code>std::shared_timed_mutex</code>的不同点在于，<code>std::shared_timed_mutex</code>支持更多的操作方式(参考4.3节)，<code>std::shared_mutex</code>有更高的性能优势，但支持的操作较少。</p>
+<p>第8章中会看到，这种锁的也不能包治百病，其性能依赖于参与其中的处理器数量，同样也与读者和作者线程的负载有关。为了确保增加复杂度后还能获得性能收益，目标系统上的代码性能就很重要。</p>
+<p>比起使用<code>std::mutex</code>实例进行同步，不如使用<code>std::shared_mutex</code>来做同步。对于更新操作，可以使用<code>std::lock_guard&lt;std::shared_mutex&gt;</code>和<code>std::unique_lock&lt;std::shared_mutex&gt;</code>上锁。作为<code>std::mutex</code>的替代方案，与<code>std::mutex</code>所做的一样，这就能保证更新线程的独占访问。那些无需修改数据结构的线程，可以使用<code>std::shared_lock&lt;std::shared_mutex&gt;</code>获取访问权。这种RAII类型模板是在C++14中的新特性，这与使用<code>std::unique_lock</code>一样，除了多线程可以同时获取同一个<code>std::shared_mutex</code>的共享锁。唯一的限制：当有线程拥有共享锁时，尝试获取独占锁的线程会被阻塞，直到所有其他线程放弃锁。当任一线程拥有一个独占锁时，其他线程就无法获得共享锁或独占锁，直到第一个线程放弃其拥有的锁。</p>
+<p>如同之前描述的那样，下面的代码清单展示了一个简单的DNS缓存，使用<code>std::map</code>持有缓存数据，使用<code>std::shared_mutex</code>进行保护。</p>
+<p>代码3.13 使用<code>std::shared_mutex</code>对数据结构进行保护</p>
+<pre><code class="language-c++">#include &lt;map&gt;
+#include &lt;string&gt;
+#include &lt;mutex&gt;
+#include &lt;shared_mutex&gt;
+
+class dns_entry;
+
+class dns_cache
+{
+  std::map&lt;std::string,dns_entry&gt; entries;
+  mutable std::shared_mutex entry_mutex;
+public:
+  dns_entry find_entry(std::string const&amp; domain) const
+  {
+    std::shared_lock&lt;std::shared_mutex&gt; lk(entry_mutex);  // 1
+    std::map&lt;std::string,dns_entry&gt;::const_iterator const it=
+       entries.find(domain);
+    return (it==entries.end())?dns_entry():it-&gt;second;
+  }
+  void update_or_add_entry(std::string const&amp; domain,
+                           dns_entry const&amp; dns_details)
+  {
+    std::lock_guard&lt;std::shared_mutex&gt; lk(entry_mutex);  // 2
+    entries[domain]=dns_details;
+  }
+};
+</code></pre>
+<p>代码3.13中，find_entry()使用<code>std::shared_lock&lt;&gt;</code>来保护共享和只读权限①。这就使得多线程可以同时调用find_entry()，且不会出错。另一方面，update_or_add_entry()使用<code>std::lock_guard&lt;&gt;</code>实例，当表格需要更新时②，为其提供独占访问权限。update_or_add_entry()函数调用时，独占锁会阻止其他线程对数据结构进行修改，并且阻止线程调用find_entry()。</p>
+<h2 id="333-嵌套锁"><a class="header" href="#333-嵌套锁">3.3.3 嵌套锁</a></h2>
+<p>线程对已经获取的<code>std::mutex</code>(已经上锁)再次上锁是错误的，尝试这样做会导致未定义行为。在某些情况下，一个线程会尝试在释放一个互斥量前多次获取。因此，C++标准库提供了<code>std::recursive_mutex</code>类。除了可以在同一线程的单个实例上多次上锁，其他功能与<code>std::mutex</code>相同。其他线程对互斥量上锁前，当前线程必须释放拥有的所有锁，所以如果你调用lock()三次，也必须调用unlock()三次。正确使用<code>std::lock_guard&lt;std::recursive_mutex&gt;</code>和<code>std::unique_lock&lt;std::recursive_mutex&gt;</code>可以帮你处理这些问题。</p>
+<p>使用嵌套锁时，要对代码设计进行改动。嵌套锁一般用在可并发访问的类上，所以使用互斥量保护其成员数据。每个公共成员函数都会对互斥量上锁，然后完成对应的操作后再解锁互斥量。不过，有时成员函数会调用另一个成员函数，这种情况下，第二个成员函数也会试图锁住互斥量，这就会导致未定义行为的发生。“变通的”解决方案会将互斥量转为嵌套锁，第二个成员函数就能成功的进行上锁，并且函数能继续执行。</p>
+<p>但是这种方式过于草率和不合理，所以不推荐这样的使用方式。特别是，对应类的不变量通常会被破坏。这意味着，当不变量被破坏时，第二个成员函数还需要继续执行。一个比较好的方式是，从中提取出一个函数作为类的私有成员，这个私有成员函数不会对互斥量进行上锁(调用前必须获得锁)。然后，需要仔细考虑一下，这种情况调用新函数时数据的状态。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../../content/chapter3/3.2-chinese.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../../content/chapter3/3.4-chinese.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../../content/chapter3/3.2-chinese.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../../content/chapter3/3.4-chinese.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>

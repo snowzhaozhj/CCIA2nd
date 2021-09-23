@@ -1,0 +1,933 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>D.4 future头文件 - C++ConcurrencyInAction</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../../favicon.svg">
+                        <link rel="shortcut icon" href="../../favicon.png">
+                <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+                <link rel="stylesheet" href="../../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../content/Praise_for_the_first_edition.html"><strong aria-hidden="true">1.</strong> 第一版的赞许</a></li><li class="chapter-item expanded "><a href="../../content/preface-chinese.html"><strong aria-hidden="true">2.</strong> 前言</a></li><li class="chapter-item expanded "><a href="../../content/acknowledgments-chinese.html"><strong aria-hidden="true">3.</strong> 感谢</a></li><li class="chapter-item expanded "><a href="../../content/about_this_book-chinese.html"><strong aria-hidden="true">4.</strong> 关于本书</a></li><li class="chapter-item expanded "><a href="../../content/about_the_author-chinese.html"><strong aria-hidden="true">5.</strong> 关于作者</a></li><li class="chapter-item expanded "><a href="../../content/about_cover_illustration-chinese.html"><strong aria-hidden="true">6.</strong> 关于封面</a></li><li class="chapter-item expanded "><a href="../../content/chapter1/1.0-chinese.html"><strong aria-hidden="true">7.</strong> 第1章 你好，并发世界</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter1/1.1-chinese.html"><strong aria-hidden="true">7.1.</strong> 1.1 何谓并发</a></li><li class="chapter-item expanded "><a href="../../content/chapter1/1.2-chinese.html"><strong aria-hidden="true">7.2.</strong> 1.2 为什么使用并发</a></li><li class="chapter-item expanded "><a href="../../content/chapter1/1.3-chinese.html"><strong aria-hidden="true">7.3.</strong> 1.3 并发和多线程</a></li><li class="chapter-item expanded "><a href="../../content/chapter1/1.4-chinese.html"><strong aria-hidden="true">7.4.</strong> 1.4 开始入门</a></li><li class="chapter-item expanded "><a href="../../content/chapter1/1.5-chinese.html"><strong aria-hidden="true">7.5.</strong> 1.5 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter2/2.0-chinese.html"><strong aria-hidden="true">8.</strong> 第2章 线程管理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter2/2.1-chinese.html"><strong aria-hidden="true">8.1.</strong> 2.1 线程的基本操作</a></li><li class="chapter-item expanded "><a href="../../content/chapter2/2.2-chinese.html"><strong aria-hidden="true">8.2.</strong> 2.2 传递参数</a></li><li class="chapter-item expanded "><a href="../../content/chapter2/2.3-chinese.html"><strong aria-hidden="true">8.3.</strong> 2.3 转移所有权</a></li><li class="chapter-item expanded "><a href="../../content/chapter2/2.4-chinese.html"><strong aria-hidden="true">8.4.</strong> 2.4 确定线程数量</a></li><li class="chapter-item expanded "><a href="../../content/chapter2/2.5-chinese.html"><strong aria-hidden="true">8.5.</strong> 2.5 线程标识</a></li><li class="chapter-item expanded "><a href="../../content/chapter2/2.6-chinese.html"><strong aria-hidden="true">8.6.</strong> 2.6 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter3/3.0-chinese.html"><strong aria-hidden="true">9.</strong> 第3章 共享数据</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter3/3.1-chinese.html"><strong aria-hidden="true">9.1.</strong> 3.1 共享数据的问题</a></li><li class="chapter-item expanded "><a href="../../content/chapter3/3.2-chinese.html"><strong aria-hidden="true">9.2.</strong> 3.2 使用互斥量</a></li><li class="chapter-item expanded "><a href="../../content/chapter3/3.3-chinese.html"><strong aria-hidden="true">9.3.</strong> 3.3 保护共享数据的方式</a></li><li class="chapter-item expanded "><a href="../../content/chapter3/3.4-chinese.html"><strong aria-hidden="true">9.4.</strong> 3.4 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter4/4.0-chinese.html"><strong aria-hidden="true">10.</strong> 第4章 同步操作</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter4/4.1-chinese.html"><strong aria-hidden="true">10.1.</strong> 4.1 等待事件或条件</a></li><li class="chapter-item expanded "><a href="../../content/chapter4/4.2-chinese.html"><strong aria-hidden="true">10.2.</strong> 4.2 使用future</a></li><li class="chapter-item expanded "><a href="../../content/chapter4/4.3-chinese.html"><strong aria-hidden="true">10.3.</strong> 4.3 限时等待</a></li><li class="chapter-item expanded "><a href="../../content/chapter4/4.4-chinese.html"><strong aria-hidden="true">10.4.</strong> 4.4 简化代码</a></li><li class="chapter-item expanded "><a href="../../content/chapter4/4.5-chinese.html"><strong aria-hidden="true">10.5.</strong> 4.5 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter5/5.0-chinese.html"><strong aria-hidden="true">11.</strong> 第5章 内存模型和原子操作</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter5/5.1-chinese.html"><strong aria-hidden="true">11.1.</strong> 5.1 内存模型</a></li><li class="chapter-item expanded "><a href="../../content/chapter5/5.2-chinese.html"><strong aria-hidden="true">11.2.</strong> 5.2 原子操作和原子类型</a></li><li class="chapter-item expanded "><a href="../../content/chapter5/5.3-chinese.html"><strong aria-hidden="true">11.3.</strong> 5.3 同步操作和强制排序</a></li><li class="chapter-item expanded "><a href="../../content/chapter5/5.4-chinese.html"><strong aria-hidden="true">11.4.</strong> 5.4 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter6/6.0-chinese.html"><strong aria-hidden="true">12.</strong> 第6章 设计基于锁的并发数据结构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter6/6.1-chinese.html"><strong aria-hidden="true">12.1.</strong> 6.1 并发设计的意义</a></li><li class="chapter-item expanded "><a href="../../content/chapter6/6.2-chinese.html"><strong aria-hidden="true">12.2.</strong> 6.2 基于锁的并发数据结构</a></li><li class="chapter-item expanded "><a href="../../content/chapter6/6.3-chinese.html"><strong aria-hidden="true">12.3.</strong> 6.3 设计更加复杂的数据结构</a></li><li class="chapter-item expanded "><a href="../../content/chapter6/6.4-chinese.html"><strong aria-hidden="true">12.4.</strong> 6.4 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter7/7.0-chinese.html"><strong aria-hidden="true">13.</strong> 第7章 设计无锁的并发数据结构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter7/7.1-chinese.html"><strong aria-hidden="true">13.1.</strong> 7.1 定义和意义</a></li><li class="chapter-item expanded "><a href="../../content/chapter7/7.2-chinese.html"><strong aria-hidden="true">13.2.</strong> 7.2 无锁数据结构的例子</a></li><li class="chapter-item expanded "><a href="../../content/chapter7/7.3-chinese.html"><strong aria-hidden="true">13.3.</strong> 7.3 设计无锁数据结构的指导建议</a></li><li class="chapter-item expanded "><a href="../../content/chapter7/7.4-chinese.html"><strong aria-hidden="true">13.4.</strong> 7.4 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter8/8.0-chinese.html"><strong aria-hidden="true">14.</strong> 第8章 并发设计</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter8/8.1-chinese.html"><strong aria-hidden="true">14.1.</strong> 8.1 线程间划分工作</a></li><li class="chapter-item expanded "><a href="../../content/chapter8/8.2-chinese.html"><strong aria-hidden="true">14.2.</strong> 8.2 并发代码的性能</a></li><li class="chapter-item expanded "><a href="../../content/chapter8/8.3-chinese.html"><strong aria-hidden="true">14.3.</strong> 8.3 为多线程性能设计数据结构</a></li><li class="chapter-item expanded "><a href="../../content/chapter8/8.4-chinese.html"><strong aria-hidden="true">14.4.</strong> 8.4 设计并发代码的注意事项</a></li><li class="chapter-item expanded "><a href="../../content/chapter8/8.5-chinese.html"><strong aria-hidden="true">14.5.</strong> 8.5 在实践中设计并发代码</a></li><li class="chapter-item expanded "><a href="../../content/chapter8/8.6-chinese.html"><strong aria-hidden="true">14.6.</strong> 8.6 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter9/9.0-chinese.html"><strong aria-hidden="true">15.</strong> 第9章 高级线程管理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter9/9.1-chinese.html"><strong aria-hidden="true">15.1.</strong> 9.1 线程池</a></li><li class="chapter-item expanded "><a href="../../content/chapter9/9.2-chinese.html"><strong aria-hidden="true">15.2.</strong> 9.2 中断线程</a></li><li class="chapter-item expanded "><a href="../../content/chapter9/9.3-chinese.html"><strong aria-hidden="true">15.3.</strong> 9.3 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter10/10.0-chinese.html"><strong aria-hidden="true">16.</strong> 第10章 并行算法</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter10/10.1-chinese.html"><strong aria-hidden="true">16.1.</strong> 10.1 并行化标准库算法</a></li><li class="chapter-item expanded "><a href="../../content/chapter10/10.2-chinese.html"><strong aria-hidden="true">16.2.</strong> 10.2 执行策略</a></li><li class="chapter-item expanded "><a href="../../content/chapter10/10.3-chinese.html"><strong aria-hidden="true">16.3.</strong> 10.3 C++标准库中的并行算法</a></li><li class="chapter-item expanded "><a href="../../content/chapter10/10.4-chinese.html"><strong aria-hidden="true">16.4.</strong> 10.4 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter11/11.0-chinese.html"><strong aria-hidden="true">17.</strong> 第11章 测试和调试多线程应用</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter11/11.1-chinese.html"><strong aria-hidden="true">17.1.</strong> 11.1 与并发相关的Bug</a></li><li class="chapter-item expanded "><a href="../../content/chapter11/11.2-chinese.html"><strong aria-hidden="true">17.2.</strong> 11.2 定位并发Bug的技巧</a></li><li class="chapter-item expanded "><a href="../../content/chapter11/11.3-chinese.html"><strong aria-hidden="true">17.3.</strong> 11.3 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.0-chinese.html"><strong aria-hidden="true">18.</strong> 附录A C++11特性简明参考(部分)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/appendix_A/A.1-chinese.html"><strong aria-hidden="true">18.1.</strong> A.1 右值引用</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.2-chinese.html"><strong aria-hidden="true">18.2.</strong> A.2 删除函数</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.3-chinese.html"><strong aria-hidden="true">18.3.</strong> A.3 默认函数</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.4-chinese.html"><strong aria-hidden="true">18.4.</strong> A.4 常量表达式函数</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.5-chinese.html"><strong aria-hidden="true">18.5.</strong> A.5 Lambda函数</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.6-chinese.html"><strong aria-hidden="true">18.6.</strong> A.6 变参模板</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.7-chinese.html"><strong aria-hidden="true">18.7.</strong> A.7 自动推导变量类型</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.8-chinese.html"><strong aria-hidden="true">18.8.</strong> A.8 线程本地变量</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.9-chinese.html"><strong aria-hidden="true">18.9.</strong> A.9 模板类参数的推导</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.10-chinese.html"><strong aria-hidden="true">18.10.</strong> A.10 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/appendix_B/B.0-chinese.html"><strong aria-hidden="true">19.</strong> 附录B 并发库简要对比</a></li><li class="chapter-item expanded "><a href="../../content/appendix_C/C.0-chinese.html"><strong aria-hidden="true">20.</strong> 附录C 消息传递框架与完整的ATM示例</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.0-chinese.html"><strong aria-hidden="true">21.</strong> 附录D C++线程类库参考</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/appendix_D/D.1-chinese.html"><strong aria-hidden="true">21.1.</strong> D.1 chrono头文件</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.2-chinese.html"><strong aria-hidden="true">21.2.</strong> D.2 condition_variable头文件</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.3-chinese.html"><strong aria-hidden="true">21.3.</strong> D.3 atomic头文件</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.4-chinese.html" class="active"><strong aria-hidden="true">21.4.</strong> D.4 future头文件</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.5-chinese.html"><strong aria-hidden="true">21.5.</strong> D.5 mutex头文件</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.6-chinese.html"><strong aria-hidden="true">21.6.</strong> D.6 ratio头文件</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.7-chinese.html"><strong aria-hidden="true">21.7.</strong> D.7 thread头文件</a></li></ol></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">C++ConcurrencyInAction</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="d4-future头文件"><a class="header" href="#d4-future头文件">D.4 &lt;future&gt;头文件</a></h1>
+<p><code>&lt;future&gt;</code>头文件提供处理异步结果(在其他线程上执行额结果)的工具。</p>
+<p><strong>头文件内容</strong></p>
+<pre><code>namespace std
+{
+  enum class future_status {
+      ready, timeout, deferred };
+
+  enum class future_errc
+  {
+    broken_promise,
+    future_already_retrieved,
+    promise_already_satisfied,
+    no_state
+  };
+
+  class future_error;
+
+  const error_category&amp; future_category();
+
+  error_code make_error_code(future_errc e);
+  error_condition make_error_condition(future_errc e);
+
+  template&lt;typename ResultType&gt;
+  class future;
+
+  template&lt;typename ResultType&gt;
+  class shared_future;
+
+  template&lt;typename ResultType&gt;
+  class promise;
+
+  template&lt;typename FunctionSignature&gt;
+  class packaged_task; // no definition provided
+
+  template&lt;typename ResultType,typename ... Args&gt;
+  class packaged_task&lt;ResultType (Args...)&gt;;
+
+  enum class launch {
+    async, deferred
+  };
+
+  template&lt;typename FunctionType,typename ... Args&gt;
+  future&lt;result_of&lt;FunctionType(Args...)&gt;::type&gt;
+  async(FunctionType&amp;&amp; func,Args&amp;&amp; ... args);
+
+  template&lt;typename FunctionType,typename ... Args&gt;
+  future&lt;result_of&lt;FunctionType(Args...)&gt;::type&gt;
+  async(std::launch policy,FunctionType&amp;&amp; func,Args&amp;&amp; ... args);
+}
+</code></pre>
+<h2 id="d41-stdfuture类型模板"><a class="header" href="#d41-stdfuture类型模板">D.4.1 std::future类型模板</a></h2>
+<p><code>std::future</code>类型模板是为了等待其他线程上的异步结果。其和<code>std::promise</code>，<code>std::packaged_task</code>类型模板，还有<code>std::async</code>函数模板，都是为异步结果准备的工具。只有<code>std::future</code>实例可以在任意时间引用异步结果。</p>
+<p><code>std::future</code>实例是MoveConstructible(移动构造)和MoveAssignable(移动赋值)，不过不能CopyConstructible(拷贝构造)和CopyAssignable(拷贝赋值)。</p>
+<p><strong>类型声明</strong></p>
+<pre><code>template&lt;typename ResultType&gt;
+class future
+{
+public:
+  future() noexcept;
+  future(future&amp;&amp;) noexcept;
+  future&amp; operator=(future&amp;&amp;) noexcept;
+  ~future();
+  
+  future(future const&amp;) = delete;
+  future&amp; operator=(future const&amp;) = delete;
+
+  shared_future&lt;ResultType&gt; share();
+
+  bool valid() const noexcept;
+  
+  see description get();
+ 
+  void wait();
+
+  template&lt;typename Rep,typename Period&gt;
+  future_status wait_for(
+      std::chrono::duration&lt;Rep,Period&gt; const&amp; relative_time);
+
+  template&lt;typename Clock,typename Duration&gt;
+  future_status wait_until(
+      std::chrono::time_point&lt;Clock,Duration&gt; const&amp; absolute_time);
+};
+</code></pre>
+<h3 id="stdfuture-默认构造函数"><a class="header" href="#stdfuture-默认构造函数">std::future 默认构造函数</a></h3>
+<p>不使用异步结果构造一个<code>std::future</code>对象。</p>
+<p><strong>声明</strong></p>
+<pre><code>future() noexcept;
+</code></pre>
+<p><strong>效果</strong>
+构造一个新的<code>std::future</code>实例。</p>
+<p><strong>后置条件</strong>
+valid()返回false。</p>
+<p><strong>抛出</strong>
+无</p>
+<h3 id="stdfuture-移动构造函数"><a class="header" href="#stdfuture-移动构造函数">std::future 移动构造函数</a></h3>
+<p>使用另外一个对象，构造一个<code>std::future</code>对象，将相关异步结果的所有权转移给新<code>std::future</code>对象。</p>
+<p><strong>声明</strong></p>
+<pre><code>future(future&amp;&amp; other) noexcept;
+</code></pre>
+<p><strong>效果</strong>
+使用已有对象构造一个新的<code>std::future</code>对象。</p>
+<p><strong>后置条件</strong>
+已有对象中的异步结果，将于新的对象相关联。然后，解除已有对象和异步之间的关系。<code>this-&gt;valid()</code>返回的结果与之前已有对象<code>other.valid()</code>返回的结果相同。在调用该构造函数后，<code>other.valid()</code>将返回false。</p>
+<p><strong>抛出</strong>
+无</p>
+<h3 id="stdfuture-移动赋值操作"><a class="header" href="#stdfuture-移动赋值操作">std::future 移动赋值操作</a></h3>
+<p>将已有<code>std::future</code>对象中异步结果的所有权，转移到另一对象当中。</p>
+<p><strong>声明</strong></p>
+<pre><code>future(future&amp;&amp; other) noexcept;
+</code></pre>
+<p><strong>效果</strong>
+在两个<code>std::future</code>实例中转移异步结果的状态。</p>
+<p><strong>后置条件</strong>
+当执行完赋值操作后，<code>*this.other</code>就与异步结果没有关系了。异步状态(如果有的话)在释放后与<code>*this</code>相关，并且在最后一次引用后，销毁该状态。<code>this-&gt;valid()</code>返回的结果与之前已有对象<code>other.valid()</code>返回的结果相同。在调用该构造函数后，<code>other.valid()</code>将返回false。</p>
+<p><strong>抛出</strong>
+无</p>
+<h3 id="stdfuture-析构函数"><a class="header" href="#stdfuture-析构函数">std::future 析构函数</a></h3>
+<p>销毁一个<code>std::future</code>对象。</p>
+<p><strong>声明</strong></p>
+<pre><code>~future();
+</code></pre>
+<p><strong>效果</strong>
+销毁<code>*this</code>。如果这是最后一次引用与<code>*this</code>相关的异步结果，之后就会将该异步结果销毁。</p>
+<p><strong>抛出</strong>
+无</p>
+<h3 id="stdfutureshare-成员函数"><a class="header" href="#stdfutureshare-成员函数">std::future::share 成员函数</a></h3>
+<p>构造一个新<code>std::shared_future</code>实例，并且将<code>*this</code>异步结果的所有权转移到新的<code>std::shared_future</code>实例中。</p>
+<p><strong>声明</strong></p>
+<pre><code>shared_future&lt;ResultType&gt; share();
+</code></pre>
+<p><strong>效果</strong>
+如同 shared_future<ResultType>(std::move(*this))。</p>
+<p><strong>后置条件</strong>
+当调用share()成员函数，与<code>*this</code>相关的异步结果将与新构造的<code>std::shared_future</code>实例相关。<code>this-&gt;valid()</code>将返回false。</p>
+<p><strong>抛出</strong>
+无</p>
+<h3 id="stdfuturevalid-成员函数"><a class="header" href="#stdfuturevalid-成员函数">std::future::valid 成员函数</a></h3>
+<p>检查<code>std::future</code>实例是否与一个异步结果相关联。</p>
+<p><strong>声明</strong></p>
+<pre><code>bool valid() const noexcept;
+</code></pre>
+<p><strong>返回</strong>
+当与异步结果相关时，返回true，否则返回false。</p>
+<p><strong>抛出</strong>
+无</p>
+<h3 id="stdfuturewait-成员函数"><a class="header" href="#stdfuturewait-成员函数">std::future::wait 成员函数</a></h3>
+<p>如果与<code>*this</code>相关的状态包含延迟函数，将调用该函数。否则，会等待<code>std::future</code>实例中的异步结果准备就绪。</p>
+<p><strong>声明</strong></p>
+<pre><code>void wait();
+</code></pre>
+<p><strong>先决条件</strong>
+<code>this-&gt;valid()</code>将会返回true。</p>
+<p><strong>效果</strong>
+当相关状态包含延迟函数，调用延迟函数，并保存返回的结果，或将抛出的异常保存成为异步结果。否则，会阻塞到<code>*this</code>准备就绪。</p>
+<p><strong>抛出</strong>
+无</p>
+<h3 id="stdfuturewait_for-成员函数"><a class="header" href="#stdfuturewait_for-成员函数">std::future::wait_for 成员函数</a></h3>
+<p>等待<code>std::future</code>实例上相关异步结果准备就绪，或超过某个给定的时间。</p>
+<p><strong>声明</strong></p>
+<pre><code>template&lt;typename Rep,typename Period&gt;
+future_status wait_for(
+    std::chrono::duration&lt;Rep,Period&gt; const&amp; relative_time);
+</code></pre>
+<p><strong>先决条件</strong>
+<code>this-&gt;valid()</code>将会返回true。</p>
+<p><strong>效果</strong>
+如果与<code>*this</code>相关的异步结果包含一个<code>std::async</code>调用的延迟函数(还未执行)，那么就不阻塞立即返回。否则将阻塞实例，直到与<code>*this</code>相关异步结果准备就绪，或超过给定的relative_time时长。</p>
+<p><strong>返回</strong>
+当与<code>*this</code>相关的异步结果包含一个<code>std::async</code>调用的延迟函数(还未执行)，返回<code>std::future_status::deferred</code>；当与<code>*this</code>相关的异步结果准备就绪，返回<code>std::future_status::ready</code>；当给定时间超过relative_time时，返回<code>std::future_status::timeout</code>。</p>
+<p><strong>NOTE</strong>:线程阻塞的时间可能超多给定的时长。时长尽可能由一个稳定的时钟决定。</p>
+<p><strong>抛出</strong>
+无</p>
+<h3 id="stdfuturewait_until-成员函数"><a class="header" href="#stdfuturewait_until-成员函数">std::future::wait_until 成员函数</a></h3>
+<p>等待<code>std::future</code>实例上相关异步结果准备就绪，或超过某个给定的时间。</p>
+<p><strong>声明</strong></p>
+<pre><code>template&lt;typename Clock,typename Duration&gt;
+future_status wait_until(
+  std::chrono::time_point&lt;Clock,Duration&gt; const&amp; absolute_time);
+</code></pre>
+<p><strong>先决条件</strong>
+this-&gt;valid()将返回true。</p>
+<p><strong>效果</strong>
+如果与<code>*this</code>相关的异步结果包含一个<code>std::async</code>调用的延迟函数(还未执行)，那么就不阻塞立即返回。否则将阻塞实例，直到与<code>*this</code>相关异步结果准备就绪，或<code>Clock::now()</code>返回的时间大于等于absolute_time。</p>
+<p><strong>返回</strong>
+当与<code>*this</code>相关的异步结果包含一个<code>std::async</code>调用的延迟函数(还未执行)，返回<code>std::future_status::deferred</code>；当与<code>*this</code>相关的异步结果准备就绪，返回<code>std::future_status::ready</code>；<code>Clock::now()</code>返回的时间大于等于absolute_time，返回<code>std::future_status::timeout</code>。</p>
+<p><strong>NOTE</strong>:这里不保证调用线程会被阻塞多久，只有函数返回<code>std::future_status::timeout</code>，然后<code>Clock::now()</code>返回的时间大于等于absolute_time的时候，线程才会解除阻塞。</p>
+<p><strong>抛出</strong>
+无</p>
+<h3 id="stdfutureget-成员函数"><a class="header" href="#stdfutureget-成员函数">std::future::get 成员函数</a></h3>
+<p>当相关状态包含一个<code>std::async</code>调用的延迟函数，调用该延迟函数，并返回结果；否则，等待与<code>std::future</code>实例相关的异步结果准备就绪，之后返回存储的值或异常。</p>
+<p><strong>声明</strong></p>
+<pre><code>void future&lt;void&gt;::get();
+R&amp; future&lt;R&amp;&gt;::get();
+R future&lt;R&gt;::get();
+</code></pre>
+<p><strong>先决条件</strong>
+this-&gt;valid()将返回true。</p>
+<p><strong>效果</strong>
+如果*this相关状态包含一个延期函数，那么调用这个函数并返回结果，或将抛出的异常进行传播。</p>
+<p>否则，线程就要被阻塞，直到与*this相关的异步结果就绪。当结果存储了一个异常，那么就就会将存储异常抛出。否则，将会返回存储值。</p>
+<p><strong>返回</strong>
+当相关状态包含一个延期函数，那么这个延期函数的结果将被返回。否则，当ResultType为void时，就会按照常规调用返回。如果ResultType是R&amp;(R类型的引用)，存储的引用值将会被返回。否则，存储的值将会返回。</p>
+<p><strong>抛出</strong>
+异常由延期函数，或存储在异步结果中的异常(如果有的话)抛出。</p>
+<p><strong>后置条件</strong></p>
+<pre><code>this-&gt;valid()==false
+</code></pre>
+<h2 id="d42-stdshared_future类型模板"><a class="header" href="#d42-stdshared_future类型模板">D.4.2 std::shared_future类型模板</a></h2>
+<p><code>std::shared_future</code>类型模板是为了等待其他线程上的异步结果。其和<code>std::promise</code>，<code>std::packaged_task</code>类型模板，还有<code>std::async</code>函数模板，都是为异步结果准备的工具。多个<code>std::shared_future</code>实例可以引用同一个异步结果。</p>
+<p><code>std::shared_future</code>实例是CopyConstructible(拷贝构造)和CopyAssignable(拷贝赋值)。你也可以同ResultType的<code>std::future</code>类型对象，移动构造一个<code>std::shared_future</code>类型对象。</p>
+<p>访问给定<code>std::shared_future</code>实例是非同步的。因此，当有多个线程访问同一个<code>std::shared_future</code>实例，且无任何外围同步操作时，这样的访问是不安全的。不过访问关联状态时是同步的，所以多个线程访问多个独立的<code>std::shared_future</code>实例，且没有外围同步操作的时候，是安全的。</p>
+<p><strong>类型定义</strong></p>
+<pre><code>template&lt;typename ResultType&gt;
+class shared_future
+{
+public:
+  shared_future() noexcept;
+  shared_future(future&lt;ResultType&gt;&amp;&amp;) noexcept;
+  
+  shared_future(shared_future&amp;&amp;) noexcept;
+  shared_future(shared_future const&amp;);
+  shared_future&amp; operator=(shared_future const&amp;);
+  shared_future&amp; operator=(shared_future&amp;&amp;) noexcept;
+  ~shared_future();
+
+  bool valid() const noexcept;
+
+  see description get() const;
+
+  void wait() const;
+
+  template&lt;typename Rep,typename Period&gt;
+  future_status wait_for(
+     std::chrono::duration&lt;Rep,Period&gt; const&amp; relative_time) const;
+
+  template&lt;typename Clock,typename Duration&gt;
+  future_status wait_until(
+     std::chrono::time_point&lt;Clock,Duration&gt; const&amp; absolute_time)
+    const;
+};
+</code></pre>
+<h3 id="stdshared_future-默认构造函数"><a class="header" href="#stdshared_future-默认构造函数">std::shared_future 默认构造函数</a></h3>
+<p>不使用关联异步结果，构造一个<code>std::shared_future</code>对象。</p>
+<p><strong>声明</strong></p>
+<pre><code>shared_future() noexcept;
+</code></pre>
+<p><strong>效果</strong>
+构造一个新的<code>std::shared_future</code>实例。</p>
+<p><strong>后置条件</strong>
+当新实例构建完成后，调用valid()将返回false。</p>
+<p><strong>抛出</strong>
+无</p>
+<h3 id="stdshared_future-移动构造函数"><a class="header" href="#stdshared_future-移动构造函数">std::shared_future 移动构造函数</a></h3>
+<p>以一个已创建<code>std::shared_future</code>对象为准，构造<code>std::shared_future</code>实例，并将使用<code>std::shared_future</code>对象关联的异步结果的所有权转移到新的实例中。</p>
+<p><strong>声明</strong></p>
+<pre><code>shared_future(shared_future&amp;&amp; other) noexcept;
+</code></pre>
+<p><strong>效果</strong>
+构造一个新<code>std::shared_future</code>实例。</p>
+<p><strong>后置条件</strong>
+将other对象中关联异步结果的所有权转移到新对象中，这样other对象就没有与之相关联的异步结果了。</p>
+<p><strong>抛出</strong>
+无</p>
+<h3 id="stdshared_future-移动对应stdfuture对象的构造函数"><a class="header" href="#stdshared_future-移动对应stdfuture对象的构造函数">std::shared_future 移动对应std::future对象的构造函数</a></h3>
+<p>以一个已创建<code>std::future</code>对象为准，构造<code>std::shared_future</code>实例，并将使用<code>std::shared_future</code>对象关联的异步结果的所有权转移到新的实例中。</p>
+<p><strong>声明</strong></p>
+<pre><code>shared_future(std::future&lt;ResultType&gt;&amp;&amp; other) noexcept;
+</code></pre>
+<p><strong>效果</strong>
+构造一个<code>std::shared_future</code>对象。</p>
+<p><strong>后置条件</strong>
+将other对象中关联异步结果的所有权转移到新对象中，这样other对象就没有与之相关联的异步结果了。</p>
+<p><strong>抛出</strong>
+无</p>
+<h3 id="stdshared_future-拷贝构造函数"><a class="header" href="#stdshared_future-拷贝构造函数">std::shared_future 拷贝构造函数</a></h3>
+<p>以一个已创建<code>std::future</code>对象为准，构造<code>std::shared_future</code>实例，并将使用<code>std::shared_future</code>对象关联的异步结果(如果有的话)拷贝到新创建对象当中，两个对象共享该异步结果。</p>
+<p><strong>声明</strong></p>
+<pre><code>shared_future(shared_future const&amp; other);
+</code></pre>
+<p><strong>效果</strong>
+构造一个<code>std::shared_future</code>对象。</p>
+<p><strong>后置条件</strong>
+将other对象中关联异步结果拷贝到新对象中，与other共享关联的异步结果。</p>
+<p><strong>抛出</strong>
+无</p>
+<h3 id="stdshared_future-析构函数"><a class="header" href="#stdshared_future-析构函数">std::shared_future 析构函数</a></h3>
+<p>销毁一个<code>std::shared_future</code>对象。</p>
+<p><strong>声明</strong></p>
+<pre><code>~shared_future();
+</code></pre>
+<p><strong>效果</strong>
+将<code>*this</code>销毁。如果<code>*this</code>关联的异步结果与<code>std::promise</code>或<code>std::packaged_task</code>不再有关联，那么该函数将会切断<code>std::shared_future</code>实例与异步结果的联系，并销毁异步结果。</p>
+<p><strong>抛出</strong>
+无</p>
+<h3 id="stdshared_futurevalid-成员函数"><a class="header" href="#stdshared_futurevalid-成员函数">std::shared_future::valid 成员函数</a></h3>
+<p>检查<code>std::shared_future</code>实例是否与一个异步结果相关联。</p>
+<p><strong>声明</strong></p>
+<pre><code>bool valid() const noexcept;
+</code></pre>
+<p><strong>返回</strong>
+当与异步结果相关时，返回true，否则返回false。</p>
+<p><strong>抛出</strong>
+无</p>
+<h3 id="stdshared_futurewait-成员函数"><a class="header" href="#stdshared_futurewait-成员函数">std::shared_future::wait 成员函数</a></h3>
+<p>当*this关联状态包含一个延期函数，那么调用这个函数。否则，等待直到与<code>std::shared_future</code>实例相关的异步结果就绪为止。</p>
+<p><strong>声明</strong></p>
+<pre><code>void wait() const;
+</code></pre>
+<p><strong>先决条件</strong>
+this-&gt;valid()将返回true。</p>
+<p><strong>效果</strong>
+当有多个线程调用<code>std::shared_future</code>实例上的get()和wait()时，实例会序列化的共享同一关联状态。如果关联状态包括一个延期函数，那么第一个调用get()或wait()时就会调用延期函数，并且存储返回值，或将抛出异常以异步结果的方式保存下来。</p>
+<p><strong>抛出</strong>
+无</p>
+<h3 id="stdshared_futurewait_for-成员函数"><a class="header" href="#stdshared_futurewait_for-成员函数">std::shared_future::wait_for 成员函数</a></h3>
+<p>等待<code>std::shared_future</code>实例上相关异步结果准备就绪，或超过某个给定的时间。</p>
+<p><strong>声明</strong></p>
+<pre><code>template&lt;typename Rep,typename Period&gt;
+future_status wait_for(
+    std::chrono::duration&lt;Rep,Period&gt; const&amp; relative_time) const;
+</code></pre>
+<p><strong>先决条件</strong>
+<code>this-&gt;valid()</code>将会返回true。</p>
+<p><strong>效果</strong>
+如果与<code>*this</code>相关的异步结果包含一个<code>std::async</code>调用的延期函数(还未执行)，那么就不阻塞立即返回。否则将阻塞实例，直到与<code>*this</code>相关异步结果准备就绪，或超过给定的relative_time时长。</p>
+<p><strong>返回</strong>
+当与<code>*this</code>相关的异步结果包含一个<code>std::async</code>调用的延迟函数(还未执行)，返回<code>std::future_status::deferred</code>；当与<code>*this</code>相关的异步结果准备就绪，返回<code>std::future_status::ready</code>；当给定时间超过relative_time时，返回<code>std::future_status::timeout</code>。</p>
+<p><strong>NOTE</strong>:线程阻塞的时间可能超多给定的时长。时长尽可能由一个稳定的时钟决定。</p>
+<p><strong>抛出</strong>
+无</p>
+<h3 id="stdshared_futurewait_until-成员函数"><a class="header" href="#stdshared_futurewait_until-成员函数">std::shared_future::wait_until 成员函数</a></h3>
+<p>等待<code>std::future</code>实例上相关异步结果准备就绪，或超过某个给定的时间。</p>
+<p><strong>声明</strong></p>
+<pre><code>template&lt;typename Clock,typename Duration&gt;
+future_status wait_until(
+  std::chrono::time_point&lt;Clock,Duration&gt; const&amp; absolute_time) const;
+</code></pre>
+<p><strong>先决条件</strong>
+this-&gt;valid()将返回true。</p>
+<p><strong>效果</strong>
+如果与<code>*this</code>相关的异步结果包含一个<code>std::async</code>调用的延迟函数(还未执行)，那么就不阻塞立即返回。否则将阻塞实例，直到与<code>*this</code>相关异步结果准备就绪，或<code>Clock::now()</code>返回的时间大于等于absolute_time。</p>
+<p><strong>返回</strong>
+当与<code>*this</code>相关的异步结果包含一个<code>std::async</code>调用的延迟函数(还未执行)，返回<code>std::future_status::deferred</code>；当与<code>*this</code>相关的异步结果准备就绪，返回<code>std::future_status::ready</code>；<code>Clock::now()</code>返回的时间大于等于absolute_time，返回<code>std::future_status::timeout</code>。</p>
+<p><strong>NOTE</strong>:这里不保证调用线程会被阻塞多久，只有函数返回<code>std::future_status::timeout</code>，然后<code>Clock::now()</code>返回的时间大于等于absolute_time的时候，线程才会解除阻塞。</p>
+<p><strong>抛出</strong>
+无</p>
+<h3 id="stdshared_futureget-成员函数"><a class="header" href="#stdshared_futureget-成员函数">std::shared_future::get 成员函数</a></h3>
+<p>当相关状态包含一个<code>std::async</code>调用的延迟函数，调用该延迟函数，并返回结果；否则，等待与<code>std::shared_future</code>实例相关的异步结果准备就绪，之后返回存储的值或异常。</p>
+<p><strong>声明</strong></p>
+<pre><code>void shared_future&lt;void&gt;::get() const;
+R&amp; shared_future&lt;R&amp;&gt;::get() const;
+R const&amp; shared_future&lt;R&gt;::get() const;
+</code></pre>
+<p><strong>先决条件</strong>
+this-&gt;valid()将返回true。</p>
+<p><strong>效果</strong>
+当有多个线程调用<code>std::shared_future</code>实例上的get()和wait()时，实例会序列化的共享同一关联状态。如果关联状态包括一个延期函数，那么第一个调用get()或wait()时就会调用延期函数，并且存储返回值，或将抛出异常以异步结果的方式保存下来。</p>
+<p>阻塞会知道*this关联的异步结果就绪后解除。当异步结果存储了一个一行，那么就会抛出这个异常。否则，返回存储的值。</p>
+<p><strong>返回</strong>
+当ResultType为void时，就会按照常规调用返回。如果ResultType是R&amp;(R类型的引用)，存储的引用值将会被返回。否则，返回存储值的const引用。</p>
+<p><strong>抛出</strong>
+抛出存储的异常(如果有的话)。</p>
+<h2 id="d43-stdpackaged_task类型模板"><a class="header" href="#d43-stdpackaged_task类型模板">D.4.3 std::packaged_task类型模板</a></h2>
+<p><code>std::packaged_task</code>类型模板可打包一个函数或其他可调用对象，所以当函数通过<code>std::packaged_task</code>实例被调用时，结果将会作为异步结果。这个结果可以通过检索<code>std::future</code>实例来查找。</p>
+<p><code>std::packaged_task</code>实例是可以MoveConstructible(移动构造)和MoveAssignable(移动赋值)，不过不能CopyConstructible(拷贝构造)和CopyAssignable(拷贝赋值)。</p>
+<p><strong>类型定义</strong></p>
+<pre><code>template&lt;typename FunctionType&gt;
+class packaged_task; // undefined
+
+template&lt;typename ResultType,typename... ArgTypes&gt;
+class packaged_task&lt;ResultType(ArgTypes...)&gt;
+{
+public:
+  packaged_task() noexcept;
+  packaged_task(packaged_task&amp;&amp;) noexcept;
+  ~packaged_task();
+
+  packaged_task&amp; operator=(packaged_task&amp;&amp;) noexcept;
+
+  packaged_task(packaged_task const&amp;) = delete;
+  packaged_task&amp; operator=(packaged_task const&amp;) = delete;
+
+  void swap(packaged_task&amp;) noexcept;
+
+  template&lt;typename Callable&gt;
+  explicit packaged_task(Callable&amp;&amp; func);
+
+  template&lt;typename Callable,typename Allocator&gt;
+  packaged_task(std::allocator_arg_t, const Allocator&amp;,Callable&amp;&amp;);
+
+  bool valid() const noexcept;
+  std::future&lt;ResultType&gt; get_future();
+  void operator()(ArgTypes...);
+  void make_ready_at_thread_exit(ArgTypes...);
+  void reset();
+};
+</code></pre>
+<h3 id="stdpackaged_task-默认构造函数"><a class="header" href="#stdpackaged_task-默认构造函数">std::packaged_task 默认构造函数</a></h3>
+<p>构造一个<code>std::packaged_task</code>对象。</p>
+<p><strong>声明</strong></p>
+<pre><code>packaged_task() noexcept;
+</code></pre>
+<p><strong>效果</strong>
+不使用关联任务或异步结果来构造一个<code>std::packaged_task</code>对象。</p>
+<p><strong>抛出</strong>
+无</p>
+<h3 id="stdpackaged_task-通过可调用对象构造"><a class="header" href="#stdpackaged_task-通过可调用对象构造">std::packaged_task 通过可调用对象构造</a></h3>
+<p>使用关联任务和异步结果，构造一个<code>std::packaged_task</code>对象。</p>
+<p><strong>声明</strong></p>
+<pre><code>template&lt;typename Callable&gt;
+packaged_task(Callable&amp;&amp; func);
+</code></pre>
+<p><strong>先决条件</strong>
+表达式<code>func(args...)</code>必须是合法的，并且在<code>args...</code>中的args-i参数，必须是<code>ArgTypes...</code>中ArgTypes-i类型的一个值。且返回值必须可转换为ResultType。</p>
+<p><strong>效果</strong>
+使用ResultType类型的关联异步结果，构造一个<code>std::packaged_task</code>对象，异步结果是未就绪的，并且Callable类型相关的任务是对func的一个拷贝。</p>
+<p><strong>抛出</strong>
+当构造函数无法为异步结果分配出内存时，会抛出<code>std::bad_alloc</code>类型的异常。其他异常会在使用Callable类型的拷贝或移动构造过程中抛出。</p>
+<h3 id="stdpackaged_task-通过有分配器的可调用对象构造"><a class="header" href="#stdpackaged_task-通过有分配器的可调用对象构造">std::packaged_task 通过有分配器的可调用对象构造</a></h3>
+<p>使用关联任务和异步结果，构造一个<code>std::packaged_task</code>对象。使用以提供的分配器为关联任务和异步结果分配内存。</p>
+<p><strong>声明</strong></p>
+<pre><code>template&lt;typename Allocator,typename Callable&gt;
+packaged_task(
+    std::allocator_arg_t, Allocator const&amp; alloc,Callable&amp;&amp; func);
+</code></pre>
+<p><strong>先决条件</strong>
+表达式<code>func(args...)</code>必须是合法的，并且在<code>args...</code>中的args-i参数，必须是<code>ArgTypes...</code>中ArgTypes-i类型的一个值。且返回值必须可转换为ResultType。</p>
+<p><strong>效果</strong>
+使用ResultType类型的关联异步结果，构造一个<code>std::packaged_task</code>对象，异步结果是未就绪的，并且Callable类型相关的任务是对func的一个拷贝。异步结果和任务的内存通过内存分配器alloc进行分配，或进行拷贝。</p>
+<p><strong>抛出</strong>
+当构造函数无法为异步结果分配出内存时，会抛出<code>std::bad_alloc</code>类型的异常。其他异常会在使用Callable类型的拷贝或移动构造过程中抛出。</p>
+<h3 id="stdpackaged_task-移动构造函数"><a class="header" href="#stdpackaged_task-移动构造函数">std::packaged_task 移动构造函数</a></h3>
+<p>通过一个<code>std::packaged_task</code>对象构建另一个，将与已存在的<code>std::packaged_task</code>相关的异步结果和任务的所有权转移到新构建的对象当中。</p>
+<p><strong>声明</strong></p>
+<pre><code>packaged_task(packaged_task&amp;&amp; other) noexcept;
+</code></pre>
+<p><strong>效果</strong>
+构建一个新的<code>std::packaged_task</code>实例。</p>
+<p><strong>后置条件</strong>
+通过other构建新的<code>std::packaged_task</code>对象。在新对象构建完成后，other与其之前相关联的异步结果就没有任何关系了。</p>
+<p><strong>抛出</strong>
+无</p>
+<h3 id="stdpackaged_task-移动赋值操作"><a class="header" href="#stdpackaged_task-移动赋值操作">std::packaged_task 移动赋值操作</a></h3>
+<p>将一个<code>std::packaged_task</code>对象相关的异步结果的所有权转移到另外一个。</p>
+<p><strong>声明</strong></p>
+<pre><code>packaged_task&amp; operator=(packaged_task&amp;&amp; other) noexcept;
+</code></pre>
+<p><strong>效果</strong>
+将other相关异步结果和任务的所有权转移到<code>*this</code>中，并且切断异步结果和任务与other对象的关联，如同<code>std::packaged_task(other).swap(*this)</code>。</p>
+<p><strong>后置条件</strong>
+与other相关的异步结果与任务移动转移，使*this.other无关联的异步结果。</p>
+<p><strong>返回</strong></p>
+<pre><code>*this
+</code></pre>
+<p><strong>抛出</strong>
+无</p>
+<h3 id="stdpackaged_taskswap-成员函数"><a class="header" href="#stdpackaged_taskswap-成员函数">std::packaged_task::swap 成员函数</a></h3>
+<p>将两个<code>std::packaged_task</code>对象所关联的异步结果的所有权进行交换。</p>
+<p><strong>声明</strong></p>
+<pre><code>void swap(packaged_task&amp; other) noexcept;
+</code></pre>
+<p><strong>效果</strong>
+将other和*this关联的异步结果与任务进行交换。</p>
+<p><strong>后置条件</strong>
+将与other关联的异步结果和任务，通过调用swap的方式，与*this相交换。</p>
+<p><strong>抛出</strong>
+无</p>
+<h3 id="stdpackaged_task-析构函数"><a class="header" href="#stdpackaged_task-析构函数">std::packaged_task 析构函数</a></h3>
+<p>销毁一个<code>std::packaged_task</code>对象。</p>
+<p><strong>声明</strong></p>
+<pre><code>~packaged_task();
+</code></pre>
+<p><strong>效果</strong>
+将<code>*this</code>销毁。如果<code>*this</code>有关联的异步结果，并且结果不是一个已存储的任务或异常，那么异步结果状态将会变为就绪，伴随就绪的是一个<code>std::future_error</code>异常和错误码<code>std::future_errc::broken_promise</code>。</p>
+<p><strong>抛出</strong>
+无</p>
+<h3 id="stdpackaged_taskget_future-成员函数"><a class="header" href="#stdpackaged_taskget_future-成员函数">std::packaged_task::get_future 成员函数</a></h3>
+<p>在*this相关异步结果中，检索一个<code>std::future</code>实例。</p>
+<p><strong>声明</strong></p>
+<pre><code>std::future&lt;ResultType&gt; get_future();
+</code></pre>
+<p><strong>先决条件</strong>
+*this具有关联异步结果。</p>
+<p><strong>返回</strong>
+一个与*this关联异构结果相关的一个<code>std::future</code>实例。</p>
+<p><strong>抛出</strong>
+如果一个<code>std::future</code>已经通过get_future()获取了异步结果，在抛出<code>std::future_error</code>异常时，错误码是<code>std::future_errc::future_already_retrieved</code></p>
+<h3 id="stdpackaged_taskreset-成员函数"><a class="header" href="#stdpackaged_taskreset-成员函数">std::packaged_task::reset 成员函数</a></h3>
+<p>将一个<code>std::packaged_task</code>对实例与一个新的异步结果相关联。</p>
+<p><strong>声明</strong></p>
+<pre><code>void reset();
+</code></pre>
+<p><strong>先决条件</strong>
+*this具有关联的异步任务。</p>
+<p><strong>效果</strong>
+如同<code>*this=packaged_task(std::move(f))</code>，f是*this中已存储的关联任务。</p>
+<p><strong>抛出</strong>
+如果内存不足以分配给新的异构结果，那么将会抛出<code>std::bad_alloc</code>类异常。</p>
+<h3 id="stdpackaged_taskvalid-成员函数"><a class="header" href="#stdpackaged_taskvalid-成员函数">std::packaged_task::valid 成员函数</a></h3>
+<p>检查*this中是都具有关联任务和异步结果。</p>
+<p><strong>声明</strong></p>
+<pre><code>bool valid() const noexcept;
+</code></pre>
+<p><strong>返回</strong>
+当*this具有相关任务和异步结构，返回true；否则，返回false。</p>
+<p><strong>抛出</strong>
+无</p>
+<h3 id="stdpackaged_taskoperator-函数调用操作"><a class="header" href="#stdpackaged_taskoperator-函数调用操作">std::packaged_task::operator() 函数调用操作</a></h3>
+<p>调用一个<code>std::packaged_task</code>实例中的相关任务，并且存储返回值，或将异常存储到异常结果当中。</p>
+<p><strong>声明</strong></p>
+<pre><code>void operator()(ArgTypes... args);
+</code></pre>
+<p><strong>先决条件</strong>
+*this具有相关任务。</p>
+<p><strong>效果</strong>
+像<code>INVOKE(func,args...)</code>那要调用相关的函数func。如果返回征程，那么将会存储到<em>this相关的异步结果中。当返回结果是一个异常，将这个异常存储到</em>this相关的异步结果中。</p>
+<p><strong>后置条件</strong>
+*this相关联的异步结果状态为就绪，并且存储了一个值或异常。所有阻塞线程，在等待到异步结果的时候被解除阻塞。</p>
+<p><strong>抛出</strong>
+当异步结果已经存储了一个值或异常，那么将抛出一个<code>std::future_error</code>异常，错误码为<code>std::future_errc::promise_already_satisfied</code>。</p>
+<p><strong>同步</strong>
+<code>std::future&lt;ResultType&gt;::get()</code>或<code>std::shared_future&lt;ResultType&gt;::get()</code>的成功调用，代表同步操作的成功，函数将会检索异步结果中的值或异常。</p>
+<h3 id="stdpackaged_taskmake_ready_at_thread_exit-成员函数"><a class="header" href="#stdpackaged_taskmake_ready_at_thread_exit-成员函数">std::packaged_task::make_ready_at_thread_exit 成员函数</a></h3>
+<p>调用一个<code>std::packaged_task</code>实例中的相关任务，并且存储返回值，或将异常存储到异常结果当中，直到线程退出时，将相关异步结果的状态置为就绪。</p>
+<p><strong>声明</strong></p>
+<pre><code>void make_ready_at_thread_exit(ArgTypes... args);
+</code></pre>
+<p><strong>先决条件</strong>
+*this具有相关任务。</p>
+<p><strong>效果</strong>
+像<code>INVOKE(func,args...)</code>那要调用相关的函数func。如果返回征程，那么将会存储到<code>*this</code>相关的异步结果中。当返回结果是一个异常，将这个异常存储到<code>*this</code>相关的异步结果中。当当前线程退出的时候，可调配相关异步状态为就绪。</p>
+<p><strong>后置条件</strong>
+*this的异步结果中已经存储了一个值或一个异常，不过在当前线程退出的时候，这个结果都是非就绪的。当当前线程退出时，阻塞等待异步结果的线程将会被解除阻塞。</p>
+<p><strong>抛出</strong>
+当异步结果已经存储了一个值或异常，那么将抛出一个<code>std::future_error</code>异常，错误码为<code>std::future_errc::promise_already_satisfied</code>。当无关联异步状态时，抛出<code>std::future_error</code>异常，错误码为<code>std::future_errc::no_state</code>。</p>
+<p><strong>同步</strong>
+<code>std::future&lt;ResultType&gt;::get()</code>或<code>std::shared_future&lt;ResultType&gt;::get()</code>在线程上的成功调用，代表同步操作的成功，函数将会检索异步结果中的值或异常。</p>
+<h2 id="d44-stdpromise类型模板"><a class="header" href="#d44-stdpromise类型模板">D.4.4 std::promise类型模板</a></h2>
+<p><code>std::promise</code>类型模板提供设置异步结果的方法，这样其他线程就可以通过<code>std::future</code>实例来索引该结果。</p>
+<p>ResultType模板参数，该类型可以存储异步结果。</p>
+<p><code>std::promise</code>实例中的异步结果与某个<code>srd::future</code>实例相关联，并且可以通过调用get_future()成员函数来获取这个<code>srd::future</code>实例。ResultType类型的异步结果，可以通过set_value()成员函数对存储值进行设置，或者使用set_exception()将对应异常设置进异步结果中。</p>
+<p><code>std::promise</code>实例是可以MoveConstructible(移动构造)和MoveAssignable(移动赋值)，但是不能CopyConstructible(拷贝构造)和CopyAssignable(拷贝赋值)。</p>
+<p><strong>类型定义</strong></p>
+<pre><code>template&lt;typename ResultType&gt;
+class promise
+{
+public:
+  promise();
+  promise(promise&amp;&amp;) noexcept;
+  ~promise();
+  promise&amp; operator=(promise&amp;&amp;) noexcept;
+
+  template&lt;typename Allocator&gt;
+  promise(std::allocator_arg_t, Allocator const&amp;);
+
+  promise(promise const&amp;) = delete;
+  promise&amp; operator=(promise const&amp;) = delete;
+
+  void swap(promise&amp; ) noexcept;
+  
+  std::future&lt;ResultType&gt; get_future();
+
+  void set_value(see description);
+  void set_exception(std::exception_ptr p);
+};
+</code></pre>
+<h3 id="stdpromise-默认构造函数"><a class="header" href="#stdpromise-默认构造函数">std::promise 默认构造函数</a></h3>
+<p>构造一个<code>std::promise</code>对象。</p>
+<p><strong>声明</strong></p>
+<pre><code>promise();
+</code></pre>
+<p><strong>效果</strong>
+使用ResultType类型的相关异步结果来构造<code>std::promise</code>实例，不过异步结果并未就绪。</p>
+<p><strong>抛出</strong>
+当没有足够内存为异步结果进行分配，那么将抛出<code>std::bad_alloc</code>型异常。</p>
+<h3 id="stdpromise-带分配器的构造函数"><a class="header" href="#stdpromise-带分配器的构造函数">std::promise 带分配器的构造函数</a></h3>
+<p>构造一个<code>std::promise</code>对象，使用提供的分配器来为相关异步结果分配内存。</p>
+<p><strong>声明</strong></p>
+<pre><code>template&lt;typename Allocator&gt;
+promise(std::allocator_arg_t, Allocator const&amp; alloc);
+</code></pre>
+<p><strong>效果</strong>
+使用ResultType类型的相关异步结果来构造<code>std::promise</code>实例，不过异步结果并未就绪。异步结果的内存由alloc分配器来分配。</p>
+<p><strong>抛出</strong>
+当分配器为异步结果分配内存时，如有抛出异常，就为该函数抛出的异常。</p>
+<h3 id="stdpromise-移动构造函数"><a class="header" href="#stdpromise-移动构造函数">std::promise 移动构造函数</a></h3>
+<p>通过另一个已存在对象，构造一个<code>std::promise</code>对象。将已存在对象中的相关异步结果的所有权转移到新创建的<code>std::promise</code>对象当中。</p>
+<p><strong>声明</strong></p>
+<pre><code>promise(promise&amp;&amp; other) noexcept;
+</code></pre>
+<p><strong>效果</strong>
+构造一个<code>std::promise</code>实例。</p>
+<p><strong>后置条件</strong>
+当使用other来构造一个新的实例，那么other中相关异构结果的所有权将转移到新创建的对象上。之后，other将无关联异步结果。</p>
+<p><strong>抛出</strong>
+无</p>
+<h3 id="stdpromise-移动赋值操作符"><a class="header" href="#stdpromise-移动赋值操作符">std::promise 移动赋值操作符</a></h3>
+<p>在两个<code>std::promise</code>实例中转移异步结果的所有权。</p>
+<p><strong>声明</strong></p>
+<pre><code>promise&amp; operator=(promise&amp;&amp; other) noexcept;
+</code></pre>
+<p><strong>效果</strong>
+在other和<code>*this</code>之间进行异步结果所有权的转移。当<code>*this</code>已经有关联的异步结果，那么该异步结果的状态将会为就绪态，且伴随一个<code>std::future_error</code>类型异常，错误码为<code>std::future_errc::broken_promise</code>。</p>
+<p><strong>后置条件</strong>
+将other中关联的异步结果转移到*this当中。other中将无关联异步结果。</p>
+<p><strong>返回</strong></p>
+<pre><code>*this
+</code></pre>
+<p><strong>抛出</strong>
+无</p>
+<h3 id="stdpromiseswap-成员函数"><a class="header" href="#stdpromiseswap-成员函数">std::promise::swap 成员函数</a></h3>
+<p>将两个<code>std::promise</code>实例中的关联异步结果进行交换。</p>
+<p><strong>声明</strong></p>
+<pre><code>void swap(promise&amp; other);
+</code></pre>
+<p><strong>效果</strong>
+交换other和*this当中的关联异步结果。</p>
+<p><strong>后置条件</strong>
+当swap使用other时，other中的异步结果就会与*this中关联异步结果相交换。二者返回来亦然。</p>
+<p><strong>抛出</strong>
+无</p>
+<h3 id="stdpromise-析构函数"><a class="header" href="#stdpromise-析构函数">std::promise 析构函数</a></h3>
+<p>销毁<code>std::promise</code>对象。</p>
+<p><strong>声明</strong></p>
+<pre><code>~promise();
+</code></pre>
+<p><strong>效果</strong>
+销毁<code>*this</code>。当<code>*this</code>具有关联的异步结果，并且结果中没有存储值或异常，那么结果将会置为就绪，伴随一个<code>std::future_error</code>异常，错误码为<code>std::future_errc::broken_promise</code>。</p>
+<p><strong>抛出</strong>
+无</p>
+<h3 id="stdpromiseget_future-成员函数"><a class="header" href="#stdpromiseget_future-成员函数">std::promise::get_future 成员函数</a></h3>
+<p>通过*this关联的异步结果，检索出所要的<code>std::future</code>实例。</p>
+<p><strong>声明</strong></p>
+<pre><code>std::future&lt;ResultType&gt; get_future();
+</code></pre>
+<p><strong>先决条件</strong>
+*this具有关联异步结果。</p>
+<p><strong>返回</strong>
+与*this关联异步结果关联的<code>std::future</code>实例。</p>
+<p><strong>抛出</strong>
+当<code>std::future</code>已经通过get_future()获取过了，将会抛出一个<code>std::future_error</code>类型异常，伴随的错误码为<code>std::future_errc::future_already_retrieved</code>。</p>
+<h3 id="stdpromiseset_value-成员函数"><a class="header" href="#stdpromiseset_value-成员函数">std::promise::set_value 成员函数</a></h3>
+<p>存储一个值到与*this关联的异步结果中。</p>
+<p><strong>声明</strong></p>
+<pre><code>void promise&lt;void&gt;::set_value();
+void promise&lt;R&amp;&gt;::set_value(R&amp; r);
+void promise&lt;R&gt;::set_value(R const&amp; r);
+void promise&lt;R&gt;::set_value(R&amp;&amp; r);
+</code></pre>
+<p><strong>先决条件</strong>
+*this具有关联异步结果。</p>
+<p><strong>效果</strong>
+当ResultType不是void型，就存储r到*this相关的异步结果当中。</p>
+<p><strong>后置条件</strong>
+*this相关的异步结果的状态为就绪，且将值存入。任意等待异步结果的阻塞线程将解除阻塞。</p>
+<p><strong>抛出</strong>
+当异步结果已经存有一个值或一个异常，那么将抛出<code>std::future_error</code>型异常，伴随错误码为<code>std::future_errc::promise_already_satisfied</code>。r的拷贝构造或移动构造抛出的异常，即为本函数抛出的异常。</p>
+<p><strong>同步</strong>
+并发调用set_value()和set_exception()的线程将被序列化。要想成功的调用set_exception()，需要在之前调用<code>std::future&lt;Result-Type&gt;::get()</code>或<code>std::shared_future&lt;ResultType&gt;::get()</code>，这两个函数将会查找已存储的异常。</p>
+<h3 id="stdpromiseset_value_at_thread_exit-成员函数"><a class="header" href="#stdpromiseset_value_at_thread_exit-成员函数">std::promise::set_value_at_thread_exit 成员函数</a></h3>
+<p>存储一个值到与*this关联的异步结果中，到线程退出时，异步结果的状态会被设置为就绪。</p>
+<p><strong>声明</strong></p>
+<pre><code>void promise&lt;void&gt;::set_value_at_thread_exit();
+void promise&lt;R&amp;&gt;::set_value_at_thread_exit(R&amp; r);
+void promise&lt;R&gt;::set_value_at_thread_exit(R const&amp; r);
+void promise&lt;R&gt;::set_value_at_thread_exit(R&amp;&amp; r);
+</code></pre>
+<p><strong>先决条件</strong>
+*this具有关联异步结果。</p>
+<p><strong>效果</strong>
+当ResultType不是void型，就存储r到*this相关的异步结果当中。标记异步结果为“已存储值”。当前线程退出时，会安排相关异步结果的状态为就绪。</p>
+<p><strong>后置条件</strong>
+将值存入*this相关的异步结果，且直到当前线程退出时，异步结果状态被置为就绪。任何等待异步结果的阻塞线程将解除阻塞。</p>
+<p><strong>抛出</strong>
+当异步结果已经存有一个值或一个异常，那么将抛出<code>std::future_error</code>型异常，伴随错误码为<code>std::future_errc::promise_already_satisfied</code>。r的拷贝构造或移动构造抛出的异常，即为本函数抛出的异常。</p>
+<p><strong>同步</strong>
+并发调用set_value(), set_value_at_thread_exit(), set_exception()和set_exception_at_thread_exit()的线程将被序列化。要想成功的调用set_exception()，需要在之前调用<code>std::future&lt;Result-Type&gt;::get()</code>或<code>std::shared_future&lt;ResultType&gt;::get()</code>，这两个函数将会查找已存储的异常。</p>
+<h3 id="stdpromiseset_exception-成员函数"><a class="header" href="#stdpromiseset_exception-成员函数">std::promise::set_exception 成员函数</a></h3>
+<p>存储一个异常到与*this关联的异步结果中。</p>
+<p><strong>声明</strong></p>
+<pre><code>void set_exception(std::exception_ptr e);
+</code></pre>
+<p><strong>先决条件</strong>
+*this具有关联异步结果。(bool)e为true。</p>
+<p><strong>效果</strong>
+将e存储到*this相关的异步结果中。</p>
+<p><strong>后置条件</strong>
+在存储异常后，*this相关的异步结果的状态将置为继续。任何等待异步结果的阻塞线程将解除阻塞。</p>
+<p><strong>抛出</strong>
+当异步结果已经存有一个值或一个异常，那么将抛出<code>std::future_error</code>型异常，伴随错误码为<code>std::future_errc::promise_already_satisfied</code>。</p>
+<p><strong>同步</strong>
+并发调用set_value()和set_exception()的线程将被序列化。要想成功的调用set_exception()，需要在之前调用<code>std::future&lt;Result-Type&gt;::get()</code>或<code>std::shared_future&lt;ResultType&gt;::get()</code>，这两个函数将会查找已存储的异常。</p>
+<h3 id="stdpromiseset_exception_at_thread_exit-成员函数"><a class="header" href="#stdpromiseset_exception_at_thread_exit-成员函数">std::promise::set_exception_at_thread_exit 成员函数</a></h3>
+<p>存储一个异常到与*this关联的异步结果中，知道当前线程退出，异步结果被置为就绪。</p>
+<p><strong>声明</strong></p>
+<pre><code>void set_exception_at_thread_exit(std::exception_ptr e);
+</code></pre>
+<p><strong>先决条件</strong>
+*this具有关联异步结果。(bool)e为true。</p>
+<p><strong>效果</strong>
+将e存储到*this相关的异步结果中。标记异步结果为“已存储值”。当前线程退出时，会安排相关异步结果的状态为就绪。</p>
+<p><strong>后置条件</strong>
+将值存入*this相关的异步结果，且直到当前线程退出时，异步结果状态被置为就绪。任何等待异步结果的阻塞线程将解除阻塞。</p>
+<p><strong>抛出</strong>
+当异步结果已经存有一个值或一个异常，那么将抛出<code>std::future_error</code>型异常，伴随错误码为<code>std::future_errc::promise_already_satisfied</code>。</p>
+<p><strong>同步</strong>
+并发调用set_value(), set_value_at_thread_exit(), set_exception()和set_exception_at_thread_exit()的线程将被序列化。要想成功的调用set_exception()，需要在之前调用<code>std::future&lt;Result-Type&gt;::get()</code>或<code>std::shared_future&lt;ResultType&gt;::get()</code>，这两个函数将会查找已存储的异常。</p>
+<h2 id="d45-stdasync函数模板"><a class="header" href="#d45-stdasync函数模板">D.4.5 std::async函数模板</a></h2>
+<p><code>std::async</code>能够简单的使用可用的硬件并行来运行自身包含的异步任务。当调用<code>std::async</code>返回一个包含任务结果的<code>std::future</code>对象。根据投放策略，任务在其所在线程上是异步运行的，当有线程调用了这个future对象的wait()和get()成员函数，则该任务会同步运行。</p>
+<p><strong>声明</strong></p>
+<pre><code>enum class launch
+{
+  async,deferred
+};
+
+template&lt;typename Callable,typename ... Args&gt;
+future&lt;result_of&lt;Callable(Args...)&gt;::type&gt;
+async(Callable&amp;&amp; func,Args&amp;&amp; ... args);
+
+template&lt;typename Callable,typename ... Args&gt;
+future&lt;result_of&lt;Callable(Args...)&gt;::type&gt;
+async(launch policy,Callable&amp;&amp; func,Args&amp;&amp; ... args);
+</code></pre>
+<p><strong>先决条件</strong>
+表达式<code>INVOKE(func,args)</code>能都为func提供合法的值和args。Callable和Args的所有成员都可MoveConstructible(可移动构造)。</p>
+<p><strong>效果</strong>
+在内部存储中拷贝构造<code>func</code>和<code>arg...</code>(分别使用fff和xyz...进行表示)。</p>
+<p>当policy是<code>std::launch::async</code>,运行<code>INVOKE(fff,xyz...)</code>在所在线程上。当这个线程完成时，返回的<code>std::future</code>状态将会为就绪态，并且之后会返回对应的值或异常(由调用函数抛出)。析构函数会等待返回的<code>std::future</code>相关异步状态为就绪时，才解除阻塞。</p>
+<p>当policy是<code>std::launch::deferred</code>，fff和xyx...都会作为延期函数调用，存储在返回的<code>std::future</code>。首次调用future的wait()或get()成员函数，将会共享相关状态，之后执行的<code>INVOKE(fff,xyz...)</code>与调用wait()或get()函数的线程同步执行。</p>
+<p>执行<code>INVOKE(fff,xyz...)</code>后，在调用<code>std::future</code>的成员函数get()时，就会有值返回或有异常抛出。</p>
+<p>当policy是<code>std::launch::async | std::launch::deferred</code>或是policy参数被省略，其行为如同已指定的<code>std::launch::async</code>或<code>std::launch::deferred</code>。具体实现将会通过逐渐递增的方式(call-by-call basis)最大化利用可用的硬件并行，并避免超限分配的问题。</p>
+<p>在所有的情况下，<code>std::async</code>调用都会直接返回。</p>
+<p><strong>同步</strong>
+完成函数调用的先行条件是，需要通过调用<code>std::future</code>和<code>std::shared_future</code>实例的wait(),get(),wait_for()或wait_until()，返回的对象与<code>std::async</code>返回的<code>std::future</code>对象关联的状态相同才算成功。就<code>std::launch::async</code>这个policy来说，在完成线程上的函数前，也需要先行对上面的函数调用后，成功的返回才行。</p>
+<p><strong>抛出</strong>
+当内部存储无法分配所需的空间，将抛出<code>std::bad_alloc</code>类型异常；否则，当效果没有达到，或任何异常在构造fff和xyz...发生时，抛出<code>std::future_error</code>异常。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../../content/appendix_D/D.3-chinese.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../../content/appendix_D/D.5-chinese.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../../content/appendix_D/D.3-chinese.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../../content/appendix_D/D.5-chinese.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>关于本书 - C++ConcurrencyInAction</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../favicon.svg">
+                        <link rel="shortcut icon" href="../favicon.png">
+                <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+                <link rel="stylesheet" href="../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../content/Praise_for_the_first_edition.html"><strong aria-hidden="true">1.</strong> 第一版的赞许</a></li><li class="chapter-item expanded "><a href="../content/preface-chinese.html"><strong aria-hidden="true">2.</strong> 前言</a></li><li class="chapter-item expanded "><a href="../content/acknowledgments-chinese.html"><strong aria-hidden="true">3.</strong> 感谢</a></li><li class="chapter-item expanded "><a href="../content/about_this_book-chinese.html" class="active"><strong aria-hidden="true">4.</strong> 关于本书</a></li><li class="chapter-item expanded "><a href="../content/about_the_author-chinese.html"><strong aria-hidden="true">5.</strong> 关于作者</a></li><li class="chapter-item expanded "><a href="../content/about_cover_illustration-chinese.html"><strong aria-hidden="true">6.</strong> 关于封面</a></li><li class="chapter-item expanded "><a href="../content/chapter1/1.0-chinese.html"><strong aria-hidden="true">7.</strong> 第1章 你好，并发世界</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../content/chapter1/1.1-chinese.html"><strong aria-hidden="true">7.1.</strong> 1.1 何谓并发</a></li><li class="chapter-item expanded "><a href="../content/chapter1/1.2-chinese.html"><strong aria-hidden="true">7.2.</strong> 1.2 为什么使用并发</a></li><li class="chapter-item expanded "><a href="../content/chapter1/1.3-chinese.html"><strong aria-hidden="true">7.3.</strong> 1.3 并发和多线程</a></li><li class="chapter-item expanded "><a href="../content/chapter1/1.4-chinese.html"><strong aria-hidden="true">7.4.</strong> 1.4 开始入门</a></li><li class="chapter-item expanded "><a href="../content/chapter1/1.5-chinese.html"><strong aria-hidden="true">7.5.</strong> 1.5 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../content/chapter2/2.0-chinese.html"><strong aria-hidden="true">8.</strong> 第2章 线程管理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../content/chapter2/2.1-chinese.html"><strong aria-hidden="true">8.1.</strong> 2.1 线程的基本操作</a></li><li class="chapter-item expanded "><a href="../content/chapter2/2.2-chinese.html"><strong aria-hidden="true">8.2.</strong> 2.2 传递参数</a></li><li class="chapter-item expanded "><a href="../content/chapter2/2.3-chinese.html"><strong aria-hidden="true">8.3.</strong> 2.3 转移所有权</a></li><li class="chapter-item expanded "><a href="../content/chapter2/2.4-chinese.html"><strong aria-hidden="true">8.4.</strong> 2.4 确定线程数量</a></li><li class="chapter-item expanded "><a href="../content/chapter2/2.5-chinese.html"><strong aria-hidden="true">8.5.</strong> 2.5 线程标识</a></li><li class="chapter-item expanded "><a href="../content/chapter2/2.6-chinese.html"><strong aria-hidden="true">8.6.</strong> 2.6 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../content/chapter3/3.0-chinese.html"><strong aria-hidden="true">9.</strong> 第3章 共享数据</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../content/chapter3/3.1-chinese.html"><strong aria-hidden="true">9.1.</strong> 3.1 共享数据的问题</a></li><li class="chapter-item expanded "><a href="../content/chapter3/3.2-chinese.html"><strong aria-hidden="true">9.2.</strong> 3.2 使用互斥量</a></li><li class="chapter-item expanded "><a href="../content/chapter3/3.3-chinese.html"><strong aria-hidden="true">9.3.</strong> 3.3 保护共享数据的方式</a></li><li class="chapter-item expanded "><a href="../content/chapter3/3.4-chinese.html"><strong aria-hidden="true">9.4.</strong> 3.4 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../content/chapter4/4.0-chinese.html"><strong aria-hidden="true">10.</strong> 第4章 同步操作</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../content/chapter4/4.1-chinese.html"><strong aria-hidden="true">10.1.</strong> 4.1 等待事件或条件</a></li><li class="chapter-item expanded "><a href="../content/chapter4/4.2-chinese.html"><strong aria-hidden="true">10.2.</strong> 4.2 使用future</a></li><li class="chapter-item expanded "><a href="../content/chapter4/4.3-chinese.html"><strong aria-hidden="true">10.3.</strong> 4.3 限时等待</a></li><li class="chapter-item expanded "><a href="../content/chapter4/4.4-chinese.html"><strong aria-hidden="true">10.4.</strong> 4.4 简化代码</a></li><li class="chapter-item expanded "><a href="../content/chapter4/4.5-chinese.html"><strong aria-hidden="true">10.5.</strong> 4.5 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../content/chapter5/5.0-chinese.html"><strong aria-hidden="true">11.</strong> 第5章 内存模型和原子操作</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../content/chapter5/5.1-chinese.html"><strong aria-hidden="true">11.1.</strong> 5.1 内存模型</a></li><li class="chapter-item expanded "><a href="../content/chapter5/5.2-chinese.html"><strong aria-hidden="true">11.2.</strong> 5.2 原子操作和原子类型</a></li><li class="chapter-item expanded "><a href="../content/chapter5/5.3-chinese.html"><strong aria-hidden="true">11.3.</strong> 5.3 同步操作和强制排序</a></li><li class="chapter-item expanded "><a href="../content/chapter5/5.4-chinese.html"><strong aria-hidden="true">11.4.</strong> 5.4 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../content/chapter6/6.0-chinese.html"><strong aria-hidden="true">12.</strong> 第6章 设计基于锁的并发数据结构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../content/chapter6/6.1-chinese.html"><strong aria-hidden="true">12.1.</strong> 6.1 并发设计的意义</a></li><li class="chapter-item expanded "><a href="../content/chapter6/6.2-chinese.html"><strong aria-hidden="true">12.2.</strong> 6.2 基于锁的并发数据结构</a></li><li class="chapter-item expanded "><a href="../content/chapter6/6.3-chinese.html"><strong aria-hidden="true">12.3.</strong> 6.3 设计更加复杂的数据结构</a></li><li class="chapter-item expanded "><a href="../content/chapter6/6.4-chinese.html"><strong aria-hidden="true">12.4.</strong> 6.4 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../content/chapter7/7.0-chinese.html"><strong aria-hidden="true">13.</strong> 第7章 设计无锁的并发数据结构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../content/chapter7/7.1-chinese.html"><strong aria-hidden="true">13.1.</strong> 7.1 定义和意义</a></li><li class="chapter-item expanded "><a href="../content/chapter7/7.2-chinese.html"><strong aria-hidden="true">13.2.</strong> 7.2 无锁数据结构的例子</a></li><li class="chapter-item expanded "><a href="../content/chapter7/7.3-chinese.html"><strong aria-hidden="true">13.3.</strong> 7.3 设计无锁数据结构的指导建议</a></li><li class="chapter-item expanded "><a href="../content/chapter7/7.4-chinese.html"><strong aria-hidden="true">13.4.</strong> 7.4 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../content/chapter8/8.0-chinese.html"><strong aria-hidden="true">14.</strong> 第8章 并发设计</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../content/chapter8/8.1-chinese.html"><strong aria-hidden="true">14.1.</strong> 8.1 线程间划分工作</a></li><li class="chapter-item expanded "><a href="../content/chapter8/8.2-chinese.html"><strong aria-hidden="true">14.2.</strong> 8.2 并发代码的性能</a></li><li class="chapter-item expanded "><a href="../content/chapter8/8.3-chinese.html"><strong aria-hidden="true">14.3.</strong> 8.3 为多线程性能设计数据结构</a></li><li class="chapter-item expanded "><a href="../content/chapter8/8.4-chinese.html"><strong aria-hidden="true">14.4.</strong> 8.4 设计并发代码的注意事项</a></li><li class="chapter-item expanded "><a href="../content/chapter8/8.5-chinese.html"><strong aria-hidden="true">14.5.</strong> 8.5 在实践中设计并发代码</a></li><li class="chapter-item expanded "><a href="../content/chapter8/8.6-chinese.html"><strong aria-hidden="true">14.6.</strong> 8.6 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../content/chapter9/9.0-chinese.html"><strong aria-hidden="true">15.</strong> 第9章 高级线程管理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../content/chapter9/9.1-chinese.html"><strong aria-hidden="true">15.1.</strong> 9.1 线程池</a></li><li class="chapter-item expanded "><a href="../content/chapter9/9.2-chinese.html"><strong aria-hidden="true">15.2.</strong> 9.2 中断线程</a></li><li class="chapter-item expanded "><a href="../content/chapter9/9.3-chinese.html"><strong aria-hidden="true">15.3.</strong> 9.3 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../content/chapter10/10.0-chinese.html"><strong aria-hidden="true">16.</strong> 第10章 并行算法</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../content/chapter10/10.1-chinese.html"><strong aria-hidden="true">16.1.</strong> 10.1 并行化标准库算法</a></li><li class="chapter-item expanded "><a href="../content/chapter10/10.2-chinese.html"><strong aria-hidden="true">16.2.</strong> 10.2 执行策略</a></li><li class="chapter-item expanded "><a href="../content/chapter10/10.3-chinese.html"><strong aria-hidden="true">16.3.</strong> 10.3 C++标准库中的并行算法</a></li><li class="chapter-item expanded "><a href="../content/chapter10/10.4-chinese.html"><strong aria-hidden="true">16.4.</strong> 10.4 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../content/chapter11/11.0-chinese.html"><strong aria-hidden="true">17.</strong> 第11章 测试和调试多线程应用</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../content/chapter11/11.1-chinese.html"><strong aria-hidden="true">17.1.</strong> 11.1 与并发相关的Bug</a></li><li class="chapter-item expanded "><a href="../content/chapter11/11.2-chinese.html"><strong aria-hidden="true">17.2.</strong> 11.2 定位并发Bug的技巧</a></li><li class="chapter-item expanded "><a href="../content/chapter11/11.3-chinese.html"><strong aria-hidden="true">17.3.</strong> 11.3 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../content/appendix_A/A.0-chinese.html"><strong aria-hidden="true">18.</strong> 附录A C++11特性简明参考(部分)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../content/appendix_A/A.1-chinese.html"><strong aria-hidden="true">18.1.</strong> A.1 右值引用</a></li><li class="chapter-item expanded "><a href="../content/appendix_A/A.2-chinese.html"><strong aria-hidden="true">18.2.</strong> A.2 删除函数</a></li><li class="chapter-item expanded "><a href="../content/appendix_A/A.3-chinese.html"><strong aria-hidden="true">18.3.</strong> A.3 默认函数</a></li><li class="chapter-item expanded "><a href="../content/appendix_A/A.4-chinese.html"><strong aria-hidden="true">18.4.</strong> A.4 常量表达式函数</a></li><li class="chapter-item expanded "><a href="../content/appendix_A/A.5-chinese.html"><strong aria-hidden="true">18.5.</strong> A.5 Lambda函数</a></li><li class="chapter-item expanded "><a href="../content/appendix_A/A.6-chinese.html"><strong aria-hidden="true">18.6.</strong> A.6 变参模板</a></li><li class="chapter-item expanded "><a href="../content/appendix_A/A.7-chinese.html"><strong aria-hidden="true">18.7.</strong> A.7 自动推导变量类型</a></li><li class="chapter-item expanded "><a href="../content/appendix_A/A.8-chinese.html"><strong aria-hidden="true">18.8.</strong> A.8 线程本地变量</a></li><li class="chapter-item expanded "><a href="../content/appendix_A/A.9-chinese.html"><strong aria-hidden="true">18.9.</strong> A.9 模板类参数的推导</a></li><li class="chapter-item expanded "><a href="../content/appendix_A/A.10-chinese.html"><strong aria-hidden="true">18.10.</strong> A.10 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../content/appendix_B/B.0-chinese.html"><strong aria-hidden="true">19.</strong> 附录B 并发库简要对比</a></li><li class="chapter-item expanded "><a href="../content/appendix_C/C.0-chinese.html"><strong aria-hidden="true">20.</strong> 附录C 消息传递框架与完整的ATM示例</a></li><li class="chapter-item expanded "><a href="../content/appendix_D/D.0-chinese.html"><strong aria-hidden="true">21.</strong> 附录D C++线程类库参考</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../content/appendix_D/D.1-chinese.html"><strong aria-hidden="true">21.1.</strong> D.1 chrono头文件</a></li><li class="chapter-item expanded "><a href="../content/appendix_D/D.2-chinese.html"><strong aria-hidden="true">21.2.</strong> D.2 condition_variable头文件</a></li><li class="chapter-item expanded "><a href="../content/appendix_D/D.3-chinese.html"><strong aria-hidden="true">21.3.</strong> D.3 atomic头文件</a></li><li class="chapter-item expanded "><a href="../content/appendix_D/D.4-chinese.html"><strong aria-hidden="true">21.4.</strong> D.4 future头文件</a></li><li class="chapter-item expanded "><a href="../content/appendix_D/D.5-chinese.html"><strong aria-hidden="true">21.5.</strong> D.5 mutex头文件</a></li><li class="chapter-item expanded "><a href="../content/appendix_D/D.6-chinese.html"><strong aria-hidden="true">21.6.</strong> D.6 ratio头文件</a></li><li class="chapter-item expanded "><a href="../content/appendix_D/D.7-chinese.html"><strong aria-hidden="true">21.7.</strong> D.7 thread头文件</a></li></ol></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">C++ConcurrencyInAction</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="关于本书"><a class="header" href="#关于本书">关于本书</a></h1>
+<p>本书是使用并发和多线程的指导书籍，并基于C++最新标准(11，14，17)。从最基本的<code>std::thread</code>，<code>std::mutex</code>和<code>std::async</code>的使用，到复杂的原子操作和内存模型。</p>
+<h2 id="路线图"><a class="header" href="#路线图">路线图</a></h2>
+<p>前4章，介绍了标准库中的各种工具，展示使用方法。</p>
+<p>第5章，涵盖了内存模型和原子操作，包括原子操作如何对执行顺序进行限制(这章标志着介绍部分的结束)。</p>
+<p>第6、7章，开始讨论高级主题，如何使用基本工具去构建复杂的数据结构——第6章是基于锁的数据结构，第7章是无锁数据结构。</p>
+<p>第8章，针对设计多线程代码给了一些指导意见，覆盖了性能问题和并行算法。</p>
+<p>第9章，线程管理——线程池，工作队列和中断操作。</p>
+<p>第10章，介绍C++17中标准库算法对并行性的支持。</p>
+<p>第11章，测试和调试——Bug类型，定位Bug的技巧，以及如何进行测试等等。</p>
+<p>附录，包括新标准中语言特性的简要描述，主要是与多线程相关的特性，以及在第4章中提到的消息传递库的实现细节和C++17线程库的完整的参考。</p>
+<h2 id="适读人群"><a class="header" href="#适读人群">适读人群</a></h2>
+<p>如果你正在用C++写一个多线程程序，可以阅读本书。如果你正在使用C++标准库中新的多线程工具，可以从本书中得到一些指导。如果你正在使用其他线程库，本书的建议和技术指导也很值得参考。</p>
+<p>阅读本书需要有较好的C++基础，关于多线程编程的知识或者经验不是必须的。</p>
+<h3 id="如何阅读本书"><a class="header" href="#如何阅读本书">如何阅读本书</a></h3>
+<p>如果从来没有写过多线程代码，我建议从头到尾阅读本书，可以跳过第5章中的较为细节的部分。</p>
+<p>第7章内容依赖于第5章中的内容，如果跳过了第5章，应该在读第7章前，读一下第5章。</p>
+<p>如果没有用过C++11，可以先看一下附录，当在正文中遇到一些没见过的工具或特性时，可以随时回看附录。</p>
+<p>即使有不同环境下写多线程代码的经验，开始的章节仍有必要浏览一下，这样就能清楚地知道，你所熟知的工具在C++的新标准中对应于哪些工具。如果使用原子变量去做一些底层工作，第5章必读。第8章有关C++多线程的异常和安全性的内容很值得一看。如果对某些关键词比较感兴趣，索引和目录能够帮你快速找到相应的内容。</p>
+<p>你可能喜欢回顾主要的章节，并用自己的方式阅读示例代码。虽然你已经了解C++线程库，但附录D还是很有用。例如，查阅每个类和函数的细节。</p>
+<h2 id="代码公约和下载"><a class="header" href="#代码公约和下载">代码公约和下载</a></h2>
+<p>为了区分普通文本，清单和正文中的所有代码都采用<code>像这样的固定宽度的字体</code>。许多清单都伴随着代码注释，突出显示重要的概念。在某些情况下，你可以通过页下给出的快捷链接进行查阅。</p>
+<p>本书所有实例的源代码，可在出版商的网站上进行下载：www.manning.com/books/c-plus-plus-concurrency-in-action-second-edition。</p>
+<p>你也可以从github上下载源码：https://github.com/anthonywilliams/ccia_code_samples。</p>
+<h3 id="软件需求"><a class="header" href="#软件需求">软件需求</a></h3>
+<p>使用书中的代码，需要一个较新的C++编译器(要支持C++17语言的特性(见附录A))，还需要C++支持标准线程库。</p>
+<p>写本书的时候，最新版本的g++、clang++和Microsoft Visual Studio都对C++17的标准现成库进行了实现。他们也会支持附录中的大多数语言特性，那些目前还不被支持的特性也会逐渐被支持。</p>
+<p>我的公司Software Solutions Ltd，销售C++11标准线程库的完整实现，其可以使用在一些旧编译器上，以及为新版本的clang、gcc和Microsoft Visual Studio实现的并发技术标准[1]。这个线程库也可以用来测试本书中的例子。</p>
+<p>Boost线程库[2]提供的API，已经可移植到多个平台。本书中的大多数例子将<code>std::</code>替换为<code>boost::</code>，再<code>#include</code>引用相应的头文件，就能使用Boost线程库来运行。新标准中，部分编译器可能还不支持(例如<code>std::async</code>)，或在Boost线程库中有着不同名字(例如：<code>boost::unique_future</code>)。</p>
+<h2 id="作者在线"><a class="header" href="#作者在线">作者在线</a></h2>
+<p>购买<em>C++ Concurrency in Action</em>就能访问曼宁(<em>Manning Publications</em>)的私人网络论坛，在那里可以对本书做一些评论，问一些技术问题，获得作者或其他读者的帮助。</p>
+<p>为了能够访问论坛和订阅它的内容，在浏览器地址中输入 https://www.manning.com/books/c-plus-plus-concurrency-in-action-second-edition 。</p>
+<p>https://forums.manning.com/forums/about 页面将告诉你如何注册之后访问论坛，你能获得什么样的帮助，还有论坛中的一些规则。</p>
+<p>曼宁保证为本书的读者提供互相交流，以及和作者交流的平台。虽然曼宁自愿维护本书论坛，但不保证这样的平台不会收取任何的费用。所以，可以给作者提一些有挑战性的问题，免得这样的地方白白浪费。</p>
+<hr />
+<p>[1] The <code>just::thread</code> implementation of the C++ Standard Thread Library, http://www.stdthread.co.uk.</p>
+<p>[2] The Boost C++ library collection, http://www.boost.org.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../content/acknowledgments-chinese.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../content/about_the_author-chinese.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../content/acknowledgments-chinese.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../content/about_the_author-chinese.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>

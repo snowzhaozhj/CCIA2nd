@@ -1,0 +1,354 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>4.3 限时等待 - C++ConcurrencyInAction</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../../favicon.svg">
+                        <link rel="shortcut icon" href="../../favicon.png">
+                <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+                <link rel="stylesheet" href="../../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../content/Praise_for_the_first_edition.html"><strong aria-hidden="true">1.</strong> 第一版的赞许</a></li><li class="chapter-item expanded "><a href="../../content/preface-chinese.html"><strong aria-hidden="true">2.</strong> 前言</a></li><li class="chapter-item expanded "><a href="../../content/acknowledgments-chinese.html"><strong aria-hidden="true">3.</strong> 感谢</a></li><li class="chapter-item expanded "><a href="../../content/about_this_book-chinese.html"><strong aria-hidden="true">4.</strong> 关于本书</a></li><li class="chapter-item expanded "><a href="../../content/about_the_author-chinese.html"><strong aria-hidden="true">5.</strong> 关于作者</a></li><li class="chapter-item expanded "><a href="../../content/about_cover_illustration-chinese.html"><strong aria-hidden="true">6.</strong> 关于封面</a></li><li class="chapter-item expanded "><a href="../../content/chapter1/1.0-chinese.html"><strong aria-hidden="true">7.</strong> 第1章 你好，并发世界</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter1/1.1-chinese.html"><strong aria-hidden="true">7.1.</strong> 1.1 何谓并发</a></li><li class="chapter-item expanded "><a href="../../content/chapter1/1.2-chinese.html"><strong aria-hidden="true">7.2.</strong> 1.2 为什么使用并发</a></li><li class="chapter-item expanded "><a href="../../content/chapter1/1.3-chinese.html"><strong aria-hidden="true">7.3.</strong> 1.3 并发和多线程</a></li><li class="chapter-item expanded "><a href="../../content/chapter1/1.4-chinese.html"><strong aria-hidden="true">7.4.</strong> 1.4 开始入门</a></li><li class="chapter-item expanded "><a href="../../content/chapter1/1.5-chinese.html"><strong aria-hidden="true">7.5.</strong> 1.5 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter2/2.0-chinese.html"><strong aria-hidden="true">8.</strong> 第2章 线程管理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter2/2.1-chinese.html"><strong aria-hidden="true">8.1.</strong> 2.1 线程的基本操作</a></li><li class="chapter-item expanded "><a href="../../content/chapter2/2.2-chinese.html"><strong aria-hidden="true">8.2.</strong> 2.2 传递参数</a></li><li class="chapter-item expanded "><a href="../../content/chapter2/2.3-chinese.html"><strong aria-hidden="true">8.3.</strong> 2.3 转移所有权</a></li><li class="chapter-item expanded "><a href="../../content/chapter2/2.4-chinese.html"><strong aria-hidden="true">8.4.</strong> 2.4 确定线程数量</a></li><li class="chapter-item expanded "><a href="../../content/chapter2/2.5-chinese.html"><strong aria-hidden="true">8.5.</strong> 2.5 线程标识</a></li><li class="chapter-item expanded "><a href="../../content/chapter2/2.6-chinese.html"><strong aria-hidden="true">8.6.</strong> 2.6 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter3/3.0-chinese.html"><strong aria-hidden="true">9.</strong> 第3章 共享数据</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter3/3.1-chinese.html"><strong aria-hidden="true">9.1.</strong> 3.1 共享数据的问题</a></li><li class="chapter-item expanded "><a href="../../content/chapter3/3.2-chinese.html"><strong aria-hidden="true">9.2.</strong> 3.2 使用互斥量</a></li><li class="chapter-item expanded "><a href="../../content/chapter3/3.3-chinese.html"><strong aria-hidden="true">9.3.</strong> 3.3 保护共享数据的方式</a></li><li class="chapter-item expanded "><a href="../../content/chapter3/3.4-chinese.html"><strong aria-hidden="true">9.4.</strong> 3.4 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter4/4.0-chinese.html"><strong aria-hidden="true">10.</strong> 第4章 同步操作</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter4/4.1-chinese.html"><strong aria-hidden="true">10.1.</strong> 4.1 等待事件或条件</a></li><li class="chapter-item expanded "><a href="../../content/chapter4/4.2-chinese.html"><strong aria-hidden="true">10.2.</strong> 4.2 使用future</a></li><li class="chapter-item expanded "><a href="../../content/chapter4/4.3-chinese.html" class="active"><strong aria-hidden="true">10.3.</strong> 4.3 限时等待</a></li><li class="chapter-item expanded "><a href="../../content/chapter4/4.4-chinese.html"><strong aria-hidden="true">10.4.</strong> 4.4 简化代码</a></li><li class="chapter-item expanded "><a href="../../content/chapter4/4.5-chinese.html"><strong aria-hidden="true">10.5.</strong> 4.5 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter5/5.0-chinese.html"><strong aria-hidden="true">11.</strong> 第5章 内存模型和原子操作</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter5/5.1-chinese.html"><strong aria-hidden="true">11.1.</strong> 5.1 内存模型</a></li><li class="chapter-item expanded "><a href="../../content/chapter5/5.2-chinese.html"><strong aria-hidden="true">11.2.</strong> 5.2 原子操作和原子类型</a></li><li class="chapter-item expanded "><a href="../../content/chapter5/5.3-chinese.html"><strong aria-hidden="true">11.3.</strong> 5.3 同步操作和强制排序</a></li><li class="chapter-item expanded "><a href="../../content/chapter5/5.4-chinese.html"><strong aria-hidden="true">11.4.</strong> 5.4 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter6/6.0-chinese.html"><strong aria-hidden="true">12.</strong> 第6章 设计基于锁的并发数据结构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter6/6.1-chinese.html"><strong aria-hidden="true">12.1.</strong> 6.1 并发设计的意义</a></li><li class="chapter-item expanded "><a href="../../content/chapter6/6.2-chinese.html"><strong aria-hidden="true">12.2.</strong> 6.2 基于锁的并发数据结构</a></li><li class="chapter-item expanded "><a href="../../content/chapter6/6.3-chinese.html"><strong aria-hidden="true">12.3.</strong> 6.3 设计更加复杂的数据结构</a></li><li class="chapter-item expanded "><a href="../../content/chapter6/6.4-chinese.html"><strong aria-hidden="true">12.4.</strong> 6.4 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter7/7.0-chinese.html"><strong aria-hidden="true">13.</strong> 第7章 设计无锁的并发数据结构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter7/7.1-chinese.html"><strong aria-hidden="true">13.1.</strong> 7.1 定义和意义</a></li><li class="chapter-item expanded "><a href="../../content/chapter7/7.2-chinese.html"><strong aria-hidden="true">13.2.</strong> 7.2 无锁数据结构的例子</a></li><li class="chapter-item expanded "><a href="../../content/chapter7/7.3-chinese.html"><strong aria-hidden="true">13.3.</strong> 7.3 设计无锁数据结构的指导建议</a></li><li class="chapter-item expanded "><a href="../../content/chapter7/7.4-chinese.html"><strong aria-hidden="true">13.4.</strong> 7.4 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter8/8.0-chinese.html"><strong aria-hidden="true">14.</strong> 第8章 并发设计</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter8/8.1-chinese.html"><strong aria-hidden="true">14.1.</strong> 8.1 线程间划分工作</a></li><li class="chapter-item expanded "><a href="../../content/chapter8/8.2-chinese.html"><strong aria-hidden="true">14.2.</strong> 8.2 并发代码的性能</a></li><li class="chapter-item expanded "><a href="../../content/chapter8/8.3-chinese.html"><strong aria-hidden="true">14.3.</strong> 8.3 为多线程性能设计数据结构</a></li><li class="chapter-item expanded "><a href="../../content/chapter8/8.4-chinese.html"><strong aria-hidden="true">14.4.</strong> 8.4 设计并发代码的注意事项</a></li><li class="chapter-item expanded "><a href="../../content/chapter8/8.5-chinese.html"><strong aria-hidden="true">14.5.</strong> 8.5 在实践中设计并发代码</a></li><li class="chapter-item expanded "><a href="../../content/chapter8/8.6-chinese.html"><strong aria-hidden="true">14.6.</strong> 8.6 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter9/9.0-chinese.html"><strong aria-hidden="true">15.</strong> 第9章 高级线程管理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter9/9.1-chinese.html"><strong aria-hidden="true">15.1.</strong> 9.1 线程池</a></li><li class="chapter-item expanded "><a href="../../content/chapter9/9.2-chinese.html"><strong aria-hidden="true">15.2.</strong> 9.2 中断线程</a></li><li class="chapter-item expanded "><a href="../../content/chapter9/9.3-chinese.html"><strong aria-hidden="true">15.3.</strong> 9.3 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter10/10.0-chinese.html"><strong aria-hidden="true">16.</strong> 第10章 并行算法</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter10/10.1-chinese.html"><strong aria-hidden="true">16.1.</strong> 10.1 并行化标准库算法</a></li><li class="chapter-item expanded "><a href="../../content/chapter10/10.2-chinese.html"><strong aria-hidden="true">16.2.</strong> 10.2 执行策略</a></li><li class="chapter-item expanded "><a href="../../content/chapter10/10.3-chinese.html"><strong aria-hidden="true">16.3.</strong> 10.3 C++标准库中的并行算法</a></li><li class="chapter-item expanded "><a href="../../content/chapter10/10.4-chinese.html"><strong aria-hidden="true">16.4.</strong> 10.4 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter11/11.0-chinese.html"><strong aria-hidden="true">17.</strong> 第11章 测试和调试多线程应用</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter11/11.1-chinese.html"><strong aria-hidden="true">17.1.</strong> 11.1 与并发相关的Bug</a></li><li class="chapter-item expanded "><a href="../../content/chapter11/11.2-chinese.html"><strong aria-hidden="true">17.2.</strong> 11.2 定位并发Bug的技巧</a></li><li class="chapter-item expanded "><a href="../../content/chapter11/11.3-chinese.html"><strong aria-hidden="true">17.3.</strong> 11.3 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.0-chinese.html"><strong aria-hidden="true">18.</strong> 附录A C++11特性简明参考(部分)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/appendix_A/A.1-chinese.html"><strong aria-hidden="true">18.1.</strong> A.1 右值引用</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.2-chinese.html"><strong aria-hidden="true">18.2.</strong> A.2 删除函数</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.3-chinese.html"><strong aria-hidden="true">18.3.</strong> A.3 默认函数</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.4-chinese.html"><strong aria-hidden="true">18.4.</strong> A.4 常量表达式函数</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.5-chinese.html"><strong aria-hidden="true">18.5.</strong> A.5 Lambda函数</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.6-chinese.html"><strong aria-hidden="true">18.6.</strong> A.6 变参模板</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.7-chinese.html"><strong aria-hidden="true">18.7.</strong> A.7 自动推导变量类型</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.8-chinese.html"><strong aria-hidden="true">18.8.</strong> A.8 线程本地变量</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.9-chinese.html"><strong aria-hidden="true">18.9.</strong> A.9 模板类参数的推导</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.10-chinese.html"><strong aria-hidden="true">18.10.</strong> A.10 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/appendix_B/B.0-chinese.html"><strong aria-hidden="true">19.</strong> 附录B 并发库简要对比</a></li><li class="chapter-item expanded "><a href="../../content/appendix_C/C.0-chinese.html"><strong aria-hidden="true">20.</strong> 附录C 消息传递框架与完整的ATM示例</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.0-chinese.html"><strong aria-hidden="true">21.</strong> 附录D C++线程类库参考</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/appendix_D/D.1-chinese.html"><strong aria-hidden="true">21.1.</strong> D.1 chrono头文件</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.2-chinese.html"><strong aria-hidden="true">21.2.</strong> D.2 condition_variable头文件</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.3-chinese.html"><strong aria-hidden="true">21.3.</strong> D.3 atomic头文件</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.4-chinese.html"><strong aria-hidden="true">21.4.</strong> D.4 future头文件</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.5-chinese.html"><strong aria-hidden="true">21.5.</strong> D.5 mutex头文件</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.6-chinese.html"><strong aria-hidden="true">21.6.</strong> D.6 ratio头文件</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.7-chinese.html"><strong aria-hidden="true">21.7.</strong> D.7 thread头文件</a></li></ol></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">C++ConcurrencyInAction</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="43-限时等待"><a class="header" href="#43-限时等待">4.3 限时等待</a></h1>
+<p>阻塞调用会将线程挂起一段(不确定的)时间，直到相应的事件发生。通常情况下，这样的方式很不错，但是在一些情况下，需要限定线程等待的时间。可以发送一些类似“我还存活”的信息，无论是对交互式用户，或是其他进程，亦或当用户放弃等待，也可以按下“取消”键终止等待。</p>
+<p>这里介绍两种指定超时方式：一种是“时间段”，另一种是“时间点”。第一种方式，需要指定一段时间(例如，30毫秒)。第二种方式，就是指定一个时间点(例如，世界标准时间[UTC]17:30:15.045987023，2011年11月30日)。多数等待函数提供变量，对两种超时方式进行处理。处理持续时间的变量以<code>_for</code>作为后缀，处理绝对时间的变量以<code>_until</code>作为后缀。</p>
+<p>所以，<code>std::condition_variable</code>的两个成员函数wait_for()和wait_until()成员函数分别有两个重载，这两个重载都与wait()成员函数的重载相关——其中一个只是等待信号触发，或超期，亦或伪唤醒，并且醒来时会使用谓词检查锁，并且只有在校验为true时才会返回(这时条件变量的条件达成)，或直接超时。</p>
+<p>观察使用超时函数的细节前，我们来检查一下在C++中指定时间的方式，就从“时钟”开始吧！</p>
+<h3 id="431-时钟"><a class="header" href="#431-时钟">4.3.1 时钟</a></h3>
+<p>对于C++标准库来说，时钟就是时间信息源。并且，时钟是一个类，提供了四种不同的信息：</p>
+<ul>
+<li>
+<p>当前时间</p>
+</li>
+<li>
+<p>时间类型</p>
+</li>
+<li>
+<p>时钟节拍</p>
+</li>
+<li>
+<p>稳定时钟</p>
+</li>
+</ul>
+<p>当前时间可以通过静态成员函数now()从获取。例如，<code>std::chrono::system_clock::now()</code>会返回系统的当前时间。特定的时间点可以通过time_point的typedef成员来指定，所以some_clock::now()的类型就是some_clock::time_point。</p>
+<p>时钟节拍被指定为1/x(x在不同硬件上有不同的值)秒，这是由时间周期所决定——一个时钟一秒有25个节拍，因此一个周期为<code>std::ratio&lt;1, 25&gt;</code>，当一个时钟的时钟节拍每2.5秒一次，周期就可以表示为<code>std::ratio&lt;5, 2&gt;</code>。当时钟节拍在运行时获取时，可以使用给定的应用程序运行多次，用执行的平均时间求出，其中最短的时间可能就是时钟节拍，或者是写在手册当中，这就不保证在给定应用中观察到的节拍周期与指定的时钟周期是否相匹配。</p>
+<p>当时钟节拍均匀分布(无论是否与周期匹配)，并且不可修改，这种时钟就称为稳定时钟。is_steady静态数据成员为true时，也表明这个时钟就是稳定的。通常情况下，因为<code>std::chrono::system_clock</code>可调，所以是不稳定的。这可调可能造成首次调用now()返回的时间要早于上次调用now()所返回的时间，这就违反了节拍频率的均匀分布。稳定闹钟对于计算超时很重要，所以C++标准库提供一个稳定时钟<code>std::chrono::steady_clock</code>。C++标准库提供的其他时钟可表示为<code>std::chrono::system_clock</code>，代表了系统时钟的“实际时间”，并且提供了函数，可将时间点转化为time_t类型的值。<code>std::chrono::high_resolution_clock</code> 可能是标准库中提供的具有最小节拍周期(因此具有最高的精度)的时钟。它实际上是typedef的另一种时钟，这些时钟和与时间相关的工具，都在<code>&lt;chrono&gt;</code>库头文件中定义。</p>
+<p>我们先看一下时间段是怎么表示的。</p>
+<h3 id="432-时间段"><a class="header" href="#432-时间段">4.3.2 时间段</a></h3>
+<p>时间部分最简单的就是时间段，<code>std::chrono::duration&lt;&gt;</code>函数模板能够对时间段进行处理(线程库使用到的所有C++时间处理工具，都在<code>std::chrono</code>命名空间内)。第一个模板参数是一个类型表示(比如，int，long或double)，第二个模板参数是定制部分，表示每一个单元所用秒数。例如，当几分钟的时间要存在short类型中时，可以写成<code>std::chrono::duration&lt;short, std::ratio&lt;60, 1&gt;&gt;</code>，因为60秒是才是1分钟，所以第二个参数写成<code>std::ratio&lt;60, 1&gt;</code>。当需要将毫秒级计数存在double类型中时，可以写成<code>std::chrono::duration&lt;double, std::ratio&lt;1, 1000&gt;&gt;</code>，因为1秒等于1000毫秒。</p>
+<p>标准库在<code>std::chrono</code>命名空间内为时间段变量提供一系列预定义类型：nanoseconds[纳秒] , microseconds[微秒] , milliseconds[毫秒] , seconds[秒] , minutes[分]和hours[时]。比如，你要在一个合适的单元表示一段超过500年的时延，预定义类型可充分利用了大整型，来表示所要表示的时间类型。当然，这里也定义了一些国际单位制(SI, [法]le Système international d'unités)分数，可从<code>std::atto(10^(-18))</code>到<code>std::exa(10^(18))</code>(题外话：当你的平台支持128位整型)，也可以指定自定义时延类型。例如：<code>std::duration&lt;double, std::centi&gt;</code>，就可以使用一个double类型的变量表示1/100。</p>
+<p>方便起见，C++14中<code>std::chrono_literals</code>命名空间中有许多预定义的后缀操作符用来表示时长。下面的代码就是使用硬编码的方式赋予变量具体的时长：</p>
+<pre><code class="language-c++">using namespace std::chrono_literals;
+auto one_day=24h;
+auto half_an_hour=30min;
+auto max_time_between_messages=30ms;
+</code></pre>
+<p>使用整型字面符时，15ns和<code>std::chrono::nanoseconds(15)</code>就是等价的。不过，当使用浮点字面量时，且未指明表示类型时，数值上会对浮点时长进行适当的缩放。因此，2.5min会被表示为<code>std::chrono::duration&lt;some-floating-point-type,std::ratio&lt;60,1&gt;&gt;</code>。如果非常关心所选的浮点类型表示的范围或精度，就需要构造相应的对象来保证表示范围或精度，而不是去苛求字面值来对范围或精度进行表达。</p>
+<p>当不要求截断值的情况下(时转换成秒是没问题，但是秒转换成时就不行)时间段的转换是隐式的，显示转换可以由<code>std::chrono::duration_cast&lt;&gt;</code>来完成。</p>
+<pre><code class="language-c++">std::chrono::milliseconds ms(54802);
+std::chrono::seconds s=
+       std::chrono::duration_cast&lt;std::chrono::seconds&gt;(ms);
+</code></pre>
+<p>这里的结果就是截断的，而不是进行了舍入，所以s最后的值为54。</p>
+<p>时间值支持四则运算，所以能够对两个时间段进行加减，或者是对一个时间段乘除一个常数(模板的第一个参数)来获得一个新时间段变量。例如，5*seconds(1)与seconds(5)或minutes(1)-seconds(55)是一样。在时间段中可以通过count()成员函数获得单位时间的数量。例如，<code>std::chrono::milliseconds(1234).count()</code>就是1234。</p>
+<p>基于时间段的等待可由<code>std::chrono::duration&lt;&gt;</code>来完成。例如：等待future状态变为就绪需要35毫秒：</p>
+<pre><code class="language-c++">std::future&lt;int&gt; f=std::async(some_task);
+if(f.wait_for(std::chrono::milliseconds(35))==std::future_status::ready)
+  do_something_with(f.get());
+</code></pre>
+<p>等待函数会返回状态值，表示是等待是超时，还是继续等待。等待future时，超时时会返回<code>std::future_status::timeout</code>。当future状态改变，则会返回<code>std::future_status::ready</code>。当与future相关的任务延迟了，则会返回<code>std::future_status::deferred</code>。基于时间段的等待使用稳定时钟来计时，所以这里的35毫秒不受任何影响。当然，系统调度的不确定性和不同操作系统的时钟精度意味着：线程调用和返回的实际时间间隔可能要比35毫秒长。</p>
+<p>现在，来看看“时间点”如何工作。</p>
+<h3 id="433-时间点"><a class="header" href="#433-时间点">4.3.3 时间点</a></h3>
+<p>时间点可用<code>std::chrono::time_point&lt;&gt;</code>来表示，第一个参数用来指定使用的时钟，第二个函数参数用来表示时间单位(特化的<code>std::chrono::duration&lt;&gt;</code>)。时间点就是时间戳，而时间戳是时钟的基本属性，不可以直接查询，其在C++标准中已经指定。通常，UNIX时间戳表示1970年1月1日 00:00。时钟可能共享一个时间戳，或具有独立的时间戳。当两个时钟共享一个时间戳时，其中一个time_point类型可以与另一个时钟类型中的time_point相关联。虽然不知道UNIX时间戳的具体值，但可以通过对指定time_point类型使用time_since_epoch()来获取时间戳，该成员函数会返回一个数值，这个数值是指定时间点与UNIX时间戳的时间间隔。</p>
+<p>例如，指定一个时间点<code>std::chrono::time_point&lt;std::chrono::system_clock, std::chrono::minutes&gt;</code>，这就与系统时钟有关，且实际中的一分钟与系统时钟精度应该不相同(通常差几秒)。</p>
+<p>可以通过对<code>std::chrono::time_point&lt;&gt;</code>实例进行加/减，来获得一个新的时间点，所以<code>std::chrono::hight_resolution_clock::now() + std::chrono::nanoseconds(500)</code>将得到500纳秒后的时间，这对于计算绝对时间来说非常方便。</p>
+<p>也可以减去一个时间点(二者需要共享同一个时钟)，结果是两个时间点的时间差。这对于代码块的计时是很有用的，例如：</p>
+<pre><code class="language-c++">auto start=std::chrono::high_resolution_clock::now();
+do_something();
+auto stop=std::chrono::high_resolution_clock::now();
+std::cout&lt;&lt;”do_something() took “
+  &lt;&lt;std::chrono::duration&lt;double,std::chrono::seconds&gt;(stop-start).count()
+  &lt;&lt;” seconds”&lt;&lt;std::endl;
+</code></pre>
+<p><code>std::chrono::time_point&lt;&gt;</code>的时钟参数不仅能够指定UNIX时间戳。当等待函数(绝对时间超时)传递时间点时，时间点参数就可以用来测量时间。当时钟变更时，会产生严重的后果，因为等待轨迹随着时钟的改变而改变，并且直到调用now()成员函数时，才能返回一个超过超时时间的值。</p>
+<p>后缀为<code>_unitl</code>的(等待函数的)变量会使用时间点。通常是使用时钟的<code>::now()</code>(程序中一个固定的时间点)作为偏移，虽然时间点与系统时钟有关，可以使用<code>std::chrono::system_clock::to_time_point()</code>静态成员函数，对时间点进行操作。</p>
+<p>代码4.11 等待条件变量满足条件——有超时功能</p>
+<pre><code class="language-c++">#include &lt;condition_variable&gt;
+#include &lt;mutex&gt;
+#include &lt;chrono&gt;
+
+std::condition_variable cv;
+bool done;
+std::mutex m;
+
+bool wait_loop()
+{
+  auto const timeout= std::chrono::steady_clock::now()+
+      std::chrono::milliseconds(500);
+  std::unique_lock&lt;std::mutex&gt; lk(m);
+  while(!done)
+  {
+    if(cv.wait_until(lk,timeout)==std::cv_status::timeout)
+      break;
+  }
+  return done;
+}
+</code></pre>
+<p>当没有什么可以等待时，可在一定时限中等待条件变量。这种方式中，循环的整体长度有限。4.1.1节中当使用条件变量时，就使用了循环，这是为了处理假唤醒。当循环中使用wait_for()时，可能在等待了足够长的时间后结束等待(在假唤醒之前)，且下一次等待又开始了。这可能重复很多次，出现无限等待的情况。</p>
+<p>至此，有关时间点的基本知识已经了解差不多了。现在，让我们来了解一下如何在函数中使用超时。</p>
+<h3 id="434-使用超时"><a class="header" href="#434-使用超时">4.3.4 使用超时</a></h3>
+<p>使用超时的最简单方式，就是对特定线程添加延迟处理。当线程无所事事时，就不会占用其他线程的处理时间。4.1节中的例子，循环检查“done”标志，两个处理函数分别是<code>std::this_thread::sleep_for()</code>和<code>std::this_thread::sleep_until()</code>。它们的工作就像一个简单的闹钟：当线程因为指定时长而进入睡眠时，可使用sleep_for()唤醒，可指定休眠的时间点，之后可使用sleep_until唤醒。sleep_for()的使用和4.1节一样，有些事必须在指定时间内完成，所以耗时就很敏感。另一方面，sleep_until()允许在某个特定时间点将调度线程唤醒。可能在晚间备份或在早上6:00打印工资条时使用，亦或挂起线程直到下一帧刷新时进行视频播放。</p>
+<p>当然，休眠只是超时处理的一种形式，超时可以配合条件变量和future一起使用。超时甚至可以在获取互斥锁时(当互斥量支持超时时)使用。<code>std::mutex</code>和<code>std::recursive_mutex</code>都不支持超时，而<code>std::timed_mutex</code>和<code>std::recursive_timed_mutex</code>支持超时。这两种类型也有try_lock_for()和try_lock_until()成员函数，可以在一段时期内尝试获取锁，或在指定时间点前获取互斥锁。表4.1展示了C++标准库中支持超时的函数。参数列表为“延时”(<em>duration</em>)必须是<code>std::duration&lt;&gt;</code>的实例，并且列出为<em>时间点</em>(time_point)必须是<code>std::time_point&lt;&gt;</code>的实例。</p>
+<p>表4.1 可接受超时的函数</p>
+<table border=1>
+  <td>类型/命名空间</td>
+  <td>函数</td>
+  <td>返回值</td>
+<tr>
+  <td rowspan=2> std::this_thread 命名空间 </td>
+  <td> sleep_for(duration) </td>
+  <td rowspan=2>N/A</td>
+</tr>
+<tr>
+  <td>sleep_until(time_point)</td>
+</tr>
+<tr>
+  <td rowspan = 2>std::condition_variable 或 std::condition_variable_any</td>
+  <td>wait_for(lock, duration)</td>
+  <td rowspan = 2>std::cv_status::time_out 或 std::cv_status::no_timeout</td>
+</tr>
+<tr>
+  <td>wait_until(lock, time_point)</td>
+</tr>
+<tr>
+  <td rowspan = 2> </td>
+  <td> wait_for(lock, duration, predicate)</td>
+  <td rowspan = 2>bool —— 当唤醒时，返回谓词的结果</td>
+</tr>
+<tr>
+  <td>wait_until(lock, duration, predicate)</td>
+</tr>
+<tr>
+  <td rowspan = 2>std::timed_mutex 或 std::recursive_timed_mutex</td>
+  <td>try_lock_for(duration)</td>
+  <td rowspan = 2> bool —— 获取锁时返回true，否则返回fasle</td>
+</tr>
+<tr>
+  <td>try_lock_until(time_point)</td>
+</tr>
+<tr>
+  <td rowspan = 2>std::unique_lock&lt;TimedLockable&gt;</td>
+  <td>unique_lock(lockable, duration)</td>
+  <td>N/A —— 对新构建的对象调用owns_lock();</td>
+</tr>
+<tr>
+  <td>unique_lock(lockable, time_point)</td>
+  <td>当获取锁时返回true，否则返回false</td>
+</tr>
+<tr>
+  <td rowspan = 2></td>
+  <td>try_lock_for(duration)</td>
+  <td rowspan = 2>bool —— 当获取锁时返回true，否则返回false</td>
+</tr>
+<tr>
+  <td>try_lock_until(time_point)</td>
+</tr>
+<tr>
+  <td rowspan = 3>std::future&lt;ValueType&gt;或std::shared_future&lt;ValueType&gt;</td>
+  <td>wait_for(duration)</td>
+  <td>当等待超时，返回std::future_status::timeout</td>
+</tr>
+<tr>
+  <td rowspan = 2>wait_until(time_point)</td>
+  <td>当期望值准备就绪时，返回std::future_status::ready</td>
+</tr>
+<tr>
+  <td>当期望值持有一个为启动的延迟函数，返回std::future_status::deferred</td>
+</tr>
+</table>
+<p>现在，我们讨论过的机制有：条件变量、future、promise，还有打包任务。是时候从更高的角度去看待这些机制，以及如何使用这些机制简化线程的同步操作。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../../content/chapter4/4.2-chinese.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../../content/chapter4/4.4-chinese.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../../content/chapter4/4.2-chinese.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../../content/chapter4/4.4-chinese.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>

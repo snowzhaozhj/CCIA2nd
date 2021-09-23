@@ -1,0 +1,666 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>D.2 condition_variable头文件 - C++ConcurrencyInAction</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../../favicon.svg">
+                        <link rel="shortcut icon" href="../../favicon.png">
+                <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+                <link rel="stylesheet" href="../../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../content/Praise_for_the_first_edition.html"><strong aria-hidden="true">1.</strong> 第一版的赞许</a></li><li class="chapter-item expanded "><a href="../../content/preface-chinese.html"><strong aria-hidden="true">2.</strong> 前言</a></li><li class="chapter-item expanded "><a href="../../content/acknowledgments-chinese.html"><strong aria-hidden="true">3.</strong> 感谢</a></li><li class="chapter-item expanded "><a href="../../content/about_this_book-chinese.html"><strong aria-hidden="true">4.</strong> 关于本书</a></li><li class="chapter-item expanded "><a href="../../content/about_the_author-chinese.html"><strong aria-hidden="true">5.</strong> 关于作者</a></li><li class="chapter-item expanded "><a href="../../content/about_cover_illustration-chinese.html"><strong aria-hidden="true">6.</strong> 关于封面</a></li><li class="chapter-item expanded "><a href="../../content/chapter1/1.0-chinese.html"><strong aria-hidden="true">7.</strong> 第1章 你好，并发世界</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter1/1.1-chinese.html"><strong aria-hidden="true">7.1.</strong> 1.1 何谓并发</a></li><li class="chapter-item expanded "><a href="../../content/chapter1/1.2-chinese.html"><strong aria-hidden="true">7.2.</strong> 1.2 为什么使用并发</a></li><li class="chapter-item expanded "><a href="../../content/chapter1/1.3-chinese.html"><strong aria-hidden="true">7.3.</strong> 1.3 并发和多线程</a></li><li class="chapter-item expanded "><a href="../../content/chapter1/1.4-chinese.html"><strong aria-hidden="true">7.4.</strong> 1.4 开始入门</a></li><li class="chapter-item expanded "><a href="../../content/chapter1/1.5-chinese.html"><strong aria-hidden="true">7.5.</strong> 1.5 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter2/2.0-chinese.html"><strong aria-hidden="true">8.</strong> 第2章 线程管理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter2/2.1-chinese.html"><strong aria-hidden="true">8.1.</strong> 2.1 线程的基本操作</a></li><li class="chapter-item expanded "><a href="../../content/chapter2/2.2-chinese.html"><strong aria-hidden="true">8.2.</strong> 2.2 传递参数</a></li><li class="chapter-item expanded "><a href="../../content/chapter2/2.3-chinese.html"><strong aria-hidden="true">8.3.</strong> 2.3 转移所有权</a></li><li class="chapter-item expanded "><a href="../../content/chapter2/2.4-chinese.html"><strong aria-hidden="true">8.4.</strong> 2.4 确定线程数量</a></li><li class="chapter-item expanded "><a href="../../content/chapter2/2.5-chinese.html"><strong aria-hidden="true">8.5.</strong> 2.5 线程标识</a></li><li class="chapter-item expanded "><a href="../../content/chapter2/2.6-chinese.html"><strong aria-hidden="true">8.6.</strong> 2.6 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter3/3.0-chinese.html"><strong aria-hidden="true">9.</strong> 第3章 共享数据</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter3/3.1-chinese.html"><strong aria-hidden="true">9.1.</strong> 3.1 共享数据的问题</a></li><li class="chapter-item expanded "><a href="../../content/chapter3/3.2-chinese.html"><strong aria-hidden="true">9.2.</strong> 3.2 使用互斥量</a></li><li class="chapter-item expanded "><a href="../../content/chapter3/3.3-chinese.html"><strong aria-hidden="true">9.3.</strong> 3.3 保护共享数据的方式</a></li><li class="chapter-item expanded "><a href="../../content/chapter3/3.4-chinese.html"><strong aria-hidden="true">9.4.</strong> 3.4 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter4/4.0-chinese.html"><strong aria-hidden="true">10.</strong> 第4章 同步操作</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter4/4.1-chinese.html"><strong aria-hidden="true">10.1.</strong> 4.1 等待事件或条件</a></li><li class="chapter-item expanded "><a href="../../content/chapter4/4.2-chinese.html"><strong aria-hidden="true">10.2.</strong> 4.2 使用future</a></li><li class="chapter-item expanded "><a href="../../content/chapter4/4.3-chinese.html"><strong aria-hidden="true">10.3.</strong> 4.3 限时等待</a></li><li class="chapter-item expanded "><a href="../../content/chapter4/4.4-chinese.html"><strong aria-hidden="true">10.4.</strong> 4.4 简化代码</a></li><li class="chapter-item expanded "><a href="../../content/chapter4/4.5-chinese.html"><strong aria-hidden="true">10.5.</strong> 4.5 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter5/5.0-chinese.html"><strong aria-hidden="true">11.</strong> 第5章 内存模型和原子操作</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter5/5.1-chinese.html"><strong aria-hidden="true">11.1.</strong> 5.1 内存模型</a></li><li class="chapter-item expanded "><a href="../../content/chapter5/5.2-chinese.html"><strong aria-hidden="true">11.2.</strong> 5.2 原子操作和原子类型</a></li><li class="chapter-item expanded "><a href="../../content/chapter5/5.3-chinese.html"><strong aria-hidden="true">11.3.</strong> 5.3 同步操作和强制排序</a></li><li class="chapter-item expanded "><a href="../../content/chapter5/5.4-chinese.html"><strong aria-hidden="true">11.4.</strong> 5.4 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter6/6.0-chinese.html"><strong aria-hidden="true">12.</strong> 第6章 设计基于锁的并发数据结构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter6/6.1-chinese.html"><strong aria-hidden="true">12.1.</strong> 6.1 并发设计的意义</a></li><li class="chapter-item expanded "><a href="../../content/chapter6/6.2-chinese.html"><strong aria-hidden="true">12.2.</strong> 6.2 基于锁的并发数据结构</a></li><li class="chapter-item expanded "><a href="../../content/chapter6/6.3-chinese.html"><strong aria-hidden="true">12.3.</strong> 6.3 设计更加复杂的数据结构</a></li><li class="chapter-item expanded "><a href="../../content/chapter6/6.4-chinese.html"><strong aria-hidden="true">12.4.</strong> 6.4 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter7/7.0-chinese.html"><strong aria-hidden="true">13.</strong> 第7章 设计无锁的并发数据结构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter7/7.1-chinese.html"><strong aria-hidden="true">13.1.</strong> 7.1 定义和意义</a></li><li class="chapter-item expanded "><a href="../../content/chapter7/7.2-chinese.html"><strong aria-hidden="true">13.2.</strong> 7.2 无锁数据结构的例子</a></li><li class="chapter-item expanded "><a href="../../content/chapter7/7.3-chinese.html"><strong aria-hidden="true">13.3.</strong> 7.3 设计无锁数据结构的指导建议</a></li><li class="chapter-item expanded "><a href="../../content/chapter7/7.4-chinese.html"><strong aria-hidden="true">13.4.</strong> 7.4 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter8/8.0-chinese.html"><strong aria-hidden="true">14.</strong> 第8章 并发设计</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter8/8.1-chinese.html"><strong aria-hidden="true">14.1.</strong> 8.1 线程间划分工作</a></li><li class="chapter-item expanded "><a href="../../content/chapter8/8.2-chinese.html"><strong aria-hidden="true">14.2.</strong> 8.2 并发代码的性能</a></li><li class="chapter-item expanded "><a href="../../content/chapter8/8.3-chinese.html"><strong aria-hidden="true">14.3.</strong> 8.3 为多线程性能设计数据结构</a></li><li class="chapter-item expanded "><a href="../../content/chapter8/8.4-chinese.html"><strong aria-hidden="true">14.4.</strong> 8.4 设计并发代码的注意事项</a></li><li class="chapter-item expanded "><a href="../../content/chapter8/8.5-chinese.html"><strong aria-hidden="true">14.5.</strong> 8.5 在实践中设计并发代码</a></li><li class="chapter-item expanded "><a href="../../content/chapter8/8.6-chinese.html"><strong aria-hidden="true">14.6.</strong> 8.6 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter9/9.0-chinese.html"><strong aria-hidden="true">15.</strong> 第9章 高级线程管理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter9/9.1-chinese.html"><strong aria-hidden="true">15.1.</strong> 9.1 线程池</a></li><li class="chapter-item expanded "><a href="../../content/chapter9/9.2-chinese.html"><strong aria-hidden="true">15.2.</strong> 9.2 中断线程</a></li><li class="chapter-item expanded "><a href="../../content/chapter9/9.3-chinese.html"><strong aria-hidden="true">15.3.</strong> 9.3 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter10/10.0-chinese.html"><strong aria-hidden="true">16.</strong> 第10章 并行算法</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter10/10.1-chinese.html"><strong aria-hidden="true">16.1.</strong> 10.1 并行化标准库算法</a></li><li class="chapter-item expanded "><a href="../../content/chapter10/10.2-chinese.html"><strong aria-hidden="true">16.2.</strong> 10.2 执行策略</a></li><li class="chapter-item expanded "><a href="../../content/chapter10/10.3-chinese.html"><strong aria-hidden="true">16.3.</strong> 10.3 C++标准库中的并行算法</a></li><li class="chapter-item expanded "><a href="../../content/chapter10/10.4-chinese.html"><strong aria-hidden="true">16.4.</strong> 10.4 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/chapter11/11.0-chinese.html"><strong aria-hidden="true">17.</strong> 第11章 测试和调试多线程应用</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/chapter11/11.1-chinese.html"><strong aria-hidden="true">17.1.</strong> 11.1 与并发相关的Bug</a></li><li class="chapter-item expanded "><a href="../../content/chapter11/11.2-chinese.html"><strong aria-hidden="true">17.2.</strong> 11.2 定位并发Bug的技巧</a></li><li class="chapter-item expanded "><a href="../../content/chapter11/11.3-chinese.html"><strong aria-hidden="true">17.3.</strong> 11.3 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.0-chinese.html"><strong aria-hidden="true">18.</strong> 附录A C++11特性简明参考(部分)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/appendix_A/A.1-chinese.html"><strong aria-hidden="true">18.1.</strong> A.1 右值引用</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.2-chinese.html"><strong aria-hidden="true">18.2.</strong> A.2 删除函数</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.3-chinese.html"><strong aria-hidden="true">18.3.</strong> A.3 默认函数</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.4-chinese.html"><strong aria-hidden="true">18.4.</strong> A.4 常量表达式函数</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.5-chinese.html"><strong aria-hidden="true">18.5.</strong> A.5 Lambda函数</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.6-chinese.html"><strong aria-hidden="true">18.6.</strong> A.6 变参模板</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.7-chinese.html"><strong aria-hidden="true">18.7.</strong> A.7 自动推导变量类型</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.8-chinese.html"><strong aria-hidden="true">18.8.</strong> A.8 线程本地变量</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.9-chinese.html"><strong aria-hidden="true">18.9.</strong> A.9 模板类参数的推导</a></li><li class="chapter-item expanded "><a href="../../content/appendix_A/A.10-chinese.html"><strong aria-hidden="true">18.10.</strong> A.10 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/appendix_B/B.0-chinese.html"><strong aria-hidden="true">19.</strong> 附录B 并发库简要对比</a></li><li class="chapter-item expanded "><a href="../../content/appendix_C/C.0-chinese.html"><strong aria-hidden="true">20.</strong> 附录C 消息传递框架与完整的ATM示例</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.0-chinese.html"><strong aria-hidden="true">21.</strong> 附录D C++线程类库参考</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/appendix_D/D.1-chinese.html"><strong aria-hidden="true">21.1.</strong> D.1 chrono头文件</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.2-chinese.html" class="active"><strong aria-hidden="true">21.2.</strong> D.2 condition_variable头文件</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.3-chinese.html"><strong aria-hidden="true">21.3.</strong> D.3 atomic头文件</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.4-chinese.html"><strong aria-hidden="true">21.4.</strong> D.4 future头文件</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.5-chinese.html"><strong aria-hidden="true">21.5.</strong> D.5 mutex头文件</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.6-chinese.html"><strong aria-hidden="true">21.6.</strong> D.6 ratio头文件</a></li><li class="chapter-item expanded "><a href="../../content/appendix_D/D.7-chinese.html"><strong aria-hidden="true">21.7.</strong> D.7 thread头文件</a></li></ol></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">C++ConcurrencyInAction</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="d2-condition_variable头文件"><a class="header" href="#d2-condition_variable头文件">D.2 &lt;condition_variable&gt;头文件</a></h1>
+<p>&lt;condition_variable&gt;头文件提供了条件变量的定义。其作为基本同步机制，允许被阻塞的线程在某些条件达成或超时时，解除阻塞继续执行。</p>
+<h3 id="头文件内容"><a class="header" href="#头文件内容">头文件内容</a></h3>
+<pre><code>namespace std
+{
+  enum class cv_status { timeout, no_timeout };
+  
+  class condition_variable;
+  class condition_variable_any;
+}
+</code></pre>
+<h2 id="d21-stdcondition_variable类"><a class="header" href="#d21-stdcondition_variable类">D.2.1 std::condition_variable类</a></h2>
+<p><code>std::condition_variable</code>允许阻塞一个线程，直到条件达成。</p>
+<p><code>std::condition_variable</code>实例不支持CopyAssignable(拷贝赋值), CopyConstructible(拷贝构造), MoveAssignable(移动赋值)和 MoveConstructible(移动构造)。</p>
+<h3 id="类型定义"><a class="header" href="#类型定义">类型定义</a></h3>
+<pre><code>class condition_variable
+{
+public:
+  condition_variable();
+  ~condition_variable();
+
+  condition_variable(condition_variable const&amp; ) = delete;
+  condition_variable&amp; operator=(condition_variable const&amp; ) = delete;
+
+  void notify_one() noexcept;
+  void notify_all() noexcept;
+
+  void wait(std::unique_lock&lt;std::mutex&gt;&amp; lock);
+
+  template &lt;typename Predicate&gt;
+  void wait(std::unique_lock&lt;std::mutex&gt;&amp; lock,Predicate pred);
+
+  template &lt;typename Clock, typename Duration&gt;
+  cv_status wait_until(
+       std::unique_lock&lt;std::mutex&gt;&amp; lock,
+       const std::chrono::time_point&lt;Clock, Duration&gt;&amp; absolute_time);
+
+  template &lt;typename Clock, typename Duration, typename Predicate&gt;
+  bool wait_until(
+       std::unique_lock&lt;std::mutex&gt;&amp; lock,
+       const std::chrono::time_point&lt;Clock, Duration&gt;&amp; absolute_time,
+       Predicate pred);
+
+  template &lt;typename Rep, typename Period&gt;
+  cv_status wait_for(
+       std::unique_lock&lt;std::mutex&gt;&amp; lock,
+       const std::chrono::duration&lt;Rep, Period&gt;&amp; relative_time);
+
+  template &lt;typename Rep, typename Period, typename Predicate&gt;
+  bool wait_for(
+       std::unique_lock&lt;std::mutex&gt;&amp; lock,
+       const std::chrono::duration&lt;Rep, Period&gt;&amp; relative_time,
+       Predicate pred);
+};
+
+void notify_all_at_thread_exit(condition_variable&amp;,unique_lock&lt;mutex&gt;);
+</code></pre>
+<h3 id="stdcondition_variable-默认构造函数"><a class="header" href="#stdcondition_variable-默认构造函数">std::condition_variable 默认构造函数</a></h3>
+<p>构造一个<code>std::condition_variable</code>对象。</p>
+<p><strong>声明</strong></p>
+<pre><code>condition_variable();
+</code></pre>
+<p><strong>效果</strong>
+构造一个新的<code>std::condition_variable</code>实例。</p>
+<p><strong>抛出</strong>
+当条件变量无法够早的时候，将会抛出一个<code>std::system_error</code>异常。</p>
+<h3 id="stdcondition_variable-析构函数"><a class="header" href="#stdcondition_variable-析构函数">std::condition_variable 析构函数</a></h3>
+<p>销毁一个<code>std::condition_variable</code>对象。</p>
+<p><strong>声明</strong></p>
+<pre><code>~condition_variable();
+</code></pre>
+<p><strong>先决条件</strong>
+之前没有使用*this总的wait(),wait_for()或wait_until()阻塞过线程。</p>
+<p><strong>效果</strong>
+销毁*this。</p>
+<p><strong>抛出</strong>
+无</p>
+<h3 id="stdcondition_variablenotify_one-成员函数"><a class="header" href="#stdcondition_variablenotify_one-成员函数">std::condition_variable::notify_one 成员函数</a></h3>
+<p>唤醒一个等待当前<code>std::condition_variable</code>实例的线程。</p>
+<p><strong>声明</strong></p>
+<pre><code>void notify_one() noexcept;
+</code></pre>
+<p><strong>效果</strong>
+唤醒一个等待*this的线程。如果没有线程在等待，那么调用没有任何效果。</p>
+<p><strong>抛出</strong>
+当效果没有达成，就会抛出<code>std::system_error</code>异常。</p>
+<p><strong>同步</strong>
+<code>std::condition_variable</code>实例中的notify_one(),notify_all(),wait(),wait_for()和wait_until()都是序列化函数(串行调用)。调用notify_one()或notify_all()只能唤醒正在等待中的线程。</p>
+<h3 id="stdcondition_variablenotify_all-成员函数"><a class="header" href="#stdcondition_variablenotify_all-成员函数">std::condition_variable::notify_all 成员函数</a></h3>
+<p>唤醒所有等待当前<code>std::condition_variable</code>实例的线程。</p>
+<p><strong>声明</strong></p>
+<pre><code>void notify_all() noexcept;
+</code></pre>
+<p><strong>效果</strong>
+唤醒所有等待*this的线程。如果没有线程在等待，那么调用没有任何效果。</p>
+<p><strong>抛出</strong>
+当效果没有达成，就会抛出<code>std::system_error</code>异常</p>
+<p><strong>同步</strong>
+<code>std::condition_variable</code>实例中的notify_one(),notify_all(),wait(),wait_for()和wait_until()都是序列化函数(串行调用)。调用notify_one()或notify_all()只能唤醒正在等待中的线程。</p>
+<h3 id="stdcondition_variablewait-成员函数"><a class="header" href="#stdcondition_variablewait-成员函数">std::condition_variable::wait 成员函数</a></h3>
+<p>通过<code>std::condition_variable</code>的notify_one()、notify_all()或伪唤醒结束等待。</p>
+<p><strong>等待</strong></p>
+<pre><code>void wait(std::unique_lock&lt;std::mutex&gt;&amp; lock);
+</code></pre>
+<p><strong>先决条件</strong>
+当线程调用wait()即可获得锁的所有权,lock.owns_lock()必须为true。</p>
+<p><strong>效果</strong>
+自动解锁lock对象，对于线程等待线程，当其他线程调用notify_one()或notify_all()时被唤醒，亦或该线程处于伪唤醒状态。在wait()返回前，lock对象将会再次上锁。</p>
+<p><strong>抛出</strong>
+当效果没有达成的时候，将会抛出<code>std::system_error</code>异常。当lock对象在调用wait()阶段被解锁，那么当wait()退出的时候lock会再次上锁，即使函数是通过异常的方式退出。</p>
+<p><strong>NOTE</strong>:伪唤醒意味着一个线程调用wait()后，在没有其他线程调用notify_one()或notify_all()时，还处以苏醒状态。因此，建议对wait()进行重载，在可能的情况下使用一个谓词。否则，建议wait()使用循环检查与条件变量相关的谓词。</p>
+<p><strong>同步</strong>
+<code>std::condition_variable</code>实例中的notify_one(),notify_all(),wait(),wait_for()和wait_until()都是序列化函数(串行调用)。调用notify_one()或notify_all()只能唤醒正在等待中的线程。</p>
+<h3 id="stdcondition_variablewait-需要一个谓词的成员函数重载"><a class="header" href="#stdcondition_variablewait-需要一个谓词的成员函数重载">std::condition_variable::wait 需要一个谓词的成员函数重载</a></h3>
+<p>等待<code>std::condition_variable</code>上的notify_one()或notify_all()被调用，或谓词为true的情况，来唤醒线程。</p>
+<p><strong>声明</strong></p>
+<pre><code>template&lt;typename Predicate&gt;
+void wait(std::unique_lock&lt;std::mutex&gt;&amp; lock,Predicate pred);
+</code></pre>
+<p><strong>先决条件</strong>
+pred()谓词必须是合法的，并且需要返回一个值，这个值可以和bool互相转化。当线程调用wait()即可获得锁的所有权,lock.owns_lock()必须为true。</p>
+<p><strong>效果</strong>
+正如</p>
+<pre><code>while(!pred())
+{
+  wait(lock);
+}
+</code></pre>
+<p><strong>抛出</strong>
+pred中可以抛出任意异常，或者当效果没有达到的时候，抛出<code>std::system_error</code>异常。</p>
+<p><strong>NOTE</strong>:潜在的伪唤醒意味着不会指定pred调用的次数。通过lock进行上锁，pred经常会被互斥量引用所调用，并且函数必须返回(只能返回)一个值，在<code>(bool)pred()</code>评估后，返回true。</p>
+<p><strong>同步</strong>
+<code>std::condition_variable</code>实例中的notify_one(),notify_all(),wait(),wait_for()和wait_until()都是序列化函数(串行调用)。调用notify_one()或notify_all()只能唤醒正在等待中的线程。</p>
+<h3 id="stdcondition_variablewait_for-成员函数"><a class="header" href="#stdcondition_variablewait_for-成员函数">std::condition_variable::wait_for 成员函数</a></h3>
+<p><code>std::condition_variable</code>在调用notify_one()、调用notify_all()、超时或线程伪唤醒时，结束等待。</p>
+<p><strong>声明</strong></p>
+<pre><code>template&lt;typename Rep,typename Period&gt;
+cv_status wait_for(
+    std::unique_lock&lt;std::mutex&gt;&amp; lock,
+    std::chrono::duration&lt;Rep,Period&gt; const&amp; relative_time);
+</code></pre>
+<p><strong>先决条件</strong>
+当线程调用wait()即可获得锁的所有权,lock.owns_lock()必须为true。</p>
+<p><strong>效果</strong>
+当其他线程调用notify_one()或notify_all()函数时，或超出了relative_time的时间，亦或是线程被伪唤醒，则将lock对象自动解锁，并将阻塞线程唤醒。当wait_for()调用返回前，lock对象会再次上锁。</p>
+<p><strong>返回</strong>
+线程被notify_one()、notify_all()或伪唤醒唤醒时，会返回<code>std::cv_status::no_timeout</code>；反之，则返回<code>std::cv_status::timeout</code>。</p>
+<p><strong>抛出</strong>
+当效果没有达成的时候，会抛出<code>std::system_error</code>异常。当lock对象在调用wait_for()函数前解锁，那么lock对象会在wait_for()退出前再次上锁，即使函数是以异常的方式退出。</p>
+<p><strong>NOTE</strong>:伪唤醒意味着，一个线程在调用wait_for()的时候，即使没有其他线程调用notify_one()和notify_all()函数，也处于苏醒状态。因此，这里建议重载wait_for()函数，重载函数可以使用谓词。要不，则建议wait_for()使用循环的方式对与谓词相关的条件变量进行检查。在这样做的时候还需要小心，以确保超时部分依旧有效；wait_until()可能适合更多的情况。这样的话，线程阻塞的时间就要比指定的时间长了。在有这样可能性的地方，流逝的时间是由稳定时钟决定。</p>
+<p><strong>同步</strong>
+<code>std::condition_variable</code>实例中的notify_one(),notify_all(),wait(),wait_for()和wait_until()都是序列化函数(串行调用)。调用notify_one()或notify_all()只能唤醒正在等待中的线程。</p>
+<h3 id="stdcondition_variablewait_for-需要一个谓词的成员函数重载"><a class="header" href="#stdcondition_variablewait_for-需要一个谓词的成员函数重载">std::condition_variable::wait_for 需要一个谓词的成员函数重载</a></h3>
+<p><code>std::condition_variable</code>在调用notify_one()、调用notify_all()、超时或线程伪唤醒时，结束等待。</p>
+<p><strong>声明</strong></p>
+<pre><code>template&lt;typename Rep,typename Period,typename Predicate&gt;
+bool wait_for(
+    std::unique_lock&lt;std::mutex&gt;&amp; lock,
+    std::chrono::duration&lt;Rep,Period&gt; const&amp; relative_time,
+    Predicate pred);
+</code></pre>
+<p><strong>先决条件</strong>
+pred()谓词必须是合法的，并且需要返回一个值，这个值可以和bool互相转化。当线程调用wait()即可获得锁的所有权,lock.owns_lock()必须为true。</p>
+<p><strong>效果</strong>
+等价于</p>
+<pre><code>internal_clock::time_point end=internal_clock::now()+relative_time;
+while(!pred())
+{
+  std::chrono::duration&lt;Rep,Period&gt; remaining_time=
+      end-internal_clock::now();
+  if(wait_for(lock,remaining_time)==std::cv_status::timeout)
+      return pred();
+}
+return true;
+</code></pre>
+<p><strong>返回</strong>
+当pred()为true，则返回true；当超过relative_time并且pred()返回false时，返回false。</p>
+<p><strong>NOTE</strong>:潜在的伪唤醒意味着不会指定pred调用的次数。通过lock进行上锁，pred经常会被互斥量引用所调用，并且函数必须返回(只能返回)一个值，在<code>(bool)pred()</code>评估后返回true，或在指定时间relative_time内完成。线程阻塞的时间就要比指定的时间长了。在有这样可能性的地方，流逝的时间是由稳定时钟决定。</p>
+<p><strong>抛出</strong>
+当效果没有达成时，会抛出<code>std::system_error</code>异常或者由pred抛出任意异常。</p>
+<p><strong>同步</strong>
+<code>std::condition_variable</code>实例中的notify_one(),notify_all(),wait(),wait_for()和wait_until()都是序列化函数(串行调用)。调用notify_one()或notify_all()只能唤醒正在等待中的线程。</p>
+<h3 id="stdcondition_variablewait_until-成员函数"><a class="header" href="#stdcondition_variablewait_until-成员函数">std::condition_variable::wait_until 成员函数</a></h3>
+<p><code>std::condition_variable</code>在调用notify_one()、调用notify_all()、指定时间内达成条件或线程伪唤醒时，结束等待。</p>
+<p><strong>声明</strong></p>
+<pre><code>template&lt;typename Clock,typename Duration&gt;
+cv_status wait_until(
+    std::unique_lock&lt;std::mutex&gt;&amp; lock,
+    std::chrono::time_point&lt;Clock,Duration&gt; const&amp; absolute_time);
+</code></pre>
+<p><strong>先决条件</strong>
+当线程调用wait()即可获得锁的所有权,lock.owns_lock()必须为true。</p>
+<p><strong>效果</strong>
+当其他线程调用notify_one()或notify_all()函数，或Clock::now()返回一个大于或等于absolute_time的时间，亦或线程伪唤醒，lock都将自动解锁，并且唤醒阻塞的线程。在wait_until()返回之前lock对象会再次上锁。</p>
+<p><strong>返回</strong>
+线程被notify_one()、notify_all()或伪唤醒唤醒时，会返回<code>std::cv_status::no_timeout</code>；反之，则返回<code>std::cv_status::timeout</code>。</p>
+<p><strong>抛出</strong>
+当效果没有达成的时候，会抛出<code>std::system_error</code>异常。当lock对象在调用wait_for()函数前解锁，那么lock对象会在wait_for()退出前再次上锁，即使函数是以异常的方式退出。</p>
+<p><strong>NOTE</strong>:伪唤醒意味着一个线程调用wait()后，在没有其他线程调用notify_one()或notify_all()时，还处以苏醒状态。因此，这里建议重载wait_until()函数，重载函数可以使用谓词。要不，则建议wait_until()使用循环的方式对与谓词相关的条件变量进行检查。这里不保证线程会被阻塞多长时间，只有当函数返回false后(Clock::now()的返回值大于或等于absolute_time)，线程才能解除阻塞。</p>
+<p><strong>同步</strong>
+<code>std::condition_variable</code>实例中的notify_one(),notify_all(),wait(),wait_for()和wait_until()都是序列化函数(串行调用)。调用notify_one()或notify_all()只能唤醒正在等待中的线程。</p>
+<h3 id="stdcondition_variablewait_until-需要一个谓词的成员函数重载"><a class="header" href="#stdcondition_variablewait_until-需要一个谓词的成员函数重载">std::condition_variable::wait_until 需要一个谓词的成员函数重载</a></h3>
+<p><code>std::condition_variable</code>在调用notify_one()、调用notify_all()、谓词返回true或指定时间内达到条件，结束等待。</p>
+<p><strong>声明</strong></p>
+<pre><code>template&lt;typename Clock,typename Duration,typename Predicate&gt;
+bool wait_until(
+    std::unique_lock&lt;std::mutex&gt;&amp; lock,
+    std::chrono::time_point&lt;Clock,Duration&gt; const&amp; absolute_time,
+    Predicate pred);
+</code></pre>
+<p><strong>先决条件</strong>
+pred()必须是合法的，并且其返回值能转换为bool值。当线程调用wait()即可获得锁的所有权,lock.owns_lock()必须为true。</p>
+<p><strong>效果</strong>
+等价于</p>
+<pre><code>while(!pred())
+{
+  if(wait_until(lock,absolute_time)==std::cv_status::timeout)
+    return pred();
+}
+return true;
+</code></pre>
+<p><strong>返回</strong>
+当调用pred()返回true时，返回true；当Clock::now()的时间大于或等于指定的时间absolute_time，并且pred()返回false时，返回false。</p>
+<p><strong>NOTE</strong>:潜在的伪唤醒意味着不会指定pred调用的次数。通过lock进行上锁，pred经常会被互斥量引用所调用，并且函数必须返回(只能返回)一个值，在<code>(bool)pred()</code>评估后返回true，或Clock::now()返回的时间大于或等于absolute_time。这里不保证调用线程将被阻塞的时长，只有当函数返回false后(Clock::now()返回一个等于或大于absolute_time的值)，线程接触阻塞。</p>
+<p><strong>抛出</strong>
+当效果没有达成时，会抛出<code>std::system_error</code>异常或者由pred抛出任意异常。</p>
+<p><strong>同步</strong>
+<code>std::condition_variable</code>实例中的notify_one(),notify_all(),wait(),wait_for()和wait_until()都是序列化函数(串行调用)。调用notify_one()或notify_all()只能唤醒正在等待中的线程。</p>
+<h3 id="stdnotify_all_at_thread_exit-非成员函数"><a class="header" href="#stdnotify_all_at_thread_exit-非成员函数">std::notify_all_at_thread_exit 非成员函数</a></h3>
+<p>当当前调用函数的线程退出时，等待<code>std::condition_variable</code>的所有线程将会被唤醒。</p>
+<p><strong>声明</strong></p>
+<pre><code>void notify_all_at_thread_exit(
+  condition_variable&amp; cv,unique_lock&lt;mutex&gt; lk);
+</code></pre>
+<p><strong>先决条件</strong>
+当线程调用wait()即可获得锁的所有权,lk.owns_lock()必须为true。lk.mutex()需要返回的值要与并发等待线程相关的任意cv中锁对象提供的wait(),wait_for()或wait_until()相同。</p>
+<p><strong>效果</strong>
+将lk的所有权转移到内部存储中，并且当有线程退出时，安排被提醒的cv类。这里的提醒等价于</p>
+<pre><code>lk.unlock();
+cv.notify_all();
+</code></pre>
+<p><strong>抛出</strong>
+当效果没有达成时，抛出<code>std::system_error</code>异常。</p>
+<p><strong>NOTE</strong>:在线程退出前，掌握着锁的所有权，所以这里要避免死锁发生。这里建议调用该函数的线程应该尽快退出，并且在该线程可以执行一些阻塞的操作。用户必须保证等地线程不会错误的将唤醒线程当做已退出的线程，特别是伪唤醒。可以通过等待线程上的谓词测试来实现这一功能，在互斥量保护的情况下，只有谓词返回true时线程才能被唤醒，并且在调用notify_all_at_thread_exit(std::condition_variable_any类中函数)前是不会释放锁。</p>
+<h2 id="d22-stdcondition_variable_any类"><a class="header" href="#d22-stdcondition_variable_any类">D.2.2 std::condition_variable_any类</a></h2>
+<p><code>std::condition_variable_any</code>类允许线程等待某一条件为true的时候继续运行。不过<code>std::condition_variable</code>只能和<code>std::unique_lock&lt;std::mutex&gt;</code>一起使用，<code>std::condition_variable_any</code>可以和任意可上锁(Lockable)类型一起使用。</p>
+<p><code>std::condition_variable_any</code>实例不能进行拷贝赋值(CopyAssignable)、拷贝构造(CopyConstructible)、移动赋值(MoveAssignable)或移动构造(MoveConstructible)。</p>
+<h3 id="类型定义-1"><a class="header" href="#类型定义-1">类型定义</a></h3>
+<pre><code>class condition_variable_any
+{
+public:
+  condition_variable_any();
+  ~condition_variable_any();
+
+  condition_variable_any(
+      condition_variable_any const&amp; ) = delete;
+  condition_variable_any&amp; operator=(
+      condition_variable_any const&amp; ) = delete;
+
+  void notify_one() noexcept;
+  void notify_all() noexcept;
+
+  template&lt;typename Lockable&gt;
+  void wait(Lockable&amp; lock);
+
+  template &lt;typename Lockable, typename Predicate&gt;
+  void wait(Lockable&amp; lock, Predicate pred);
+
+  template &lt;typename Lockable, typename Clock,typename Duration&gt;
+  std::cv_status wait_until(
+      Lockable&amp; lock,
+      const std::chrono::time_point&lt;Clock, Duration&gt;&amp; absolute_time);
+
+  template &lt;
+      typename Lockable, typename Clock,
+      typename Duration, typename Predicate&gt;
+  bool wait_until(
+      Lockable&amp; lock,
+      const std::chrono::time_point&lt;Clock, Duration&gt;&amp; absolute_time,
+      Predicate pred);
+
+  template &lt;typename Lockable, typename Rep, typename Period&gt;
+  std::cv_status wait_for(
+      Lockable&amp; lock,
+      const std::chrono::duration&lt;Rep, Period&gt;&amp; relative_time);
+
+  template &lt;
+      typename Lockable, typename Rep,
+      typename Period, typename Predicate&gt;
+  bool wait_for(
+      Lockable&amp; lock,
+      const std::chrono::duration&lt;Rep, Period&gt;&amp; relative_time,
+      Predicate pred);
+};
+</code></pre>
+<h3 id="stdcondition_variable_any-默认构造函数"><a class="header" href="#stdcondition_variable_any-默认构造函数">std::condition_variable_any 默认构造函数</a></h3>
+<p>构造一个<code>std::condition_variable_any</code>对象。</p>
+<p><strong>声明</strong></p>
+<pre><code>condition_variable_any();
+</code></pre>
+<p><strong>效果</strong>
+构造一个新的<code>std::condition_variable_any</code>实例。</p>
+<p><strong>抛出</strong>
+当条件变量构造成功，将抛出<code>std::system_error</code>异常。</p>
+<h3 id="stdcondition_variable_any-析构函数"><a class="header" href="#stdcondition_variable_any-析构函数">std::condition_variable_any 析构函数</a></h3>
+<p>销毁<code>std::condition_variable_any</code>对象。</p>
+<p><strong>声明</strong></p>
+<pre><code>~condition_variable_any();
+</code></pre>
+<p><strong>先决条件</strong>
+之前没有使用*this总的wait(),wait_for()或wait_until()阻塞过线程。</p>
+<p><strong>效果</strong>
+销毁*this。</p>
+<p><strong>抛出</strong>
+无</p>
+<h3 id="stdcondition_variable_anynotify_one-成员函数"><a class="header" href="#stdcondition_variable_anynotify_one-成员函数">std::condition_variable_any::notify_one 成员函数</a></h3>
+<p><code>std::condition_variable_any</code>唤醒一个等待该条件变量的线程。</p>
+<p><strong>声明</strong></p>
+<pre><code>void notify_all() noexcept;
+</code></pre>
+<p><strong>效果</strong>
+唤醒一个等待*this的线程。如果没有线程在等待，那么调用没有任何效果</p>
+<p><strong>抛出</strong>
+当效果没有达成，就会抛出std::system_error异常。</p>
+<p><strong>同步</strong>
+<code>std::condition_variable</code>实例中的notify_one(),notify_all(),wait(),wait_for()和wait_until()都是序列化函数(串行调用)。调用notify_one()或notify_all()只能唤醒正在等待中的线程。</p>
+<h3 id="stdcondition_variable_anynotify_all-成员函数"><a class="header" href="#stdcondition_variable_anynotify_all-成员函数">std::condition_variable_any::notify_all 成员函数</a></h3>
+<p>唤醒所有等待当前<code>std::condition_variable_any</code>实例的线程。</p>
+<p><strong>声明</strong></p>
+<pre><code>void notify_all() noexcept;
+</code></pre>
+<p><strong>效果</strong>
+唤醒所有等待*this的线程。如果没有线程在等待，那么调用没有任何效果</p>
+<p><strong>抛出</strong>
+当效果没有达成，就会抛出std::system_error异常。</p>
+<p><strong>同步</strong>
+<code>std::condition_variable</code>实例中的notify_one(),notify_all(),wait(),wait_for()和wait_until()都是序列化函数(串行调用)。调用notify_one()或notify_all()只能唤醒正在等待中的线程。</p>
+<h3 id="stdcondition_variable_anywait-成员函数"><a class="header" href="#stdcondition_variable_anywait-成员函数">std::condition_variable_any::wait 成员函数</a></h3>
+<p>通过<code>std::condition_variable_any</code>的notify_one()、notify_all()或伪唤醒结束等待。</p>
+<p><strong>声明</strong></p>
+<pre><code>template&lt;typename Lockable&gt;
+void wait(Lockable&amp; lock);
+</code></pre>
+<p><strong>先决条件</strong>
+Lockable类型需要能够上锁，lock对象拥有一个锁。</p>
+<p><strong>效果</strong>
+自动解锁lock对象，对于线程等待线程，当其他线程调用notify_one()或notify_all()时被唤醒，亦或该线程处于伪唤醒状态。在wait()返回前，lock对象将会再次上锁。</p>
+<p><strong>抛出</strong>
+当效果没有达成的时候，将会抛出<code>std::system_error</code>异常。当lock对象在调用wait()阶段被解锁，那么当wait()退出的时候lock会再次上锁，即使函数是通过异常的方式退出。</p>
+<p><strong>NOTE</strong>:伪唤醒意味着一个线程调用wait()后，在没有其他线程调用notify_one()或notify_all()时，还处以苏醒状态。因此，建议对wait()进行重载，在可能的情况下使用一个谓词。否则，建议wait()使用循环检查与条件变量相关的谓词。</p>
+<p><strong>同步</strong>
+std::condition_variable_any实例中的notify_one(),notify_all(),wait(),wait_for()和wait_until()都是序列化函数(串行调用)。调用notify_one()或notify_all()只能唤醒正在等待中的线程。</p>
+<h3 id="stdcondition_variable_anywait-需要一个谓词的成员函数重载"><a class="header" href="#stdcondition_variable_anywait-需要一个谓词的成员函数重载">std::condition_variable_any::wait 需要一个谓词的成员函数重载</a></h3>
+<p>等待<code>std::condition_variable_any</code>上的notify_one()或notify_all()被调用，或谓词为true的情况，来唤醒线程。</p>
+<p><strong>声明</strong></p>
+<pre><code>template&lt;typename Lockable,typename Predicate&gt;
+void wait(Lockable&amp; lock,Predicate pred);
+</code></pre>
+<p><strong>先决条件</strong>
+pred()谓词必须是合法的，并且需要返回一个值，这个值可以和bool互相转化。当线程调用wait()即可获得锁的所有权,lock.owns_lock()必须为true。</p>
+<p><strong>效果</strong>
+正如</p>
+<pre><code>while(!pred())
+{
+wait(lock);
+}
+</code></pre>
+<p><strong>抛出</strong>
+pred中可以抛出任意异常，或者当效果没有达到的时候，抛出<code>std::system_error</code>异常。</p>
+<p><strong>NOTE</strong>:潜在的伪唤醒意味着不会指定pred调用的次数。通过lock进行上锁，pred经常会被互斥量引用所调用，并且函数必须返回(只能返回)一个值，在<code>(bool)pred()</code>评估后，返回true。</p>
+<p><strong>同步</strong>
+<code>std::condition_variable_any</code>实例中的notify_one(),notify_all(),wait(),wait_for()和wait_until()都是序列化函数(串行调用)。调用notify_one()或notify_all()只能唤醒正在等待中的线程。</p>
+<h3 id="stdcondition_variable_anywait_for-成员函数"><a class="header" href="#stdcondition_variable_anywait_for-成员函数">std::condition_variable_any::wait_for 成员函数</a></h3>
+<p><code>std::condition_variable_any</code>在调用notify_one()、调用notify_all()、超时或线程伪唤醒时，结束等待。</p>
+<p><strong>声明</strong></p>
+<pre><code>template&lt;typename Lockable,typename Rep,typename Period&gt;
+std::cv_status wait_for(
+    Lockable&amp; lock,
+    std::chrono::duration&lt;Rep,Period&gt; const&amp; relative_time);
+</code></pre>
+<p><strong>先决条件</strong>
+当线程调用wait()即可获得锁的所有权,lock.owns_lock()必须为true。</p>
+<p><strong>效果</strong>
+当其他线程调用notify_one()或notify_all()函数时，或超出了relative_time的时间，亦或是线程被伪唤醒，则将lock对象自动解锁，并将阻塞线程唤醒。当wait_for()调用返回前，lock对象会再次上锁。</p>
+<p><strong>返回</strong>
+线程被notify_one()、notify_all()或伪唤醒唤醒时，会返回<code>std::cv_status::no_timeout</code>；反之，则返回std::cv_status::timeout。</p>
+<p><strong>抛出</strong>
+当效果没有达成的时候，会抛出<code>std::system_error</code>异常。当lock对象在调用wait_for()函数前解锁，那么lock对象会在wait_for()退出前再次上锁，即使函数是以异常的方式退出。</p>
+<p><strong>NOTE</strong>:伪唤醒意味着，一个线程在调用wait_for()的时候，即使没有其他线程调用notify_one()和notify_all()函数，也处于苏醒状态。因此，这里建议重载wait_for()函数，重载函数可以使用谓词。要不，则建议wait_for()使用循环的方式对与谓词相关的条件变量进行检查。在这样做的时候还需要小心，以确保超时部分依旧有效；wait_until()可能适合更多的情况。这样的话，线程阻塞的时间就要比指定的时间长了。在有这样可能性的地方，流逝的时间是由稳定时钟决定。</p>
+<p><strong>同步</strong>
+<code>std::condition_variable_any</code>实例中的notify_one(),notify_all(),wait(),wait_for()和wait_until()都是序列化函数(串行调用)。调用notify_one()或notify_all()只能唤醒正在等待中的线程。</p>
+<h3 id="stdcondition_variable_anywait_for-需要一个谓词的成员函数重载"><a class="header" href="#stdcondition_variable_anywait_for-需要一个谓词的成员函数重载">std::condition_variable_any::wait_for 需要一个谓词的成员函数重载</a></h3>
+<p><code>std::condition_variable_any</code>在调用notify_one()、调用notify_all()、超时或线程伪唤醒时，结束等待。</p>
+<p><strong>声明</strong></p>
+<pre><code>template&lt;typename Lockable,typename Rep,
+    typename Period, typename Predicate&gt;
+bool wait_for(
+    Lockable&amp; lock,
+    std::chrono::duration&lt;Rep,Period&gt; const&amp; relative_time,
+    Predicate pred);
+</code></pre>
+<p><strong>先决条件</strong>
+pred()谓词必须是合法的，并且需要返回一个值，这个值可以和bool互相转化。当线程调用wait()即可获得锁的所有权,lock.owns_lock()必须为true。</p>
+<p><strong>效果</strong>
+正如</p>
+<pre><code>internal_clock::time_point end=internal_clock::now()+relative_time;
+while(!pred())
+{
+  std::chrono::duration&lt;Rep,Period&gt; remaining_time=
+      end-internal_clock::now();
+  if(wait_for(lock,remaining_time)==std::cv_status::timeout)
+      return pred();
+}
+return true;
+</code></pre>
+<p><strong>返回</strong>
+当pred()为true，则返回true；当超过relative_time并且pred()返回false时，返回false。</p>
+<p><strong>NOTE</strong>:
+潜在的伪唤醒意味着不会指定pred调用的次数。通过lock进行上锁，pred经常会被互斥量引用所调用，并且函数必须返回(只能返回)一个值，在(bool)pred()评估后返回true，或在指定时间relative_time内完成。线程阻塞的时间就要比指定的时间长了。在有这样可能性的地方，流逝的时间是由稳定时钟决定。</p>
+<p><strong>抛出</strong>
+当效果没有达成时，会抛出<code>std::system_error</code>异常或者由pred抛出任意异常。</p>
+<p><strong>同步</strong>
+<code>std::condition_variable_any</code>实例中的notify_one(),notify_all(),wait(),wait_for()和wait_until()都是序列化函数(串行调用)。调用notify_one()或notify_all()只能唤醒正在等待中的线程。</p>
+<h3 id="stdcondition_variable_anywait_until-成员函数"><a class="header" href="#stdcondition_variable_anywait_until-成员函数">std::condition_variable_any::wait_until 成员函数</a></h3>
+<p><code>std::condition_variable_any</code>在调用notify_one()、调用notify_all()、指定时间内达成条件或线程伪唤醒时，结束等待</p>
+<p><strong>声明</strong></p>
+<pre><code>template&lt;typename Lockable,typename Clock,typename Duration&gt;
+std::cv_status wait_until(
+    Lockable&amp; lock,
+    std::chrono::time_point&lt;Clock,Duration&gt; const&amp; absolute_time);
+</code></pre>
+<p><strong>先决条件</strong>
+Lockable类型需要能够上锁，lock对象拥有一个锁。</p>
+<p><strong>效果</strong>
+当其他线程调用notify_one()或notify_all()函数，或Clock::now()返回一个大于或等于absolute_time的时间，亦或线程伪唤醒，lock都将自动解锁，并且唤醒阻塞的线程。在wait_until()返回之前lock对象会再次上锁。</p>
+<p><strong>返回</strong>
+线程被notify_one()、notify_all()或伪唤醒唤醒时，会返回std::cv_status::no_timeout；反之，则返回<code>std::cv_status::timeout</code>。</p>
+<p><strong>抛出</strong>
+当效果没有达成的时候，会抛出<code>std::system_error</code>异常。当lock对象在调用wait_for()函数前解锁，那么lock对象会在wait_for()退出前再次上锁，即使函数是以异常的方式退出。</p>
+<p><strong>NOTE</strong>:伪唤醒意味着一个线程调用wait()后，在没有其他线程调用notify_one()或notify_all()时，还处以苏醒状态。因此，这里建议重载wait_until()函数，重载函数可以使用谓词。要不，则建议wait_until()使用循环的方式对与谓词相关的条件变量进行检查。这里不保证线程会被阻塞多长时间，只有当函数返回false后(Clock::now()的返回值大于或等于absolute_time)，线程才能解除阻塞。</p>
+<p><strong>同步</strong>
+<code>std::condition_variable_any</code>实例中的notify_one(),notify_all(),wait(),wait_for()和wait_until()都是序列化函数(串行调用)。调用notify_one()或notify_all()只能唤醒正在等待中的线程。</p>
+<h3 id="stdcondition_variable_anywait_unti-需要一个谓词的成员函数重载"><a class="header" href="#stdcondition_variable_anywait_unti-需要一个谓词的成员函数重载">std::condition_variable_any::wait_unti 需要一个谓词的成员函数重载</a></h3>
+<p><code>std::condition_variable_any</code>在调用notify_one()、调用notify_all()、谓词返回true或指定时间内达到条件，结束等待。</p>
+<p><strong>声明</strong></p>
+<pre><code>template&lt;typename Lockable,typename Clock,
+    typename Duration, typename Predicate&gt;
+bool wait_until(
+    Lockable&amp; lock,
+    std::chrono::time_point&lt;Clock,Duration&gt; const&amp; absolute_time,
+    Predicate pred);
+</code></pre>
+<p><strong>先决条件</strong>
+pred()必须是合法的，并且其返回值能转换为bool值。当线程调用wait()即可获得锁的所有权,lock.owns_lock()必须为true。</p>
+<p><strong>效果</strong>
+等价于</p>
+<pre><code>while(!pred())
+{
+  if(wait_until(lock,absolute_time)==std::cv_status::timeout)
+    return pred();
+}
+return true;
+</code></pre>
+<p><strong>返回</strong>
+当调用pred()返回true时，返回true；当Clock::now()的时间大于或等于指定的时间absolute_time，并且pred()返回false时，返回false。</p>
+<p><strong>NOTE</strong>：潜在的伪唤醒意味着不会指定pred调用的次数。通过lock进行上锁，pred经常会被互斥量引用所调用，并且函数必须返回(只能返回)一个值，在(bool)pred()评估后返回true，或Clock::now()返回的时间大于或等于absolute_time。这里不保证调用线程将被阻塞的时长，只有当函数返回false后(Clock::now()返回一个等于或大于absolute_time的值)，线程接触阻塞。</p>
+<p><strong>抛出</strong>
+当效果没有达成时，会抛出<code>std::system_error</code>异常或者由pred抛出任意异常。</p>
+<p><strong>同步</strong>
+<code>std::condition_variable_any</code>实例中的notify_one(),notify_all(),wait(),wait_for()和wait_until()都是序列化函数(串行调用)。调用notify_one()或notify_all()只能唤醒正在等待中的线程。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../../content/appendix_D/D.1-chinese.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../../content/appendix_D/D.3-chinese.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../../content/appendix_D/D.1-chinese.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../../content/appendix_D/D.3-chinese.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>
